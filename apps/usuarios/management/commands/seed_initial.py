@@ -35,7 +35,7 @@ class Command(BaseCommand):
             for rol, prefijo in ((Usuario.Rol.MESERO, "waiter"), (Usuario.Rol.CAJERO, "cashier")):
                 u, created = Usuario.objects.get_or_create(
                     username=f"{prefijo}_{clave}",
-                    defaults={"nombre": f"{prefijo.title()} {sede}", "rol": rol, "sede": sedes[sede]},
+                    defaults={"nombre": f"{prefijo.title()} {sede}", "rol": rol, "sede": sedes[sede], "is_staff": True},
                 )
                 if created:
                     u.set_password(DEV_PASSWORD)
