@@ -1,5 +1,6 @@
 from django.shortcuts import render
 
+from apps.algoritmos.ordenamiento import insertion_sort
 from apps.usuarios.decorators import role_required
 
 from .models import Inventario
@@ -14,13 +15,14 @@ def inventario_list(request):
     productos con cantidad 0 como "OUT OF STOCK". El botón "Add" queda
     deshabilitado para esos; agregarlos al pedido de verdad se implementa en
     HU023 (Sprint 4), esta pantalla solo deja preparado el bloqueo visual.
+
+    El orden final se calcula con ordenamiento por inserción (requisito
+    académico de algoritmos), por cantidad disponible: primero lo que hay
+    menos stock, útil para que el mesero note rápido qué se está agotando.
     """
     query = request.GET.get("q", "").strip()
-    items = (
-        Inventario.objects.select_related("producto")
-        .filter(sede=request.user.sede)   # nunca de otra sede
-        .order_by("producto__nombre")
-    )
+    items_qs = Inventario.objects.select_related("producto").filter(sede=request.user.sede)
     if query:
-        items = items.filter(producto__nombre__icontains=query)
+        items_qs = items_qs.filter(producto__nombre__icontains=query)
+    items = insertion_sort(items_qs, key=lambda i: i.cantidad)
     return render(request, "inventario/inventario_list.html", {"items": items, "query": query})
