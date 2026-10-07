@@ -1,7 +1,11 @@
 from django.urls import path
 
+from . import views
+
 app_name = "autenticacion"
 
 urlpatterns = [
-    # Add the routes of this module here (one file per module avoids merge conflicts)
+    path("login/", views.CuadraLoginView.as_view(), name="login"),
+    path("logout/", views.CuadraLogoutView.as_view(), name="logout"),
+    path("home/", views.HomeView.as_view(), name="home"),
 ]

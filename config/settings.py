@@ -86,7 +86,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 LOGIN_URL = "/login/"
-LOGIN_REDIRECT_URL = "/"
+LOGIN_REDIRECT_URL = "autenticacion:home"
 
 # Cierre de sesión automático por inactividad: 3 minutos (180 s).
 # SAVE_EVERY_REQUEST renueva el plazo con cada petición del usuario.

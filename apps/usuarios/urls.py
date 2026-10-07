@@ -1,7 +1,5 @@
-from django.urls import path
+from .sedes_urls import urlpatterns as sedes_urlpatterns
 
 app_name = "usuarios"
 
-urlpatterns = [
-    # Add the routes of this module here (one file per module avoids merge conflicts)
-]
+urlpatterns = sedes_urlpatterns
