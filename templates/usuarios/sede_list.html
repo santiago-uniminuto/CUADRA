@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Sites — CUADRA{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h4 class="mb-0">Sites</h4>
+  <a href="{% url 'usuarios:sede_create' %}" class="btn btn-primary btn-sm">+ New site</a>
+</div>
+
+{% if sedes %}
+<table class="table table-striped align-middle">
+  <thead>
+    <tr><th>Name</th><th>Address</th><th></th></tr>
+  </thead>
+  <tbody>
+    {% for sede in sedes %}
+    <tr>
+      <td>{{ sede.nombre }}</td>
+      <td>{{ sede.direccion }}</td>
+      <td class="text-end">
+        <a href="{% url 'usuarios:sede_update' sede.pk %}" class="btn btn-outline-secondary btn-sm">Edit</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p class="text-muted">No sites registered yet.</p>
+{% endif %}
+{% endblock %}
