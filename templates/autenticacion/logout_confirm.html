@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}Log out — CUADRA{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-center">
+  <div class="card shadow-sm mt-5" style="max-width: 400px; width: 100%;">
+    <div class="card-body text-center">
+      <h5 class="card-title mb-4">Are you sure you want to log out?</h5>
+      <form method="post" action="{% url 'autenticacion:logout' %}" class="d-flex gap-2">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary flex-fill">YES</button>
+        <a href="{% url 'autenticacion:home' %}" class="btn btn-outline-secondary flex-fill"
+           onclick="if (history.length > 1) { history.back(); return false; }">NO</a>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

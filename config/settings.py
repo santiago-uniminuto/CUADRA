@@ -41,6 +41,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "apps.autenticacion.middleware.InactivityTimeoutMiddleware",
 ]
 
 ROOT_URLCONF = "config.urls"
@@ -90,7 +91,8 @@ LOGIN_REDIRECT_URL = "autenticacion:home"
 
 # Cierre de sesión automático por inactividad: 3 minutos (180 s).
 # SAVE_EVERY_REQUEST renueva el plazo con cada petición del usuario.
-SESSION_COOKIE_AGE = 180
+SESSION_INACTIVITY_TIMEOUT = 180   #3minutos
+SESSION_COOKIE_AGE = 3600
 SESSION_SAVE_EVERY_REQUEST = True
 SESSION_COOKIE_HTTPONLY = True
 

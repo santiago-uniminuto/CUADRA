@@ -19,7 +19,7 @@
       <td>{{ sede.nombre }}</td>
       <td>{{ sede.direccion }}</td>
       <td class="text-end">
-        <a href="{% url 'usuarios:sede_update' sede.pk %}" class="btn btn-outline-secondary btn-sm">Edit</a>
+        <a href="{% url 'usuarios:sede_edit' sede.pk %}" class="btn btn-outline-secondary btn-sm">Edit</a>
       </td>
     </tr>
     {% endfor %}

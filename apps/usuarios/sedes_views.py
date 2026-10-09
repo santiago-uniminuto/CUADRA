@@ -1,11 +1,13 @@
 from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
 from django.views.generic import CreateView, ListView, UpdateView
 
-from .mixins import AdminRequiredMixin
+from .decorators import role_required
 from .models import Sede
 
 
-class SedeListView(AdminRequiredMixin, ListView):
+@method_decorator(role_required("ADMIN"), name="dispatch")
+class SedeListView(ListView):
     """HU012 — Listar sedes."""
 
     model = Sede
@@ -14,7 +16,8 @@ class SedeListView(AdminRequiredMixin, ListView):
     ordering = ["nombre"]
 
 
-class SedeCreateView(AdminRequiredMixin, CreateView):
+@method_decorator(role_required("ADMIN"), name="dispatch")
+class SedeCreateView(CreateView):
     """HU010 — Crear sede."""
 
     model = Sede
@@ -23,7 +26,8 @@ class SedeCreateView(AdminRequiredMixin, CreateView):
     success_url = reverse_lazy("usuarios:sede_list")
 
 
-class SedeUpdateView(AdminRequiredMixin, UpdateView):
+@method_decorator(role_required("ADMIN"), name="dispatch")
+class SedeUpdateView(UpdateView):
     """HU011 — Editar sede."""
 
     model = Sede
