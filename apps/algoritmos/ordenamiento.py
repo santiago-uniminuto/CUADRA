@@ -35,6 +35,9 @@ def selection_sort(items, key=lambda x: x):
     Ordenamiento por selección: en cada pasada busca el elemento más pequeño
     del resto de la lista y lo intercambia a su posición final. Complejidad
     O(n²), con menos intercambios que burbuja (uno por pasada como máximo).
+    OJO: la selección clásica NO es estable (elementos con la misma clave pueden
+    cambiar de orden entre sí); por eso quien la use debe poner una clave
+    compuesta que desempate, p. ej. (precio, nombre).
     """
     data = list(items)
     n = len(data)

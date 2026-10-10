@@ -9,6 +9,9 @@ from django.utils import timezone
 from django.views import View
 from django.views.generic import TemplateView
 
+from apps.usuarios.decorators import get_rol_efectivo
+from apps.usuarios.models import Usuario
+
 from .forms import CuadraAuthenticationForm
 
 
@@ -74,11 +77,28 @@ class CuadraLogoutView(View):
 
 
 class HomeView(LoginRequiredMixin, TemplateView):
-    """Temporary placeholder screen, just to verify login/logout and the
-    active-sede session data while the real per-role dashboards get built
-    in later sprints. Safe to delete once those exist."""
+    """
+    HU001, escenario 1 — pantalla principal según el rol:
+
+    - Administrator -> catálogo de productos.
+    - Waiter        -> inventario de su sede.
+    - Cashier       -> pantalla de bienvenida (sus pantallas de pagos se
+                       construyen en el Sprint 5).
+
+    Si el admin está en modo actuación, se usa el rol con el que actúa.
+    """
 
     template_name = "autenticacion/home.html"
+    DESTINOS = {
+        Usuario.Rol.ADMIN: "catalogo:producto_list",
+        Usuario.Rol.MESERO: "inventario:inventario_list",
+    }
+
+    def get(self, request, *args, **kwargs):
+        destino = self.DESTINOS.get(get_rol_efectivo(request))
+        if destino:
+            return redirect(destino)
+        return super().get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

@@ -132,9 +132,9 @@ class DeactivateTests(BaseUsuariosTest):  # HU006
     def test_open_session_is_closed(self):
         other = Client()
         other.force_login(self.mesero)
-        self.assertEqual(other.get(reverse("autenticacion:home")).status_code, 200)
+        self.assertEqual(other.get(reverse("inventario:inventario_list")).status_code, 200)
         self.client.post(reverse("usuarios:usuario_deactivate", args=[self.mesero.pk]))
-        resp = other.get(reverse("autenticacion:home"))
+        resp = other.get(reverse("inventario:inventario_list"))
         self.assertEqual(resp.status_code, 302)
         self.assertIn("/login/", resp["Location"])
 
