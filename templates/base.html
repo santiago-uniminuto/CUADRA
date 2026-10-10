@@ -11,6 +11,25 @@
   <nav class="navbar navbar-light bg-light mb-3">
     <div class="container-fluid justify-content-end">
       <span class="me-2">{{ user.username }} ({{ user.get_rol_display }})</span>
+      {% if acting_as %}
+        <span class="badge text-bg-warning me-2">Acting as {{ acting_as_display }} — {{ acting_sede }}</span>
+        <form method="post" action="{% url 'usuarios:return_to_admin' %}" class="d-inline me-2">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-warning btn-sm">Return to Admin</button>
+        </form>
+      {% elif all_sedes %}
+        <form method="post" action="{% url 'usuarios:act_as' %}" class="d-inline-flex gap-1 me-2">
+          {% csrf_token %}
+          <select name="rol" class="form-select form-select-sm" aria-label="Role">
+            <option value="WAITER">Act as Waiter</option>
+            <option value="CASHIER">Act as Cashier</option>
+          </select>
+          <select name="sede" class="form-select form-select-sm" aria-label="Site">
+            {% for s in all_sedes %}<option value="{{ s.pk }}">{{ s.nombre }}</option>{% endfor %}
+          </select>
+          <button type="submit" class="btn btn-outline-secondary btn-sm">Go</button>
+        </form>
+      {% endif %}
       <form method="post" action="{% url 'autenticacion:logout' %}" class="d-inline">
         {% csrf_token %}
         <a href="{% url 'autenticacion:logout' %}" class="btn btn-outline-secondary btn-sm">Log out</a>

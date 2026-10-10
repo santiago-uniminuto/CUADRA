@@ -1,17 +1,24 @@
 """
-Sprint 2 — Gestión de usuarios (HU004 a HU009). Solo para el rol Administrator.
+Sprint 2 — Gestión de usuarios (HU004 a HU009 y HU033). Solo para el rol Administrator.
+
+También contiene las dos vistas del modo actuación del admin (act_as / return_to_admin),
+ver decorators.py.
 """
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.contrib.sessions.models import Session
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse, reverse_lazy
 from django.utils import timezone
 from django.views import View
+from django.views.decorators.http import require_POST
 from django.views.generic import CreateView, ListView, UpdateView
 
+from apps.algoritmos.ordenamiento import bubble_sort
 from apps.auditoria.models import Bitacora
 
+from .decorators import role_required
 from .forms import AsignarRolSedeForm, ResetPasswordForm, UsuarioCreateForm, UsuarioUpdateForm
 from .mixins import AdminRequiredMixin
 from .models import Sede, Usuario
@@ -40,11 +47,13 @@ class UsuarioListView(AdminRequiredMixin, ListView):
     context_object_name = "usuarios"
 
     def get_queryset(self):
-        qs = Usuario.objects.select_related("sede").order_by("nombre")
+        qs = Usuario.objects.select_related("sede")
         self.query = self.request.GET.get("q", "").strip()
         if self.query:
             qs = qs.filter(Q(nombre__icontains=self.query))
-        return qs
+        # Orden por nombre con ordenamiento burbuja (requisito académico de
+        # algoritmos), sin distinguir mayúsculas de minúsculas.
+        return bubble_sort(qs, key=lambda u: (u.nombre.lower(), u.username.lower()))
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
@@ -146,6 +155,25 @@ class UsuarioDeactivateView(AdminRequiredMixin, View):
         return redirect("usuarios:usuario_list")
 
 
+class UsuarioReactivateView(AdminRequiredMixin, View):
+    """HU033 — Reactivar usuario: GET pide confirmación, POST ejecuta."""
+
+    def get(self, request, pk):
+        usuario = get_object_or_404(Usuario, pk=pk)
+        return render(request, "usuarios/usuario_confirm_reactivate.html", {"usuario": usuario})
+
+    def post(self, request, pk):
+        usuario = get_object_or_404(Usuario, pk=pk)
+        if usuario.is_active:
+            messages.info(request, f"User {usuario.username} is already active.")
+            return redirect("usuarios:usuario_list")
+        usuario.is_active = True
+        usuario.save(update_fields=["is_active"])
+        _log(request, "REACTIVATE", usuario, f"Reactivated user {usuario.username}")
+        messages.success(request, f"User {usuario.username} was reactivated.")
+        return redirect("usuarios:usuario_list")
+
+
 class UsuarioResetPasswordView(AdminRequiredMixin, View):
     """HU008 — Restablecer contraseña."""
 
@@ -164,3 +192,42 @@ class UsuarioResetPasswordView(AdminRequiredMixin, View):
             messages.success(request, f"Password for {usuario.username} was reset.")
             return redirect("usuarios:usuario_list")
         return render(request, self.template_name, {"usuario": usuario, "form": form})
+
+
+# ---------------------------------------------------------------- Modo actuación del admin
+def _log_actuacion(request, accion, sede, detalle):
+    Bitacora.objects.create(
+        usuario=request.user, accion=accion, entidad="Sede",
+        entidad_id=sede.pk if sede else None, detalle=detalle[:255],
+    )
+
+
+@role_required("ADMIN")
+@require_POST
+def act_as(request):
+    """
+    El admin empieza a actuar como mesero o cajero de UNA sede. Solo se guarda
+    en la sesión: el rol real en la base de datos no cambia. Reutiliza la
+    "sede activa" que ya guarda el login.
+    """
+    rol = request.POST.get("rol")
+    sede = Sede.objects.filter(pk=request.POST.get("sede") or None).first()
+    if rol not in (Usuario.Rol.MESERO, Usuario.Rol.CAJERO) or sede is None:
+        messages.error(request, "Choose a role (Waiter or Cashier) and a site.")
+        return redirect("autenticacion:home")
+    request.session["actuando_como"] = rol
+    request.session["sede_activa_id"] = sede.pk
+    request.session["sede_activa_nombre"] = sede.nombre
+    _log_actuacion(request, "ACT_AS", sede, f"Admin acting as {rol} at {sede.nombre}")
+    return redirect("autenticacion:home")
+
+
+@login_required
+@require_POST
+def return_to_admin(request):
+    """Sale del modo actuación: vuelve a las pantallas de Administrador y a su sede propia."""
+    if request.session.pop("actuando_como", None):
+        _log_actuacion(request, "RETURN_TO_ADMIN", request.user.sede, "Admin left acting mode")
+    request.session["sede_activa_id"] = request.user.sede_id
+    request.session["sede_activa_nombre"] = request.user.sede.nombre
+    return redirect("usuarios:usuario_list")

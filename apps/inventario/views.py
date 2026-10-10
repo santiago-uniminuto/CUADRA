@@ -1,7 +1,7 @@
 from django.shortcuts import render
 
 from apps.algoritmos.ordenamiento import insertion_sort
-from apps.usuarios.decorators import role_required
+from apps.usuarios.decorators import get_sede_efectiva, role_required
 
 from .models import Inventario
 
@@ -18,11 +18,13 @@ def inventario_list(request):
 
     El orden final se calcula con ordenamiento por inserción (requisito
     académico de algoritmos), por cantidad disponible: primero lo que hay
-    menos stock, útil para que el mesero note rápido qué se está agotando.
+    menos stock (a igual cantidad, por nombre), útil para que el mesero note
+    rápido qué se está agotando.
     """
     query = request.GET.get("q", "").strip()
-    items_qs = Inventario.objects.select_related("producto").filter(sede=request.user.sede)
+    sede = get_sede_efectiva(request)  # la propia, o la elegida si el admin actúa como mesero
+    items_qs = Inventario.objects.select_related("producto").filter(sede=sede)
     if query:
         items_qs = items_qs.filter(producto__nombre__icontains=query)
-    items = insertion_sort(items_qs, key=lambda i: i.cantidad)
-    return render(request, "inventario/inventario_list.html", {"items": items, "query": query})
+    items = insertion_sort(items_qs, key=lambda i: (i.cantidad, i.producto.nombre.lower()))
+    return render(request, "inventario/inventario_list.html", {"items": items, "query": query, "sede": sede})

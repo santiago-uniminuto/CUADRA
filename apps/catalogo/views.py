@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.shortcuts import get_object_or_404, redirect, render
 
+from apps.algoritmos.ordenamiento import selection_sort
 from apps.usuarios.decorators import role_required
 
 from .forms import ProductoForm, ProveedorForm, TipoProductoForm
@@ -10,11 +11,16 @@ from .models import Producto, Proveedor, TipoProducto
 # ---------------------------------------------------------------- Producto (HU013, HU014, HU015)
 @role_required("ADMIN")
 def producto_list(request):
-    """HU015 — Listar productos, con búsqueda por nombre (Escenarios 1-3)."""
+    """
+    HU015 — Listar productos, con búsqueda por nombre (Escenarios 1-3).
+    Orden final con ordenamiento por selección (requisito académico de
+    algoritmos), por precio de venta ascendente; a igual precio, por nombre.
+    """
     query = request.GET.get("q", "").strip()
-    productos = Producto.objects.select_related("tipo_producto", "proveedor").order_by("nombre")
+    productos_qs = Producto.objects.select_related("tipo_producto", "proveedor")
     if query:
-        productos = productos.filter(nombre__icontains=query)
+        productos_qs = productos_qs.filter(nombre__icontains=query)
+    productos = selection_sort(productos_qs, key=lambda p: (p.valor_venta, p.nombre.lower()))
     return render(request, "catalogo/producto_list.html", {"productos": productos, "query": query})
 
 
