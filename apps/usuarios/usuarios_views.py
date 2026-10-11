@@ -59,7 +59,7 @@ class UsuarioListView(AdminRequiredMixin, ListView):
         ctx = super().get_context_data(**kwargs)
         ctx["query"] = self.query
         ctx["roles"] = Usuario.Rol.choices
-        ctx["sedes"] = Sede.objects.order_by("nombre")
+        ctx["sedes"] = Sede.objects.filter(activo=True).order_by("nombre")
         ctx["all_users"] = Usuario.objects.order_by("nombre")
         ctx["preselected"] = self.request.GET.get("assign", "")
         return ctx
@@ -158,12 +158,22 @@ class UsuarioDeactivateView(AdminRequiredMixin, View):
 class UsuarioReactivateView(AdminRequiredMixin, View):
     """HU033 — Reactivar usuario: GET pide confirmación, POST ejecuta."""
 
+    def _sede_inactiva(self, request, usuario):
+        if not usuario.sede.activo:
+            messages.error(request, f"Site {usuario.sede} is inactive. Reactivate the site or reassign the user first.")
+            return True
+        return False
+
     def get(self, request, pk):
         usuario = get_object_or_404(Usuario, pk=pk)
+        if self._sede_inactiva(request, usuario):
+            return redirect("usuarios:usuario_list")
         return render(request, "usuarios/usuario_confirm_reactivate.html", {"usuario": usuario})
 
     def post(self, request, pk):
         usuario = get_object_or_404(Usuario, pk=pk)
+        if self._sede_inactiva(request, usuario):
+            return redirect("usuarios:usuario_list")
         if usuario.is_active:
             messages.info(request, f"User {usuario.username} is already active.")
             return redirect("usuarios:usuario_list")
@@ -211,7 +221,7 @@ def act_as(request):
     "sede activa" que ya guarda el login.
     """
     rol = request.POST.get("rol")
-    sede = Sede.objects.filter(pk=request.POST.get("sede") or None).first()
+    sede = Sede.objects.filter(pk=request.POST.get("sede") or None, activo=True).first()
     if rol not in (Usuario.Rol.MESERO, Usuario.Rol.CAJERO) or sede is None:
         messages.error(request, "Choose a role (Waiter or Cashier) and a site.")
         return redirect("autenticacion:home")

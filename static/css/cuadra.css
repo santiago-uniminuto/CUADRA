@@ -1,0 +1,65 @@
+/* CUADRA — estilos base (paleta de Engineery Solutions). Se carga después de Bootstrap. */
+:root {
+  --cuadra-dark: #0F6E56;
+  --cuadra-darker: #0a4f3e;
+  --cuadra-accent: #1D9E75;
+  --cuadra-gray: #5F5E5A;
+  --cuadra-mint: #E1F5EE;
+
+  --bs-primary: #0F6E56;
+  --bs-primary-rgb: 15, 110, 86;
+  --bs-link-color: #0F6E56;
+  --bs-link-color-rgb: 15, 110, 86;
+  --bs-link-hover-color: #0a4f3e;
+  --bs-link-hover-color-rgb: 10, 79, 62;
+  --bs-body-bg: #f6f8f7;
+  --bs-body-color: #26302d;
+}
+
+body { background: var(--bs-body-bg); }
+
+/* Barra superior */
+.navbar-cuadra { background: var(--cuadra-dark); box-shadow: 0 1px 4px rgba(0, 0, 0, .15); }
+.navbar-cuadra .navbar-brand { letter-spacing: .08em; }
+.navbar-cuadra .nav-link { color: rgba(255, 255, 255, .8); border-bottom: 2px solid transparent; }
+.navbar-cuadra .nav-link:hover { color: #fff; }
+.navbar-cuadra .nav-link.active { color: #fff; border-bottom-color: var(--cuadra-mint); }
+
+/* Botones con la marca */
+.btn-primary {
+  --bs-btn-bg: var(--cuadra-dark); --bs-btn-border-color: var(--cuadra-dark);
+  --bs-btn-hover-bg: var(--cuadra-darker); --bs-btn-hover-border-color: var(--cuadra-darker);
+  --bs-btn-active-bg: var(--cuadra-darker); --bs-btn-active-border-color: var(--cuadra-darker);
+  --bs-btn-disabled-bg: var(--cuadra-dark); --bs-btn-disabled-border-color: var(--cuadra-dark);
+}
+.btn-outline-primary {
+  --bs-btn-color: var(--cuadra-dark); --bs-btn-border-color: var(--cuadra-dark);
+  --bs-btn-hover-bg: var(--cuadra-dark); --bs-btn-hover-border-color: var(--cuadra-dark);
+  --bs-btn-active-bg: var(--cuadra-darker); --bs-btn-active-border-color: var(--cuadra-darker);
+}
+.btn-success { --bs-btn-bg: var(--cuadra-accent); --bs-btn-border-color: var(--cuadra-accent);
+  --bs-btn-hover-bg: var(--cuadra-dark); --bs-btn-hover-border-color: var(--cuadra-dark); }
+.text-bg-success { background-color: var(--cuadra-accent) !important; }
+
+/* Tablas y tarjetas */
+.table > thead > tr > th {
+  background: var(--cuadra-mint); color: var(--cuadra-dark);
+  border-bottom: 2px solid var(--cuadra-accent); white-space: nowrap;
+}
+.card { border: 0; box-shadow: 0 1px 3px rgba(0, 0, 0, .08); }
+.card-header { background: var(--cuadra-mint); color: var(--cuadra-dark); font-weight: 600; border-bottom: 0; }
+
+/* Formularios */
+.form-control:focus, .form-select:focus {
+  border-color: var(--cuadra-accent); box-shadow: 0 0 0 .2rem rgba(29, 158, 117, .2);
+}
+
+/* Títulos de página */
+main h1.h3, main h1.h4, main h4 { color: var(--cuadra-dark); font-weight: 600; }
+
+/* Barra de acciones: en pantallas angostas los botones se acomodan sin desbordar */
+.table-responsive { border-radius: .5rem; }
+@media (max-width: 576px) {
+  main.container { padding-left: .75rem; padding-right: .75rem; }
+  .table td.text-nowrap { white-space: normal !important; }
+}

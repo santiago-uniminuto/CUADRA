@@ -12,6 +12,8 @@ class Mesa(models.Model):
     numero = models.PositiveIntegerField()
     sede = models.ForeignKey("usuarios.Sede", on_delete=models.PROTECT, related_name="mesas")
     estado = models.CharField(max_length=10, choices=Estado.choices, default=Estado.AVAILABLE)
+    # Una mesa deshabilitada no se ofrece para nuevos pedidos pero conserva su historial.
+    activo = models.BooleanField(default=True)
 
     class Meta:
         constraints = [

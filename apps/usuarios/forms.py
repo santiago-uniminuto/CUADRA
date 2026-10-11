@@ -3,6 +3,7 @@ Sprint 2 — formularios de gestión de usuarios (HU004, HU005, HU007, HU008).
 Todos los mensajes visibles están en inglés (requisito del cliente/profesor).
 """
 from django import forms
+from django.db.models import Q
 from django.contrib.auth.password_validation import validate_password
 
 from .models import Sede, Usuario
@@ -49,6 +50,7 @@ class UsuarioCreateForm(forms.ModelForm):
         # El rol y la sede son obligatorios: sin opción vacía "por defecto".
         self.fields["rol"].choices = [("", "---------")] + list(Usuario.Rol.choices)
         self.fields["sede"].empty_label = "---------"
+        self.fields["sede"].queryset = Sede.objects.filter(activo=True)
 
     def clean_nombre(self):
         return self.cleaned_data["nombre"].strip()
@@ -104,6 +106,8 @@ class UsuarioUpdateForm(forms.ModelForm):
     def __init__(self, *args, editing_self=False, **kwargs):
         super().__init__(*args, **kwargs)
         self.editing_self = editing_self
+        # Solo sedes activas (más la actual del usuario, aunque se haya deshabilitado).
+        self.fields["sede"].queryset = Sede.objects.filter(Q(activo=True) | Q(pk=self.instance.sede_id))
 
     def clean_nombre(self):
         return self.cleaned_data["nombre"].strip()
@@ -124,7 +128,7 @@ class AsignarRolSedeForm(forms.Form):
     rol = forms.ChoiceField(
         choices=Usuario.Rol.choices, error_messages={"required": REQUIRED_MSG, "invalid_choice": REQUIRED_MSG})
     sede = forms.ModelChoiceField(
-        queryset=Sede.objects.all(), error_messages={"required": REQUIRED_MSG, "invalid_choice": REQUIRED_MSG})
+        queryset=Sede.objects.filter(activo=True), error_messages={"required": REQUIRED_MSG, "invalid_choice": REQUIRED_MSG})
 
     def __init__(self, *args, current_user=None, **kwargs):
         super().__init__(*args, **kwargs)
