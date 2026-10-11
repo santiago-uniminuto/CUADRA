@@ -1,4 +1,5 @@
 from django import forms
+from django.db.models import Q
 
 from .models import Producto, Proveedor, TipoProducto
 
@@ -26,6 +27,16 @@ class ProductoForm(forms.ModelForm):
             "tipo_producto": forms.Select(attrs={"class": "form-select"}),
             "proveedor": forms.Select(attrs={"class": "form-select"}),
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Solo se ofrecen tipos y proveedores activos; al editar, se conserva el actual
+        # aunque se haya deshabilitado después (el producto no pierde su dato).
+        actual = self.instance if self.instance.pk else None
+        tipo_actual = actual.tipo_producto_id if actual else None
+        prov_actual = actual.proveedor_id if actual else None
+        self.fields["tipo_producto"].queryset = TipoProducto.objects.filter(Q(activo=True) | Q(pk=tipo_actual))
+        self.fields["proveedor"].queryset = Proveedor.objects.filter(Q(activo=True) | Q(pk=prov_actual))
 
     def clean_nombre(self):
         nombre = self.cleaned_data["nombre"].strip()

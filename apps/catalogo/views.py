@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.shortcuts import get_object_or_404, redirect, render
 
 from apps.algoritmos.ordenamiento import selection_sort
+from apps.auditoria.utils import registrar
 from apps.usuarios.decorators import role_required
 
 from .forms import ProductoForm, ProveedorForm, TipoProductoForm
@@ -66,7 +67,7 @@ def producto_edit(request, pk):
 # ---------------------------------------------------------------- Proveedor (HU016, HU017)
 @role_required("ADMIN")
 def proveedor_list(request):
-    proveedores = Proveedor.objects.order_by("nombre")
+    proveedores = Proveedor.objects.order_by("-activo", "nombre")
     return render(request, "catalogo/proveedor_list.html", {"proveedores": proveedores})
 
 
@@ -103,7 +104,7 @@ def proveedor_edit(request, pk):
 # ---------------------------------------------------------------- TipoProducto (HU018)
 @role_required("ADMIN")
 def tipoproducto_list(request):
-    tipos = TipoProducto.objects.order_by("nombre")
+    tipos = TipoProducto.objects.order_by("-activo", "nombre")
     return render(request, "catalogo/tipoproducto_list.html", {"tipos": tipos})
 
 
@@ -119,3 +120,49 @@ def tipoproducto_create(request):
     else:
         form = TipoProductoForm()
     return render(request, "catalogo/tipoproducto_form.html", {"form": form, "title": "New Product Type"})
+
+
+# ---------------------------------------------------------------- Deshabilitar / reactivar
+def _toggle(request, modelo, pk, entidad, nombre_en, lista_url, aviso=""):
+    """
+    Deshabilita (o reactiva) un registro del catálogo, igual que ya se hace con los
+    usuarios: nada se borra, así el historial de ventas y reportes sigue completo.
+    GET pide confirmación; POST ejecuta y deja la acción en la bitácora.
+    """
+    objeto = get_object_or_404(modelo, pk=pk)
+    reactivar = not objeto.activo
+    if request.method == "POST":
+        objeto.activo = reactivar
+        objeto.save(update_fields=["activo"])
+        registrar(request, "REACTIVATE" if reactivar else "DEACTIVATE", entidad, objeto,
+                  f"{'Reactivated' if reactivar else 'Deactivated'} {nombre_en} {objeto}")
+        messages.success(request, f"{nombre_en.capitalize()} {objeto} was {'reactivated' if reactivar else 'deactivated'}.")
+        return redirect(lista_url)
+    return render(request, "confirm_toggle.html", {
+        "objeto": objeto, "nombre_en": nombre_en, "reactivar": reactivar,
+        "aviso": "" if reactivar else aviso, "cancel_url": lista_url,
+    })
+
+
+@role_required("ADMIN")
+def producto_toggle(request, pk):
+    return _toggle(request, Producto, pk, "Producto", "product", "catalogo:producto_list",
+                   "It will no longer appear in the inventory or in new orders. Past sales and reports are kept.")
+
+
+@role_required("ADMIN")
+def proveedor_toggle(request, pk):
+    usados = Producto.objects.filter(proveedor_id=pk, activo=True).count()
+    aviso = "It will no longer be offered when creating or editing products."
+    if usados:
+        aviso += f" {usados} active product(s) use this supplier and stay on sale."
+    return _toggle(request, Proveedor, pk, "Proveedor", "supplier", "catalogo:proveedor_list", aviso)
+
+
+@role_required("ADMIN")
+def tipoproducto_toggle(request, pk):
+    usados = Producto.objects.filter(tipo_producto_id=pk, activo=True).count()
+    aviso = "It will no longer be offered when creating or editing products."
+    if usados:
+        aviso += f" {usados} active product(s) use this type and stay on sale."
+    return _toggle(request, TipoProducto, pk, "TipoProducto", "product type", "catalogo:tipoproducto_list", aviso)

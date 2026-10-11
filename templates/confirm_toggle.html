@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}{% if reactivar %}Reactivate{% else %}Deactivate{% endif %} {{ nombre_en }} — CUADRA{% endblock %}
+
+{% block content %}
+<h4 class="mb-4">{% if reactivar %}Reactivate{% else %}Deactivate{% endif %} {{ nombre_en }}</h4>
+<div class="alert {% if reactivar %}alert-info{% else %}alert-warning{% endif %} col-md-6">
+  Are you sure you want to {% if reactivar %}reactivate{% else %}deactivate{% endif %} <strong>{{ objeto }}</strong>?
+  {% if aviso %}<br>{{ aviso }}{% endif %}
+</div>
+<form method="post" class="col-md-6">
+  {% csrf_token %}
+  <button type="submit" class="btn {% if reactivar %}btn-success{% else %}btn-danger{% endif %}">CONFIRM</button>
+  <a href="{% url cancel_url %}" class="btn btn-secondary">CANCEL</a>
+</form>
+{% endblock %}
