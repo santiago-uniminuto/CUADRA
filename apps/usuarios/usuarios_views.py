@@ -240,4 +240,4 @@ def return_to_admin(request):
         _log_actuacion(request, "RETURN_TO_ADMIN", request.user.sede, "Admin left acting mode")
     request.session["sede_activa_id"] = request.user.sede_id
     request.session["sede_activa_nombre"] = request.user.sede.nombre
-    return redirect("usuarios:usuario_list")
+    return redirect("reportes:dashboard")

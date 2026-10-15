@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block title %}Dashboard — CUADRA{% endblock %}
+
+{% block content %}
+<section class="welcome-banner mb-4">
+  <h1>Welcome back, {{ user.nombre|default:user.username }}</h1>
+  <p>Here is an overview of CUADRA today, {% now "l, F j" %}.</p>
+</section>
+
+<div class="row g-3 mb-4">
+  {% for t in tarjetas %}
+  <div class="col-6 col-md-4 col-xl">
+    <a class="stat-card" href="{% url t.url %}">
+      <div class="stat-label">{{ t.label }}</div>
+      <div class="stat-value">{{ t.value }}</div>
+      <div class="stat-sub">{{ t.sub }}</div>
+    </a>
+  </div>
+  {% endfor %}
+</div>
+
+<div class="row g-4">
+  <div class="col-lg-7">
+    <div class="card h-100">
+      <div class="card-header">Team by site</div>
+      <div class="table-responsive">
+        <table class="table align-middle mb-0">
+          <thead><tr><th>Site</th><th class="text-center">Waiters</th><th class="text-center">Cashiers</th><th class="text-center">Admins</th><th class="text-center">Total</th></tr></thead>
+          <tbody>
+            {% for s in por_sede %}
+            <tr>
+              <td class="fw-semibold">{{ s.nombre }}</td>
+              <td class="text-center">{{ s.meseros }}</td>
+              <td class="text-center">{{ s.cajeros }}</td>
+              <td class="text-center">{{ s.admins }}</td>
+              <td class="text-center fw-semibold">{{ s.total }}</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="5" class="text-muted">No active sites yet.</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-5">
+    <div class="card h-100">
+      <div class="card-header">Quick actions</div>
+      <div class="card-body">
+        <div class="row g-2">
+          <div class="col-6"><a href="{% url 'usuarios:usuario_create' %}" class="btn btn-primary w-100">+ New user</a></div>
+          <div class="col-6"><a href="{% url 'usuarios:sede_create' %}" class="btn btn-outline-primary w-100">+ New site</a></div>
+          <div class="col-6"><a href="{% url 'catalogo:producto_create' %}" class="btn btn-outline-primary w-100">+ New product</a></div>
+          <div class="col-6"><a href="{% url 'catalogo:proveedor_create' %}" class="btn btn-outline-primary w-100">+ New supplier</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header">Recent activity</div>
+      <div class="card-body py-2">
+        {% for r in recientes %}
+        <div class="activity-item d-flex flex-wrap gap-2 justify-content-between">
+          <span><strong>{{ r.usuario.nombre|default:r.usuario.username|default:"—" }}</strong> · {{ r.accion }} {{ r.entidad }}{% if r.detalle %} — <span class="text-muted">{{ r.detalle }}</span>{% endif %}</span>
+          <span class="text-muted small">{{ r.fecha|date:"M j, H:i" }}</span>
+        </div>
+        {% empty %}
+        <p class="text-muted my-2">No activity recorded yet.</p>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

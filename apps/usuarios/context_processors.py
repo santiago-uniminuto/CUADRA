@@ -24,30 +24,42 @@ def acting_mode(request):
 # ---------------------------------------------------------------- Menú de navegación
 # UNA sola lista por rol: cuando se construyan Pedidos, Pagos y Reportes (Sprint 4-5),
 # solo hay que agregar aquí su entrada y aparece en el menú de quien corresponda.
+# Cada entrada es (grupo, etiqueta, nombre de la URL). El grupo solo se dibuja en la barra lateral del admin.
 MENU_POR_ROL = {
     "ADMIN": [
-        ("Users", "usuarios:usuario_list"),
-        ("Sites", "usuarios:sede_list"),
-        ("Products", "catalogo:producto_list"),
-        ("Suppliers", "catalogo:proveedor_list"),
-        ("Product types", "catalogo:tipoproducto_list"),
-        ("Inventory", "inventario:inventario_list"),
+        ("Overview", "Dashboard", "reportes:dashboard"),
+        ("Management", "Users", "usuarios:usuario_list"),
+        ("Management", "Sites", "usuarios:sede_list"),
+        ("Catalog", "Products", "catalogo:producto_list"),
+        ("Catalog", "Suppliers", "catalogo:proveedor_list"),
+        ("Catalog", "Product types", "catalogo:tipoproducto_list"),
+        ("Operations", "Inventory", "inventario:inventario_list"),
     ],
-    "WAITER": [("Inventory", "inventario:inventario_list")],
-    "CASHIER": [("Home", "autenticacion:home")],
+    "WAITER": [("", "Inventory", "inventario:inventario_list")],
+    "CASHIER": [("", "Home", "autenticacion:home")],
 }
 
 
 def nav_menu(request):
-    """Entradas del menú según el rol con el que se está operando (el admin que actúa ve el menú de ese rol)."""
+    """
+    Menú y tipo de interfaz según el rol con el que se está operando (el admin que actúa ve lo de ese rol):
+      - layout "admin": panel de gestión (barra lateral, dashboard, informes).
+      - layout "pos":   interfaz de punto de venta para mesero y cajero (oscura, botones grandes, táctil).
+      - layout "guest": pantallas sin sesión (login).
+    """
     if not request.user.is_authenticated:
-        return {}
+        return {"layout": "guest"}
     from django.urls import reverse
-    from .decorators import get_rol_efectivo
+    from .decorators import get_rol_efectivo, get_sede_efectiva
 
-    entradas = [{"label": label, "url": reverse(nombre)} for label, nombre in MENU_POR_ROL.get(get_rol_efectivo(request), [])]
+    rol = get_rol_efectivo(request)
+    entradas = [{"group": grupo, "label": label, "url": reverse(nombre)} for grupo, label, nombre in MENU_POR_ROL.get(rol, [])]
     # La entrada activa es la de la ruta más específica que coincida (así /users/sedes/ no activa también "Users").
     coincidencias = [e for e in entradas if request.path.startswith(e["url"])]
     if coincidencias:
         max(coincidencias, key=lambda e: len(e["url"]))["active"] = True
-    return {"nav_items": entradas}
+    return {
+        "nav_items": entradas,
+        "layout": "admin" if rol == "ADMIN" else "pos",
+        "sede_actual": get_sede_efectiva(request),
+    }

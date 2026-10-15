@@ -14,7 +14,7 @@ from apps.inventario.models import Inventario
 from .models import Sede, Usuario
 
 PWD = "Str0ng-Pass#2026"
-ADMIN_ONLY_URLS = ["usuarios:usuario_list", "catalogo:producto_list", "usuarios:sede_list"]
+ADMIN_ONLY_URLS = ["usuarios:usuario_list", "catalogo:producto_list", "usuarios:sede_list", "reportes:dashboard"]
 
 
 class ActuacionBase(TestCase):
@@ -48,7 +48,7 @@ class PureAdminTests(ActuacionBase):
     def test_nav_offers_act_as(self):
         resp = self.client.get(reverse("usuarios:usuario_list"))
         self.assertContains(resp, "Act as Waiter")
-        self.assertNotContains(resp, "Return to Admin")
+        self.assertNotContains(resp, reverse("usuarios:return_to_admin"))  # el botón de volver solo existe al actuar
 
 
 class ActingTests(ActuacionBase):

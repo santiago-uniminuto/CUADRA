@@ -1,9 +1,9 @@
-{% extends "base.html" %} {% block title %}Home — CUADRA{% endblock %} {% block content %}
-Welcome, {{ user.username }}!
-Role: {{ user.get_rol_display }}
-
-Active sede: {{ sede_activa_nombre }} (id={{ sede_activa_id }})
-
-This is a temporary placeholder screen — each role's real dashboard will be built in a later sprint.
-
+{% extends "base.html" %}
+{% block title %}Home — CUADRA{% endblock %}
+{% block content %}
+<div class="pos-panel" style="max-width: 720px;">
+  <h1 class="h3 mb-1">Welcome, {{ user.nombre|default:user.username }}</h1>
+  <p class="mb-3 text-secondary">{{ user.get_rol_display }} · {{ sede_activa_nombre }}</p>
+  <p class="mb-0">Your cashier tools (closing orders and registering payments) are coming in a later sprint.</p>
+</div>
 {% endblock %}

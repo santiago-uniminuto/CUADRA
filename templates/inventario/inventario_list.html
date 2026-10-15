@@ -1,44 +1,47 @@
 {% extends "base.html" %}
 {% block title %}Inventory — CUADRA{% endblock %}
 {% block content %}
-  <h1 class="h3 mb-3">Inventory — {{ sede }}</h1>
-
-  <form method="get" class="mb-3 d-flex" style="max-width: 320px;">
-    <input type="text" name="q" value="{{ query }}" class="form-control me-2" placeholder="Search product...">
-    <button class="btn btn-outline-secondary" type="submit">Search</button>
-  </form>
+  <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-3">
+    <h1 class="h3 mb-0">Inventory — {{ sede }}</h1>
+    <form method="get" class="d-flex gap-2 flex-grow-1" style="max-width: 520px;">
+      <input type="search" name="q" value="{{ query }}" class="form-control" placeholder="Search product..." aria-label="Search product">
+      <button class="btn btn-primary" type="submit">Search</button>
+      {% if query %}<a href="{% url 'inventario:inventario_list' %}" class="btn btn-outline-secondary">Clear</a>{% endif %}
+    </form>
+  </div>
 
   {% if items %}
-    <table class="table table-striped align-middle">
-      <thead><tr><th>Product</th><th>Available quantity</th><th>Status</th><th></th></tr></thead>
-      <tbody>
-        {% for item in items %}
-          <tr>
-            <td>{{ item.producto.nombre }}</td>
-            <td>{{ item.cantidad }}</td>
-            <td>
-              {% if item.cantidad == 0 %}
-                <span class="badge text-bg-danger">OUT OF STOCK</span>
-              {% else %}
-                <span class="badge text-bg-success">Available</span>
-              {% endif %}
-            </td>
-            <td>
-              {% comment %}
-                Botón "Add to order": queda deshabilitado sin stock (HU021).
-                La acción real de agregar al pedido se conecta en HU023 (Sprint 4).
-              {% endcomment %}
-              <button type="button" class="btn btn-sm btn-primary" {% if item.cantidad == 0 %}disabled title="Out of stock"{% endif %}>
-                Add
-              </button>
-            </td>
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xxl-4 g-3">
+      {% for item in items %}
+      <div class="col">
+        <div class="pos-tile{% if item.cantidad == 0 %} out{% endif %}">
+          <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
+            <div>
+              <div class="pos-tile-name">{{ item.producto.nombre }}</div>
+              <div class="pos-tile-type">{{ item.producto.tipo_producto }}</div>
+            </div>
+            {% if item.cantidad == 0 %}
+              <span class="badge text-bg-danger">OUT OF STOCK</span>
+            {% else %}
+              <span class="badge text-bg-success">Available</span>
+            {% endif %}
+          </div>
+          <div class="d-flex justify-content-between align-items-end mt-auto mb-3">
+            <div class="pos-tile-qty">{{ item.cantidad }} <small>in stock</small></div>
+            <div class="pos-tile-price">${{ item.producto.valor_venta|floatformat:"-2g" }}</div>
+          </div>
+          {% comment %}
+            Botón "Add": queda deshabilitado sin stock (HU021).
+            La acción real de agregar al pedido se conecta en HU023 (Sprint 4).
+          {% endcomment %}
+          <button type="button" class="btn btn-primary w-100" {% if item.cantidad == 0 %}disabled title="Out of stock"{% endif %}>Add</button>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
   {% elif query %}
-    <p class="text-muted">No results found for "{{ query }}".</p>
+    <p class="text-muted fs-5">No results found for "{{ query }}".</p>
   {% else %}
-    <p class="text-muted">No products in inventory for your branch yet.</p>
+    <p class="text-muted fs-5">No products in inventory for your branch yet.</p>
   {% endif %}
 {% endblock %}

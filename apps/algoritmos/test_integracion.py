@@ -45,3 +45,17 @@ class OrdenEnPantallasTests(TestCase):
         tabla = html[html.index("<tbody>"):html.index("</tbody>")]
         nombres = re.findall(r"<td>(Ana Cajera|Beto Mesero|Zeta Admin)</td>", tabla)
         self.assertEqual(nombres, ["Ana Cajera", "Beto Mesero", "Zeta Admin"])
+
+
+class FormatoDePreciosTests(TestCase):
+    def test_prices_use_thousand_separators_and_hide_empty_decimals(self):
+        sede = Sede.objects.create(nombre="Zona T", direccion="x")
+        admin = Usuario.objects.create_user(username="admin", password=PWD, nombre="A", rol="ADMIN", sede=sede)
+        tipo, prov = TipoProducto.objects.create(nombre="T"), Proveedor.objects.create(nombre="P", contacto="c")
+        Producto.objects.create(nombre="Whisky", valor_compra=1, valor_venta=380000, tipo_producto=tipo, proveedor=prov)
+        Producto.objects.create(nombre="Cafe", valor_compra=1, valor_venta="4500.50", tipo_producto=tipo, proveedor=prov)
+        self.client.force_login(admin)
+        html = self.client.get(reverse("catalogo:producto_list")).content.decode()
+        self.assertIn("$380,000<", html)
+        self.assertIn("$4,500.50<", html)
+        self.assertNotIn("380000.00", html)

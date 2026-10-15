@@ -1,4 +1,7 @@
-/* CUADRA — estilos base (paleta de Engineery Solutions). Se carga después de Bootstrap. */
+/* CUADRA — estilos base (paleta de Engineery Solutions). Se carga después de Bootstrap.
+   Dos interfaces:  body.layout-admin  = panel de gestión (administrador)
+                    body.layout-pos    = punto de venta (mesero y cajero), tema oscuro y táctil
+                    body.layout-guest  = pantallas sin sesión (login)                                  */
 :root {
   --cuadra-dark: #0F6E56;
   --cuadra-darker: #0a4f3e;
@@ -12,20 +15,14 @@
   --bs-link-color-rgb: 15, 110, 86;
   --bs-link-hover-color: #0a4f3e;
   --bs-link-hover-color-rgb: 10, 79, 62;
-  --bs-body-bg: #f6f8f7;
+  --bs-body-bg: #f4f7f6;
   --bs-body-color: #26302d;
+  --topbar-h: 56px;
 }
 
 body { background: var(--bs-body-bg); }
 
-/* Barra superior */
-.navbar-cuadra { background: var(--cuadra-dark); box-shadow: 0 1px 4px rgba(0, 0, 0, .15); }
-.navbar-cuadra .navbar-brand { letter-spacing: .08em; }
-.navbar-cuadra .nav-link { color: rgba(255, 255, 255, .8); border-bottom: 2px solid transparent; }
-.navbar-cuadra .nav-link:hover { color: #fff; }
-.navbar-cuadra .nav-link.active { color: #fff; border-bottom-color: var(--cuadra-mint); }
-
-/* Botones con la marca */
+/* ---------- Botones con la marca ---------- */
 .btn-primary {
   --bs-btn-bg: var(--cuadra-dark); --bs-btn-border-color: var(--cuadra-dark);
   --bs-btn-hover-bg: var(--cuadra-darker); --bs-btn-hover-border-color: var(--cuadra-darker);
@@ -41,25 +38,121 @@ body { background: var(--bs-body-bg); }
   --bs-btn-hover-bg: var(--cuadra-dark); --bs-btn-hover-border-color: var(--cuadra-dark); }
 .text-bg-success { background-color: var(--cuadra-accent) !important; }
 
-/* Tablas y tarjetas */
+.form-control:focus, .form-select:focus {
+  border-color: var(--cuadra-accent); box-shadow: 0 0 0 .2rem rgba(29, 158, 117, .2);
+}
+
+/* ---------- Estructura común ---------- */
+.app-shell { display: flex; min-height: calc(100vh - var(--topbar-h)); }
+.layout-guest .app-shell { min-height: 100vh; }
+.app-main { flex: 1 1 auto; min-width: 0; padding: 1.5rem; }
+.layout-guest .app-main { max-width: 1140px; margin: 0 auto; }
+
+.user-chip { display: flex; align-items: center; gap: .6rem; color: #fff; }
+.user-avatar {
+  width: 34px; height: 34px; border-radius: 50%; background: var(--cuadra-mint); color: var(--cuadra-dark);
+  display: inline-flex; align-items: center; justify-content: center; font-weight: 700;
+}
+.user-role { font-size: .75rem; color: rgba(255, 255, 255, .7); }
+
+/* =====================================================================
+   PANEL DE ADMINISTRACIÓN
+   ===================================================================== */
+.topbar { height: var(--topbar-h); background: var(--cuadra-dark); box-shadow: 0 1px 4px rgba(0, 0, 0, .18); position: sticky; top: 0; z-index: 1030; }
+.topbar-brand { color: #fff; font-weight: 700; letter-spacing: .14em; text-decoration: none; font-size: 1.15rem; }
+.topbar-brand:hover { color: #fff; }
+.act-as-menu { min-width: 260px; }
+/* Ícono de menú propio, en blanco: el de Bootstrap solo se dibuja dentro de un .navbar (usa una variable de ese componente). */
+.topbar .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255,255,255,0.95%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2.4' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+.sidebar { width: 250px; flex: 0 0 250px; background: #fff; border-right: 1px solid #dfe7e4; }
+@media (min-width: 992px) {
+  .sidebar { position: sticky; top: var(--topbar-h); height: calc(100vh - var(--topbar-h)); overflow-y: auto; }
+}
+.sidebar-nav { padding: .75rem 0; display: flex; flex-direction: column; }
+.sidebar-group {
+  padding: 1rem 1.25rem .35rem; font-size: .7rem; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--cuadra-gray); font-weight: 700;
+}
+.sidebar-link {
+  padding: .6rem 1.25rem; color: #33413d; text-decoration: none; border-left: 3px solid transparent; font-weight: 500;
+}
+.sidebar-link:hover { background: #f1f7f5; color: var(--cuadra-dark); }
+.sidebar-link.active { background: var(--cuadra-mint); color: var(--cuadra-dark); border-left-color: var(--cuadra-accent); font-weight: 600; }
+.sidebar-foot { margin-top: auto; padding: 1rem 1.25rem; font-size: .75rem; color: #8a9893; }
+
+.layout-admin .app-main { padding: 1.75rem 2rem; max-width: 1400px; }
+.layout-admin h1.h3, .layout-admin h1.h4, .layout-admin h4 { color: var(--cuadra-dark); font-weight: 600; }
+
 .table > thead > tr > th {
   background: var(--cuadra-mint); color: var(--cuadra-dark);
   border-bottom: 2px solid var(--cuadra-accent); white-space: nowrap;
 }
 .card { border: 0; box-shadow: 0 1px 3px rgba(0, 0, 0, .08); }
-.card-header { background: var(--cuadra-mint); color: var(--cuadra-dark); font-weight: 600; border-bottom: 0; }
-
-/* Formularios */
-.form-control:focus, .form-select:focus {
-  border-color: var(--cuadra-accent); box-shadow: 0 0 0 .2rem rgba(29, 158, 117, .2);
-}
-
-/* Títulos de página */
-main h1.h3, main h1.h4, main h4 { color: var(--cuadra-dark); font-weight: 600; }
-
-/* Barra de acciones: en pantallas angostas los botones se acomodan sin desbordar */
+.card-header { background: transparent; color: var(--cuadra-dark); font-weight: 600; border-bottom: 1px solid #e6edea; }
 .table-responsive { border-radius: .5rem; }
+
+/* Dashboard */
+.welcome-banner {
+  background: linear-gradient(120deg, var(--cuadra-dark), var(--cuadra-accent)); color: #fff;
+  border-radius: .9rem; padding: 1.5rem 1.75rem; box-shadow: 0 2px 8px rgba(15, 110, 86, .25);
+}
+.welcome-banner h1 { color: #fff; font-size: 1.6rem; margin: 0 0 .25rem; }
+.welcome-banner p { margin: 0; color: rgba(255, 255, 255, .85); }
+.stat-card { display: block; text-decoration: none; color: inherit; border-radius: .8rem; background: #fff; padding: 1.1rem 1.25rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .08); border-top: 3px solid var(--cuadra-accent); height: 100%; transition: transform .12s, box-shadow .12s; }
+.stat-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0, 0, 0, .12); color: inherit; }
+.stat-value { font-size: 2.1rem; font-weight: 700; color: var(--cuadra-dark); line-height: 1.1; }
+.stat-label { font-size: .85rem; color: var(--cuadra-gray); text-transform: uppercase; letter-spacing: .06em; font-weight: 600; }
+.stat-sub { font-size: .8rem; color: #8a9893; }
+.activity-item { padding: .6rem 0; border-bottom: 1px solid #edf2f0; font-size: .92rem; }
+.activity-item:last-child { border-bottom: 0; }
+
+/* =====================================================================
+   PUNTO DE VENTA (mesero y cajero) — oscuro, botones grandes, táctil
+   ===================================================================== */
+body.layout-pos { --bs-body-bg: #111816; --bs-body-color: #e9f1ee; background: #111816; font-size: 1.05rem; }
+.pos-topbar { background: #0b1210; border-bottom: 2px solid var(--cuadra-accent); min-height: 64px; }
+.pos-brand { color: #fff; font-weight: 800; letter-spacing: .16em; text-decoration: none; font-size: 1.3rem; }
+.pos-brand:hover { color: #fff; }
+.pos-site { background: var(--cuadra-dark); color: #fff; border-radius: 2rem; padding: .35rem 1rem; font-weight: 600; }
+.pos-clock { font-variant-numeric: tabular-nums; font-size: 1.4rem; font-weight: 600; color: var(--cuadra-mint); }
+.layout-pos .app-main { padding: 1.25rem 1.5rem; max-width: 1600px; margin: 0 auto; width: 100%; }
+.layout-pos .btn { min-height: 46px; padding: .55rem 1.1rem; font-size: 1.05rem; border-radius: .6rem; }
+.layout-pos .form-control, .layout-pos .form-select { min-height: 50px; font-size: 1.05rem; border-radius: .6rem; }
+.layout-pos h1.h3, .layout-pos h1.h4 { font-weight: 700; }
+
+.pos-tabs { display: flex; flex-wrap: wrap; gap: .6rem; margin-bottom: 1.25rem; }
+.pos-tab {
+  min-height: 52px; display: inline-flex; align-items: center; padding: 0 1.6rem; border-radius: .7rem; text-decoration: none;
+  background: #1c2723; color: #cfe0da; font-weight: 600; border: 1px solid #2a3934;
+}
+.pos-tab:hover { background: #24332d; color: #fff; }
+.pos-tab.active { background: var(--cuadra-accent); color: #07201a; border-color: var(--cuadra-accent); }
+
+/* Teselas de producto */
+.pos-tile {
+  display: flex; flex-direction: column; height: 100%; border-radius: .9rem; padding: 1rem 1.1rem;
+  background: #1a2521; border: 1px solid #2a3934; border-left: 6px solid var(--cuadra-accent);
+}
+.pos-tile.out { border-left-color: #dc3545; opacity: .6; }
+.pos-tile-name { font-size: 1.2rem; font-weight: 700; line-height: 1.2; }
+.pos-tile-type { font-size: .85rem; color: #93a8a1; }
+.pos-tile-qty { font-size: 2.4rem; font-weight: 800; line-height: 1; color: #fff; }
+.pos-tile-qty small { font-size: .8rem; font-weight: 600; color: #93a8a1; text-transform: uppercase; letter-spacing: .06em; }
+.pos-tile-price { font-size: 1.05rem; color: var(--cuadra-mint); font-weight: 600; }
+
+.pos-panel { background: #1a2521; border: 1px solid #2a3934; border-radius: 1rem; padding: 1.5rem; }
+
+/* ---------- Pantallas angostas ---------- */
+@media (max-width: 991.98px) {
+  .layout-admin .app-main { padding: 1.1rem; }
+}
 @media (max-width: 576px) {
-  main.container { padding-left: .75rem; padding-right: .75rem; }
+  .app-main { padding: .85rem; }
+  .welcome-banner { padding: 1.1rem; }
+  .pos-clock { display: none; }
   .table td.text-nowrap { white-space: normal !important; }
 }

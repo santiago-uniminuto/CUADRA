@@ -19,9 +19,9 @@ class HomePorRolTests(TestCase):
         c.force_login(Usuario.objects.get(username=username))
         return c
 
-    def test_admin_goes_to_catalog(self):
+    def test_admin_goes_to_dashboard(self):
         resp = self.login("admin").get(reverse("autenticacion:home"))
-        self.assertRedirects(resp, reverse("catalogo:producto_list"))
+        self.assertRedirects(resp, reverse("reportes:dashboard"))
 
     def test_waiter_goes_to_inventory(self):
         resp = self.login("mesero1").get(reverse("autenticacion:home"))
@@ -42,7 +42,7 @@ class HomePorRolTests(TestCase):
         resp = c.post(reverse("autenticacion:login"), {"username": "mesero1", "password": PWD}, follow=True)
         self.assertEqual(resp.redirect_chain[-1][0], reverse("inventario:inventario_list"))
         resp = Client().post(reverse("autenticacion:login"), {"username": "admin", "password": PWD}, follow=True)
-        self.assertEqual(resp.redirect_chain[-1][0], reverse("catalogo:producto_list"))
+        self.assertEqual(resp.redirect_chain[-1][0], reverse("reportes:dashboard"))
 
     def test_admin_acting_as_waiter_is_sent_to_inventory(self):
         c = self.login("admin")

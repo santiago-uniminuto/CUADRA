@@ -1,7 +1,10 @@
 from django.urls import path
 
+from . import views
+
 app_name = "reportes"
 
 urlpatterns = [
-    # Add the routes of this module here (one file per module avoids merge conflicts)
+    path("dashboard/", views.dashboard, name="dashboard"),
+    # Los reportes de ventas e inventario (Sprint 5) se agregan aquí.
 ]

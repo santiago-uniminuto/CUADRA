@@ -80,7 +80,7 @@ class HomeView(LoginRequiredMixin, TemplateView):
     """
     HU001, escenario 1 — pantalla principal según el rol:
 
-    - Administrator -> catálogo de productos.
+    - Administrator -> dashboard de inicio (bienvenida y resumen).
     - Waiter        -> inventario de su sede.
     - Cashier       -> pantalla de bienvenida (sus pantallas de pagos se
                        construyen en el Sprint 5).
@@ -90,7 +90,7 @@ class HomeView(LoginRequiredMixin, TemplateView):
 
     template_name = "autenticacion/home.html"
     DESTINOS = {
-        Usuario.Rol.ADMIN: "catalogo:producto_list",
+        Usuario.Rol.ADMIN: "reportes:dashboard",
         Usuario.Rol.MESERO: "inventario:inventario_list",
     }
 

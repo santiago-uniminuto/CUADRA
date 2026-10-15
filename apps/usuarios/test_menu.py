@@ -6,7 +6,7 @@ from django.urls import reverse
 from .models import Sede, Usuario
 
 PWD = "Str0ng-Pass#2026"
-ADMIN_MENU = ["Users", "Sites", "Products", "Suppliers", "Product types", "Inventory"]
+ADMIN_MENU = ["Dashboard", "Users", "Sites", "Products", "Suppliers", "Product types", "Inventory"]
 
 
 def items(resp):
@@ -67,7 +67,7 @@ class MenuTests(TestCase):
     def test_page_is_responsive(self):
         html = self.client_for(self.admin).get(reverse("usuarios:usuario_list")).content.decode()
         self.assertIn('name="viewport"', html)
-        self.assertIn("navbar-toggler", html)
+        self.assertIn('data-bs-toggle="offcanvas"', html)  # el menú lateral del admin se oculta en pantallas angostas
 
     def test_static_files_really_exist(self):
         """No basta con que el HTML los nombre: los archivos tienen que estar en el proyecto."""

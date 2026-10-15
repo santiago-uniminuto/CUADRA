@@ -23,7 +23,7 @@ def inventario_list(request):
     """
     query = request.GET.get("q", "").strip()
     sede = get_sede_efectiva(request)  # la propia, o la elegida si el admin actúa como mesero
-    items_qs = Inventario.objects.select_related("producto").filter(sede=sede, producto__activo=True)
+    items_qs = Inventario.objects.select_related("producto__tipo_producto").filter(sede=sede, producto__activo=True)
     if query:
         items_qs = items_qs.filter(producto__nombre__icontains=query)
     items = insertion_sort(items_qs, key=lambda i: (i.cantidad, i.producto.nombre.lower()))
