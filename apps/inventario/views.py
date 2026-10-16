@@ -1,9 +1,19 @@
-from django.shortcuts import render
+import re
 
-from apps.algoritmos.ordenamiento import insertion_sort
+from django.contrib import messages
+from django.db import transaction
+from django.shortcuts import redirect, render
+from django.urls import reverse
+
+from apps.algoritmos.ordenamiento import insertion_sort, merge_sort
+from apps.auditoria.utils import registrar
+from apps.catalogo.models import Producto
 from apps.usuarios.decorators import get_sede_efectiva, role_required
+from apps.usuarios.models import Sede
 
 from .models import Inventario
+
+MAX_ENTRADA = 100_000  # tope por línea: evita errores de digitación (300000 en vez de 30)
 
 
 @role_required("WAITER")
@@ -28,3 +38,101 @@ def inventario_list(request):
         items_qs = items_qs.filter(producto__nombre__icontains=query)
     items = insertion_sort(items_qs, key=lambda i: (i.cantidad, i.producto.nombre.lower()))
     return render(request, "inventario/inventario_list.html", {"items": items, "query": query, "sede": sede})
+
+
+# ---------------------------------------------------------------- Administrador: existencias y entradas
+def _entero(valor):
+    """Entero a partir de texto, o None. Solo dígitos ASCII (str.isdigit() acepta caracteres como '²' y luego int() falla)."""
+    return int(valor) if valor is not None and re.fullmatch(r"[0-9]{1,9}", str(valor)) else None
+
+
+def _sede_elegida(request, valor):
+    """La sede pedida en la URL o el formulario (solo activas); si no hay, la del propio administrador."""
+    activas = Sede.objects.filter(activo=True)
+    pk = _entero(valor)
+    if pk is not None:
+        elegida = activas.filter(pk=pk).first()
+        if elegida:
+            return elegida
+    return activas.filter(pk=request.user.sede_id).first() or activas.order_by("nombre").first()
+
+
+def _filas_de_stock(sede, query=""):
+    """Todos los productos ACTIVOS con su existencia en la sede (0 si nunca se ha recibido), por nombre."""
+    productos = Producto.objects.select_related("tipo_producto").filter(activo=True)
+    if query:
+        productos = productos.filter(nombre__icontains=query)
+    existencias = dict(Inventario.objects.filter(sede=sede).values_list("producto_id", "cantidad"))
+    filas = [{"producto": p, "actual": existencias.get(p.pk, 0)} for p in productos]
+    return merge_sort(filas, key=lambda f: f["producto"].nombre.lower())
+
+
+@role_required("ADMIN")
+def stock_list(request):
+    """
+    Existencias de CUALQUIER sede, para el administrador (el mesero solo ve la suya, en teselas).
+    Ordenado por nombre con ordenamiento por mezcla (requisito académico de algoritmos).
+    """
+    sede = _sede_elegida(request, request.GET.get("sede"))
+    query = request.GET.get("q", "").strip()
+    return render(request, "inventario/stock_list.html", {
+        "sedes": Sede.objects.filter(activo=True).order_by("nombre"),
+        "sede": sede, "query": query,
+        "filas": _filas_de_stock(sede, query) if sede else [],
+    })
+
+
+@role_required("ADMIN")
+def stock_receive(request):
+    """
+    Registrar la ENTRADA de mercancía de una sede ("llegaron 30 Águila a Zona T, 10 a Galerías").
+    Se elige la sede y se anotan las cantidades de todos los productos que llegaron. Es todo o nada:
+    si una línea es inválida no se aplica ninguna. Cada entrada queda en la bitácora con el antes y el después.
+    """
+    if request.method == "POST":
+        pk = _entero(request.POST.get("sede"))
+        sede = Sede.objects.filter(activo=True, pk=pk).first() if pk is not None else None
+    else:
+        sede = _sede_elegida(request, request.GET.get("sede"))
+    if sede is None:
+        messages.error(request, "Choose a valid site.")
+        return redirect("inventario:stock_list")
+
+    filas = _filas_de_stock(sede)
+    errores, entradas = [], []
+    if request.method == "POST":
+        for fila in filas:
+            crudo = request.POST.get(f"qty_{fila['producto'].pk}", "").strip()
+            fila["ingresado"] = crudo
+            if crudo == "":
+                continue
+            if not re.fullmatch(r"[0-9]+", crudo):
+                errores.append(f"{fila['producto'].nombre}: enter a whole number of units, 0 or more.")
+                continue
+            cantidad = int(crudo)
+            if cantidad > MAX_ENTRADA:
+                errores.append(f"{fila['producto'].nombre}: the maximum per delivery is {MAX_ENTRADA:,} units.")
+            elif cantidad > 0:
+                entradas.append((fila["producto"], cantidad))
+        if not errores and not entradas:
+            errores.append("Enter a quantity for at least one product.")
+
+        if not errores:
+            resumen = []
+            with transaction.atomic():
+                for producto, cantidad in entradas:
+                    inv, _ = Inventario.objects.select_for_update().get_or_create(producto=producto, sede=sede)
+                    antes = inv.cantidad
+                    inv.cantidad = antes + cantidad
+                    inv.save(update_fields=["cantidad"])
+                    registrar(request, "STOCK_IN", "Inventario", inv,
+                              f"{producto.nombre} +{cantidad} at {sede.nombre} ({antes} -> {inv.cantidad})")
+                    resumen.append(f"{producto.nombre} +{cantidad}")
+            messages.success(request, f"Stock received at {sede.nombre}: " + ", ".join(resumen) + ".")
+            return redirect(f"{reverse('inventario:stock_list')}?sede={sede.pk}")
+        for e in errores:
+            messages.error(request, e)
+
+    return render(request, "inventario/stock_receive.html", {
+        "sedes": Sede.objects.filter(activo=True).order_by("nombre"), "sede": sede, "filas": filas,
+    })

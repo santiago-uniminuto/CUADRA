@@ -67,3 +67,32 @@ def insertion_sort(items, key=lambda x: x):
             j -= 1
         data[j + 1] = actual
     return data
+
+
+def merge_sort(items, key=lambda x: x):
+    """
+    Ordenamiento por mezcla (divide y vencerás): parte la lista por la mitad, ordena cada
+    mitad recursivamente y las mezcla. Complejidad O(n log n), mucho mejor que los
+    anteriores cuando la lista crece (p. ej. el inventario de varias sedes o un reporte).
+    Es estable: los elementos con la misma clave conservan su orden original.
+    """
+    data = list(items)
+    if len(data) <= 1:
+        return data
+    mitad = len(data) // 2
+    return _mezclar(merge_sort(data[:mitad], key), merge_sort(data[mitad:], key), key)
+
+
+def _mezclar(izquierda, derecha, key):
+    """Une dos listas ya ordenadas en una sola, tomando siempre el menor de los dos frentes."""
+    resultado, i, j = [], 0, 0
+    while i < len(izquierda) and j < len(derecha):
+        if key(derecha[j]) < key(izquierda[i]):
+            resultado.append(derecha[j])
+            j += 1
+        else:  # empate: sale primero el de la izquierda (así es estable)
+            resultado.append(izquierda[i])
+            i += 1
+    resultado.extend(izquierda[i:])
+    resultado.extend(derecha[j:])
+    return resultado

@@ -33,7 +33,7 @@ MENU_POR_ROL = {
         ("Catalog", "Products", "catalogo:producto_list"),
         ("Catalog", "Suppliers", "catalogo:proveedor_list"),
         ("Catalog", "Product types", "catalogo:tipoproducto_list"),
-        ("Operations", "Inventory", "inventario:inventario_list"),
+        ("Operations", "Inventory", "inventario:stock_list"),
     ],
     "WAITER": [("", "Inventory", "inventario:inventario_list")],
     "CASHIER": [("", "Home", "autenticacion:home")],

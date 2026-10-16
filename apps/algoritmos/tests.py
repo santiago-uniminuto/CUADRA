@@ -3,9 +3,9 @@ import random
 
 from django.test import SimpleTestCase
 
-from .ordenamiento import bubble_sort, insertion_sort, selection_sort
+from .ordenamiento import bubble_sort, insertion_sort, merge_sort, selection_sort
 
-ALGORITMOS = [bubble_sort, selection_sort, insertion_sort]
+ALGORITMOS = [bubble_sort, selection_sort, insertion_sort, merge_sort]
 
 
 class OrdenamientoTests(SimpleTestCase):
@@ -37,7 +37,7 @@ class OrdenamientoTests(SimpleTestCase):
 
     def test_stable_algorithms_keep_the_original_order_of_ties(self):
         filas = [("a", 1), ("b", 1), ("c", 0), ("d", 1)]
-        for algo in (bubble_sort, insertion_sort):  # la selección clásica no es estable
+        for algo in (bubble_sort, insertion_sort, merge_sort):  # la selección clásica no es estable
             resultado = algo(filas, key=lambda f: f[1])
             self.assertEqual([f[0] for f in resultado], ["c", "a", "b", "d"], algo.__name__)
 
