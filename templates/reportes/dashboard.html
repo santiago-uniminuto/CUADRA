@@ -60,11 +60,11 @@
 
   <div class="col-12">
     <div class="card">
-      <div class="card-header">Recent activity</div>
+      <div class="card-header d-flex justify-content-between align-items-center">Recent activity <a href="{% url 'auditoria:bitacora_list' %}" class="small fw-normal">View all activity</a></div>
       <div class="card-body py-2">
         {% for r in recientes %}
         <div class="activity-item d-flex flex-wrap gap-2 justify-content-between">
-          <span><strong>{{ r.usuario.nombre|default:r.usuario.username|default:"—" }}</strong> · {{ r.accion }} {{ r.entidad }}{% if r.detalle %} — <span class="text-muted">{{ r.detalle }}</span>{% endif %}</span>
+          <span><strong>{{ r.quien }}</strong> · {{ r.accion_legible }}{% if r.detalle %} — <span class="text-muted">{{ r.detalle }}</span>{% endif %}</span>
           <span class="text-muted small">{{ r.fecha|date:"M j, H:i" }}</span>
         </div>
         {% empty %}

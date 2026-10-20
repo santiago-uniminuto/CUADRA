@@ -14,6 +14,8 @@ from apps.usuarios.models import Sede
 from .models import Inventario
 
 MAX_ENTRADA = 100_000  # tope por línea: evita errores de digitación (300000 en vez de 30)
+MAX_EXISTENCIA = 1_000_000
+MAX_MOTIVO = 120
 
 
 @role_required("WAITER")
@@ -135,4 +137,81 @@ def stock_receive(request):
 
     return render(request, "inventario/stock_receive.html", {
         "sedes": Sede.objects.filter(activo=True).order_by("nombre"), "sede": sede, "filas": filas,
+    })
+
+
+class _ExistenciaCambio(Exception):
+    """La existencia cambió mientras el administrador editaba (por ejemplo, se vendió algo)."""
+
+
+@role_required("ADMIN")
+def stock_adjust(request):
+    """
+    HU044 — Corregir las existencias de una sede (conteo físico, pérdida, daño o error de digitación).
+    Se escribe la cantidad REAL de cada producto que se quiere corregir y un motivo obligatorio.
+    Es todo o nada. Como se deja una cantidad absoluta, si la existencia cambió mientras se editaba
+    (por ejemplo, una venta) no se aplica nada y se avisa, para no pisar ese movimiento.
+    """
+    if request.method == "POST":
+        pk = _entero(request.POST.get("sede"))
+        sede = Sede.objects.filter(activo=True, pk=pk).first() if pk is not None else None
+    else:
+        sede = _sede_elegida(request, request.GET.get("sede"))
+    if sede is None:
+        messages.error(request, "Choose a valid site.")
+        return redirect("inventario:stock_list")
+
+    filas = _filas_de_stock(sede)
+    motivo = ""
+    if request.method == "POST":
+        errores, cambios = [], []
+        motivo = request.POST.get("motivo", "").strip()
+        if len(motivo) < 3:
+            errores.append("Write the reason for the adjustment (at least 3 characters).")
+        elif len(motivo) > MAX_MOTIVO:
+            errores.append(f"The reason can have at most {MAX_MOTIVO} characters.")
+        for fila in filas:
+            producto = fila["producto"]
+            crudo = request.POST.get(f"new_{producto.pk}", "").strip()
+            fila["ingresado"] = crudo
+            visto = _entero(request.POST.get(f"seen_{producto.pk}"))
+            if crudo == "":
+                continue
+            if not re.fullmatch(r"[0-9]+", crudo) or int(crudo) > MAX_EXISTENCIA:
+                errores.append(f"{producto.nombre}: enter a whole number of units between 0 and {MAX_EXISTENCIA:,}.")
+            elif visto is None:
+                errores.append(f"{producto.nombre}: reload the page and try again.")
+            elif int(crudo) != visto:  # igual a lo que se veía = sin cambio
+                cambios.append((producto, int(crudo), visto))
+        if not errores and not cambios:
+            errores.append("Change the stock of at least one product.")
+
+        if not errores:
+            try:
+                with transaction.atomic():
+                    for producto, nuevo, visto in cambios:
+                        inv, _ = Inventario.objects.select_for_update().get_or_create(producto=producto, sede=sede)
+                        if inv.cantidad != visto:
+                            raise _ExistenciaCambio(
+                                f"{producto.nombre}: the stock changed while you were editing (now {inv.cantidad}). Review it and try again.")
+                        antes = inv.cantidad
+                        inv.cantidad = nuevo
+                        inv.save(update_fields=["cantidad"])
+                        registrar(request, "STOCK_ADJUST", "Inventario", inv,
+                                  f"{producto.nombre} {antes} -> {nuevo} at {sede.nombre}. Reason: {motivo}")
+                messages.success(request, f"Stock adjusted at {sede.nombre}: "
+                                 + ", ".join(f"{p.nombre} {v} → {n}" for p, n, v in cambios) + ".")
+                return redirect(f"{reverse('inventario:stock_list')}?sede={sede.pk}")
+            except _ExistenciaCambio as e:
+                errores.append(str(e))
+                escrito = {f["producto"].pk: f["ingresado"] for f in filas}
+                filas = _filas_de_stock(sede)  # con las existencias actuales
+                for f in filas:
+                    f["ingresado"] = escrito.get(f["producto"].pk, "")
+        for e in errores:
+            messages.error(request, e)
+
+    return render(request, "inventario/stock_adjust.html", {
+        "sedes": Sede.objects.filter(activo=True).order_by("nombre"), "sede": sede, "filas": filas, "motivo": motivo,
+        "max_motivo": MAX_MOTIVO,
     })

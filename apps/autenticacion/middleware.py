@@ -5,6 +5,8 @@ from django.contrib import messages
 from django.contrib.auth import logout
 from django.shortcuts import redirect
 
+from apps.auditoria.utils import evento
+
 
 class InactivityTimeoutMiddleware:
     """HU002 — close the session after SESSION_INACTIVITY_TIMEOUT seconds
@@ -28,7 +30,11 @@ class InactivityTimeoutMiddleware:
             timeout = getattr(settings, "SESSION_INACTIVITY_TIMEOUT", 180)
             last_activity = request.session.get("last_activity")
             if last_activity is not None and now - last_activity > timeout:
+                usuario = request.user
+                request._cierre_por_inactividad = True  # para que la señal no lo anote también como LOGOUT
                 logout(request)
+                evento(usuario, "SESSION_EXPIRED", "Usuario",
+                       f"Session closed after {timeout // 60} minutes without activity", usuario.pk)
                 messages.warning(request, "Your session was closed due to inactivity")
                 return redirect("autenticacion:login")
             request.session["last_activity"] = now

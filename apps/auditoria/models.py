@@ -2,6 +2,24 @@ from django.conf import settings
 from django.db import models
 
 
+# Nombre legible de cada acción y su categoría (solo para mostrar; el esquema no cambia).
+ACCIONES = {
+    "LOGIN": ("Signed in", "access"),
+    "LOGOUT": ("Signed out", "access"),
+    "LOGIN_FAILED": ("Failed sign-in", "security"),
+    "SESSION_EXPIRED": ("Session expired (inactivity)", "security"),
+    "SESSION_REPLACED": ("Session closed (signed in elsewhere)", "security"),
+    "CREATE": ("Created", "change"),
+    "UPDATE": ("Updated", "change"),
+    "DEACTIVATE": ("Deactivated", "change"),
+    "REACTIVATE": ("Reactivated", "change"),
+    "STOCK_IN": ("Stock received", "change"),
+    "STOCK_ADJUST": ("Stock adjusted", "change"),
+    "ACT_AS": ("Acting mode started", "change"),
+    "RETURN_TO_ADMIN": ("Acting mode ended", "change"),
+}
+
+
 class Bitacora(models.Model):
     """
     Trazabilidad de las acciones de los usuarios (requisito no funcional).
@@ -18,3 +36,18 @@ class Bitacora(models.Model):
 
     class Meta:
         indexes = [models.Index(fields=["usuario", "fecha"])]
+
+    @property
+    def quien(self):
+        """Quién hizo la acción, listo para mostrar. Sin usuario (intento fallido con un nombre que no existe) es «Unknown user»."""
+        if self.usuario_id is None:
+            return "Unknown user"
+        return self.usuario.nombre or self.usuario.username
+
+    @property
+    def accion_legible(self):
+        return ACCIONES.get(self.accion, (self.accion, "change"))[0]
+
+    @property
+    def categoria(self):
+        return ACCIONES.get(self.accion, (self.accion, "change"))[1]

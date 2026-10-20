@@ -30,6 +30,11 @@ class SedeCreateView(CreateView):
     template_name = "usuarios/sede_form.html"
     success_url = reverse_lazy("usuarios:sede_list")
 
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        registrar(self.request, "CREATE", "Sede", self.object, f"Created site {self.object.nombre}")
+        return response
+
 
 @method_decorator(role_required("ADMIN"), name="dispatch")
 class SedeUpdateView(UpdateView):
@@ -39,6 +44,11 @@ class SedeUpdateView(UpdateView):
     fields = ["nombre", "direccion"]
     template_name = "usuarios/sede_form.html"
     success_url = reverse_lazy("usuarios:sede_list")
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        registrar(self.request, "UPDATE", "Sede", self.object, f"Updated site {self.object.nombre}")
+        return response
 
 
 @method_decorator(role_required("ADMIN"), name="dispatch")

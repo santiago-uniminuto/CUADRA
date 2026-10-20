@@ -1,7 +1,9 @@
 from django.urls import path
 
+from . import views
+
 app_name = "auditoria"
 
 urlpatterns = [
-    # Add the routes of this module here (one file per module avoids merge conflicts)
+    path("", views.bitacora_list, name="bitacora_list"),
 ]

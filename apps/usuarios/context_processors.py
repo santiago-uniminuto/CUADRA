@@ -30,6 +30,7 @@ MENU_POR_ROL = {
         ("Overview", "Dashboard", "reportes:dashboard"),
         ("Management", "Users", "usuarios:usuario_list"),
         ("Management", "Sites", "usuarios:sede_list"),
+        ("Management", "Activity log", "auditoria:bitacora_list"),
         ("Catalog", "Products", "catalogo:producto_list"),
         ("Catalog", "Suppliers", "catalogo:proveedor_list"),
         ("Catalog", "Product types", "catalogo:tipoproducto_list"),

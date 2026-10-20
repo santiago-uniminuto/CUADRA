@@ -9,6 +9,7 @@ from django.utils import timezone
 from django.views import View
 from django.views.generic import TemplateView
 
+from apps.auditoria.utils import evento, ip_de
 from apps.usuarios.decorators import get_rol_efectivo
 from apps.usuarios.models import Usuario
 
@@ -18,10 +19,13 @@ from .forms import CuadraAuthenticationForm
 def close_other_sessions(user, current_session_key):
     """HU001, scenario 8 (single session): delete every other active session
     that belongs to this user, so the previous device is logged out."""
+    closed = 0
     active_sessions = Session.objects.filter(expire_date__gte=timezone.now())
     for session in active_sessions.exclude(session_key=current_session_key):
         if session.get_decoded().get("_auth_user_id") == str(user.pk):
             session.delete()
+            closed += 1
+    return closed
 
 
 class CuadraLoginView(LoginView):
@@ -52,7 +56,9 @@ class CuadraLoginView(LoginView):
         session["sede_activa_id"] = usuario.sede_id
         session["sede_activa_nombre"] = usuario.sede.nombre
         session["last_activity"] = time.time()
-        close_other_sessions(usuario, session.session_key)
+        if close_other_sessions(usuario, session.session_key):
+            evento(usuario, "SESSION_REPLACED", "Usuario",
+                   f"Previous session closed: signed in again from {ip_de(self.request)}", usuario.pk)
         return response
 
 

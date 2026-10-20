@@ -39,6 +39,6 @@ def dashboard(request):
             tarjeta("Product types", TipoProducto, "catalogo:tipoproducto_list"),
         ],
         "por_sede": por_sede,
-        "recientes": Bitacora.objects.select_related("usuario").order_by("-fecha")[:8],
+        "recientes": Bitacora.objects.select_related("usuario").order_by("-fecha", "-id")[:10],
     }
     return render(request, "reportes/dashboard.html", contexto)

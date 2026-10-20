@@ -35,7 +35,8 @@ def producto_create(request):
             if form.price_warning():
                 warning = True
             else:
-                form.save()
+                producto = form.save()
+                registrar(request, "CREATE", "Producto", producto, f"Created product {producto.nombre}")
                 messages.success(request, "Product created successfully.")
                 return redirect("catalogo:producto_list")
     else:
@@ -55,7 +56,8 @@ def producto_edit(request, pk):
             if form.price_warning():
                 warning = True
             else:
-                form.save()
+                producto = form.save()
+                registrar(request, "UPDATE", "Producto", producto, f"Updated product {producto.nombre}")
                 messages.success(request, "Product updated successfully.")
                 return redirect("catalogo:producto_list")
     else:
@@ -77,7 +79,8 @@ def proveedor_create(request):
     if request.method == "POST":
         form = ProveedorForm(request.POST)
         if form.is_valid():
-            form.save()
+            proveedor = form.save()
+            registrar(request, "CREATE", "Proveedor", proveedor, f"Created supplier {proveedor.nombre}")
             messages.success(request, "Supplier created successfully.")
             return redirect("catalogo:proveedor_list")
     else:
@@ -92,7 +95,8 @@ def proveedor_edit(request, pk):
     if request.method == "POST":
         form = ProveedorForm(request.POST, instance=proveedor)
         if form.is_valid():
-            form.save()
+            proveedor = form.save()
+            registrar(request, "UPDATE", "Proveedor", proveedor, f"Updated supplier {proveedor.nombre}")
             messages.success(request, "Supplier updated successfully.")
             return redirect("catalogo:proveedor_list")
     else:
@@ -114,7 +118,8 @@ def tipoproducto_create(request):
     if request.method == "POST":
         form = TipoProductoForm(request.POST)
         if form.is_valid():
-            form.save()
+            tipo = form.save()
+            registrar(request, "CREATE", "TipoProducto", tipo, f"Created product type {tipo.nombre}")
             messages.success(request, "Product type created successfully.")
             return redirect("catalogo:tipoproducto_list")
     else:

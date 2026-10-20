@@ -6,7 +6,7 @@ from django.urls import reverse
 from .models import Sede, Usuario
 
 PWD = "Str0ng-Pass#2026"
-ADMIN_MENU = ["Dashboard", "Users", "Sites", "Products", "Suppliers", "Product types", "Inventory"]
+ADMIN_MENU = ["Dashboard", "Users", "Sites", "Activity log", "Products", "Suppliers", "Product types", "Inventory"]
 
 
 def items(resp):
