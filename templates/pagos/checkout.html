@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block title %}Checkout — Order #{{ order.pk }}{% endblock %}
+{% block content %}
+<a class="btn btn-outline-secondary mb-3" href="{% url 'pagos:queue' %}">Back to pending payments</a>
+<h1 class="h3">Order #{{ order.pk }} — Table {{ order.mesa.numero }}</h1>
+<p>Status: {{ order.get_estado_display }}</p>
+<div class="table-responsive"><table class="table"><thead><tr><th>Product</th><th>Quantity</th><th>Unit price</th></tr></thead><tbody>
+{% for detail in details %}<tr><td>{{ detail.producto.nombre }}</td><td>{{ detail.cantidad }}</td><td>${{ detail.valor_venta_unitario }}</td></tr>{% empty %}<tr><td colspan="3">No products added.</td></tr>{% endfor %}
+</tbody></table></div><p class="fw-bold">Total: ${{ total }}</p>
+{% if payment %}<p class="alert alert-success">Payment registered — {{ payment.get_metodo_pago_display }} · ${{ payment.valor }}</p>
+<p><a class="btn btn-primary" href="{% url 'pagos:receipt' order.pk %}">View / print receipt</a></p>
+{% if payment.efectivo_recibido is not None %}<p>Cash received: ${{ payment.efectivo_recibido }} · Change due: ${{ payment.cambio }}</p>{% endif %}
+{% elif order.estado == 'OPEN' and details %}
+<form method="post" action="{% url 'pagos:register_payment' order.pk %}">{% csrf_token %}
+<label for="method" class="form-label">Payment method</label><select name="method" id="method" class="form-select mb-3" required>{% for value,label in methods %}<option value="{{ value }}">{{ label }}</option>{% endfor %}</select>
+<div id="cash-fields" class="mb-3"><label class="form-label" for="cash_received">Cash received</label><input class="form-control" id="cash_received" name="cash_received" type="number" min="0" step="0.01" inputmode="decimal"><p class="mt-2">Change due: <strong id="change-due">—</strong></p><p id="cash-error" class="text-danger" role="status"></p></div>
+<button class="btn btn-primary" type="submit">Confirm payment and close order</button>
+</form>
+<script>
+(function () {
+ const method = document.getElementById('method');
+ const cash = document.getElementById('cash_received');
+ const box = document.getElementById('cash-fields');
+ const change = document.getElementById('change-due');
+ const error = document.getElementById('cash-error');
+ const total = Number('{{ total|floatformat:2 }}');
+ function update() {
+   const active = method.value === 'CASH';
+   box.hidden = !active; cash.required = active;
+   if (!active) { change.textContent = '—'; error.textContent = ''; return; }
+   const amount = cash.value.trim() === '' ? NaN : Number(cash.value);
+   change.textContent = Number.isFinite(amount) && amount >= total ? (amount - total).toFixed(2) : '—';
+   error.textContent = Number.isFinite(amount) && amount < total ? 'Cash received is less than the total.' : '';
+ }
+ method.addEventListener('change', update); cash.addEventListener('input', update); update();
+})();
+</script><p class="text-muted mt-3">Inventory is deducted when payment is registered. The table stays occupied.</p>
+{% endif %}
+{% endblock %}

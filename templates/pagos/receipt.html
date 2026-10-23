@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CUADRA receipt #{{ payment.pk }}</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#e8edf2;color:#111827;font:15px/1.5 Arial,sans-serif}
+.actions{max-width:720px;margin:24px auto 12px;display:flex;gap:12px}
+.actions a,.actions button{border:0;border-radius:6px;padding:10px 16px;background:#174d3b;color:white;text-decoration:none;cursor:pointer;font:inherit}
+.receipt-sheet{max-width:720px;margin:0 auto 32px;padding:30px;background:white;box-shadow:0 2px 12px #0002}
+.receipt-sheet h1{margin:0}.receipt-sheet p{margin:8px 0}.receipt-sheet dl{display:grid;grid-template-columns:190px 1fr;gap:4px 12px}.receipt-sheet dt{font-weight:bold}.receipt-sheet dd{margin:0}
+.receipt-sheet table{border-collapse:collapse;width:100%;margin-top:20px}.receipt-sheet th,.receipt-sheet td{padding:8px;border-bottom:1px solid #ddd;text-align:left}
+.receipt-sheet .text-muted{color:#374151}.receipt-sheet .text-end{text-align:right}.receipt-sheet .text-center{text-align:center}
+@media print{@page{size:auto;margin:12mm}html,body{background:white!important;margin:0!important;padding:0!important}.actions{display:none!important}.receipt-sheet{box-shadow:none!important;margin:0!important;padding:0!important;max-width:none!important}table{page-break-inside:auto}tr{break-inside:avoid}h1{break-after:avoid}}
+</style></head><body>
+<div class="actions">
+  {% if receipt_admin_mode %}
+    <a href="{% url 'reportes:sales' %}">Back to sales report</a>
+  {% else %}
+    <a href="{% url 'pagos:checkout_detail' order.pk %}">Back to checkout</a>
+  {% endif %}
+  <button type="button" onclick="window.print()">Print receipt</button>
+</div>
+<article class="receipt-sheet" aria-label="Sales receipt">
+  <h1 class="h3 mb-1">CUADRA — Sales receipt</h1>
+  <p style="color: #374151; font-weight: 600;">Internal sales receipt — not an electronic tax invoice</p>
+  <dl class="row">
+    <dt class="col-sm-4">Receipt / payment #</dt><dd class="col-sm-8">{{ payment.pk }}</dd>
+    <dt class="col-sm-4">Order #</dt><dd class="col-sm-8">{{ order.pk }}</dd>
+    <dt class="col-sm-4">Date</dt><dd class="col-sm-8">{{ payment.fecha|date:"Y-m-d H:i" }}</dd>
+    <dt class="col-sm-4">Site</dt><dd class="col-sm-8">{{ order.mesa.sede.nombre }}</dd>
+    <dt class="col-sm-4">Table</dt><dd class="col-sm-8">{{ order.mesa.numero }}</dd>
+    <dt class="col-sm-4">Cashier</dt><dd class="col-sm-8">{{ payment.cajero.nombre }}</dd>
+    <dt class="col-sm-4">Payment method</dt><dd class="col-sm-8">{{ payment.get_metodo_pago_display }}</dd>
+  </dl>
+  <div class="table-responsive">
+    <table class="table table-sm">
+      <thead><tr><th>Product</th><th class="text-end">Qty</th><th class="text-end">Unit price</th><th class="text-end">Subtotal</th></tr></thead>
+      <tbody>{% for line in lines %}
+        <tr><td>{{ line.name }}</td><td class="text-end">{{ line.quantity }}</td><td class="text-end">${{ line.unit_price|floatformat:2 }}</td><td class="text-end">${{ line.subtotal|floatformat:2 }}</td></tr>
+      {% endfor %}</tbody>
+    </table>
+  </div>
+  <p class="text-end fs-5"><strong>Total paid: ${{ payment.valor|floatformat:2 }} COP</strong></p>
+  {% if payment.metodo_pago == 'CASH' %}
+    <p class="text-end">Cash received: ${{ payment.efectivo_recibido|floatformat:2 }} COP</p>
+    <p class="text-end">Change due: ${{ payment.cambio|floatformat:2 }} COP</p>
+  {% endif %}
+  <p class="mt-4 text-center">Thank you for your purchase.</p>
+</article>
+
+</body></html>

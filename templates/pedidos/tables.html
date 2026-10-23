@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}Tables — CUADRA{% endblock %}
+{% block content %}
+<h1 class="h3 mb-3">Tables — {{ site.nombre }}</h1>
+<div class="row row-cols-1 row-cols-md-2 row-cols-xl-4 g-3">
+{% for table in tables %}
+<div class="col"><div class="card h-100"><div class="card-body">
+<h2 class="h5">Table {{ table.numero }}</h2>
+<p><span class="badge {% if table.estado == 'OCCUPIED' %}text-bg-warning{% else %}text-bg-success{% endif %}">{{ table.get_estado_display }}</span></p>
+{% if table.has_open_order %}<a class="btn btn-primary w-100" href="{% url 'pedidos:order_detail' table.open_order_id %}">Continue open order</a>{% endif %}
+{% if not table.has_open_order %}<form method="post" action="{% url 'pedidos:open_order' table.pk %}">{% csrf_token %}<button class="btn btn-primary w-100">New order</button></form>{% endif %}
+{% if table.estado == 'OCCUPIED' and not table.has_open_order %}<form method="post" action="{% url 'pedidos:release_table' table.pk %}" class="mt-2">{% csrf_token %}<button class="btn btn-outline-secondary w-100">Release table</button></form>{% endif %}
+</div></div></div>
+{% empty %}<p>No tables available.</p>{% endfor %}
+</div>
+{% endblock %}

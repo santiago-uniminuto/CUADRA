@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block title %}Pending payments — CUADRA{% endblock %}
+{% block content %}
+<h1 class="h3 mb-3">Pending payments — {{ sede_actual }}</h1>
+<div class="table-responsive"><table class="table"><thead><tr><th>Order</th><th>Table</th><th>Waiter</th><th>Total</th><th>Action</th></tr></thead><tbody>
+{% for order in orders %}<tr><td>#{{ order.pk }}</td><td>{{ order.mesa.numero }}</td><td>{{ order.mesero.nombre }}</td><td>${{ order.total }}</td><td><a class="btn btn-primary btn-sm" href="{% url 'pagos:checkout_detail' order.pk %}">Checkout</a></td></tr>
+{% empty %}<tr><td colspan="5">No pending payments.</td></tr>{% endfor %}
+</tbody></table></div>
+{% endblock %}

@@ -15,3 +15,5 @@ class Pago(models.Model):
     metodo_pago = models.CharField(max_length=6, choices=Metodo.choices)
     valor = models.DecimalField(max_digits=12, decimal_places=2)
     fecha = models.DateTimeField(auto_now_add=True)
+    efectivo_recibido = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
+    cambio = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)

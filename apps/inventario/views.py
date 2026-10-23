@@ -5,9 +5,10 @@ from django.db import transaction
 from django.shortcuts import redirect, render
 from django.urls import reverse
 
-from apps.algoritmos.ordenamiento import insertion_sort, merge_sort
+from apps.algoritmos.ordenamiento import counting_sort, insertion_sort, merge_sort
 from apps.auditoria.utils import registrar
 from apps.catalogo.models import Producto
+from apps.pedidos.models import Pedido
 from apps.usuarios.decorators import get_sede_efectiva, role_required
 from apps.usuarios.models import Sede
 
@@ -39,7 +40,11 @@ def inventario_list(request):
     if query:
         items_qs = items_qs.filter(producto__nombre__icontains=query)
     items = insertion_sort(items_qs, key=lambda i: (i.cantidad, i.producto.nombre.lower()))
-    return render(request, "inventario/inventario_list.html", {"items": items, "query": query, "sede": sede})
+    open_orders = list(Pedido.objects.filter(mesa__sede=sede, estado=Pedido.Estado.OPEN)
+                       .select_related('mesa').order_by('mesa__numero', 'pk'))
+    return render(request, "inventario/inventario_list.html", {
+        "items": items, "query": query, "sede": sede, "open_orders": open_orders,
+    })
 
 
 # ---------------------------------------------------------------- Administrador: existencias y entradas
@@ -77,10 +82,17 @@ def stock_list(request):
     """
     sede = _sede_elegida(request, request.GET.get("sede"))
     query = request.GET.get("q", "").strip()
+    sort_mode = request.GET.get("sort", "name")
+    if sort_mode not in ("name", "quantity"):
+        sort_mode = "name"
+    filas = _filas_de_stock(sede, query) if sede else []
+    if sort_mode == "quantity":
+        # Stable Counting Sort: equal stock quantities retain name order.
+        filas = counting_sort(filas, key=lambda row: row["actual"])
     return render(request, "inventario/stock_list.html", {
         "sedes": Sede.objects.filter(activo=True).order_by("nombre"),
-        "sede": sede, "query": query,
-        "filas": _filas_de_stock(sede, query) if sede else [],
+        "sede": sede, "query": query, "sort_mode": sort_mode,
+        "filas": filas,
     })
 
 

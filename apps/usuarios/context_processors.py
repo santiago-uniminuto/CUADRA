@@ -35,9 +35,13 @@ MENU_POR_ROL = {
         ("Catalog", "Suppliers", "catalogo:proveedor_list"),
         ("Catalog", "Product types", "catalogo:tipoproducto_list"),
         ("Operations", "Inventory", "inventario:stock_list"),
+        ("Operations", "Tables", "pedidos:manage_tables"),
+        ("Reports", "Consolidated report", "reportes:general"),
+        ("Reports", "Sales report", "reportes:sales"),
+        ("Reports", "Inventory report", "reportes:inventory"),
     ],
-    "WAITER": [("", "Inventory", "inventario:inventario_list")],
-    "CASHIER": [("", "Home", "autenticacion:home")],
+    "WAITER": [("", "Inventory", "inventario:inventario_list"), ("", "Tables & orders", "pedidos:tables")],
+    "CASHIER": [("", "Home", "autenticacion:home"), ("", "Payments", "pagos:queue"), ("", "Sales report", "reportes:sales"), ("", "Inventory report", "reportes:inventory")],
 }
 
 

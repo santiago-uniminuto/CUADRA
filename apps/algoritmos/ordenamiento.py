@@ -96,3 +96,101 @@ def _mezclar(izquierda, derecha, key):
     resultado.extend(izquierda[i:])
     resultado.extend(derecha[j:])
     return resultado
+
+
+def quick_sort(items, key=lambda x: x):
+    """Quicksort no mutante con partición en tres grupos.
+
+    Ordena mesas por número (y otros iterables por una clave explícita).
+    Promedio O(n log n), peor caso O(n²), memoria adicional O(n).
+    La partición de iguales conserva su orden relativo.
+    """
+    data = list(items)
+    if len(data) < 2:
+        return data
+    pivot = key(data[len(data) // 2])
+    smaller, equal, greater = [], [], []
+    for item in data:
+        value = key(item)
+        if value < pivot:
+            smaller.append(item)
+        elif value > pivot:
+            greater.append(item)
+        else:
+            equal.append(item)
+    return quick_sort(smaller, key) + equal + quick_sort(greater, key)
+
+def binary_search(items, target, key=lambda item: item):
+    """Busca una clave exacta en una secuencia previamente ordenada.
+
+    Retorna el elemento encontrado o None. Complejidad O(log n)
+    comparaciones; no modifica la secuencia. El llamador debe ordenar
+    previamente por la misma clave (y no por precio u otro campo).
+    """
+    left, right = 0, len(items) - 1
+    while left <= right:
+        middle = (left + right) // 2
+        current = key(items[middle])
+        if current == target:
+            return items[middle]
+        if current < target:
+            left = middle + 1
+        else:
+            right = middle - 1
+    return None
+
+
+def heap_sort(items, key=lambda item: item):
+    """Heap Sort manual, ascendente por clave; O(n log n), O(n) copia.
+
+    Construye un max-heap y extrae máximos al final. No es estable;
+    para rankings se usa una clave compuesta con ID como desempate.
+    """
+    data = list(items)
+    n = len(data)
+
+    def sift_down(root, size):
+        while 2 * root + 1 < size:
+            child = 2 * root + 1
+            if child + 1 < size and key(data[child]) < key(data[child + 1]):
+                child += 1
+            if key(data[root]) >= key(data[child]):
+                break
+            data[root], data[child] = data[child], data[root]
+            root = child
+
+    for root in range(n // 2 - 1, -1, -1):
+        sift_down(root, n)
+    for end in range(n - 1, 0, -1):
+        data[0], data[end] = data[end], data[0]
+        sift_down(0, end)
+    return data
+
+
+def counting_sort(items, key=lambda item: item, max_range=10_000):
+    """Counting Sort estable para claves enteras no negativas.
+
+    Complejidad O(n + k) cuando el rango k <= max_range. Para cantidades
+    muy dispersas usa Merge Sort, evitando reservar arreglos enormes.
+    Nunca modifica el iterable recibido.
+    """
+    data = list(items)
+    if not data:
+        return data
+    keys = [key(item) for item in data]
+    if any(type(value) is not int or value < 0 for value in keys):
+        raise ValueError('Counting Sort requires non-negative integer keys.')
+    low, high = min(keys), max(keys)
+    if high - low + 1 > max_range:
+        return merge_sort(data, key=key)
+    counts = [0] * (high - low + 1)
+    for value in keys:
+        counts[value - low] += 1
+    for index in range(1, len(counts)):
+        counts[index] += counts[index - 1]
+    result = [None] * len(data)
+    for item, value in zip(reversed(data), reversed(keys)):
+        slot = value - low
+        counts[slot] -= 1
+        result[counts[slot]] = item
+    return result

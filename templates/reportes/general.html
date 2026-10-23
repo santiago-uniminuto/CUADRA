@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}Consolidated report — CUADRA{% endblock %}
+{% block content %}
+<h1 class="h3 mb-3">Consolidated report</h1>
+<p><a class="btn btn-outline-primary" href="{% url 'reportes:top_products' %}">Top-selling products</a></p>
+<p class="text-muted">Sales follow the selected date range. Inventory is a current snapshot across all sites.</p>
+<form method="get" class="card card-body mb-3"><div class="row g-2 align-items-end">
+  <div class="col-md-4"><label class="form-label" for="start">From</label><input class="form-control" type="date" id="start" name="start" value="{{ start }}"></div>
+  <div class="col-md-4"><label class="form-label" for="end">To</label><input class="form-control" type="date" id="end" name="end" value="{{ end }}"></div>
+  <div class="col-md-2"><button class="btn btn-primary w-100" type="submit">Filter</button></div>
+  <div class="col-md-2"><a class="btn btn-outline-success w-100" href="{% url 'reportes:general_export' %}?start={{ start|urlencode }}&end={{ end|urlencode }}">Export to Excel</a></div>
+</div></form>
+{% if error %}<div class="alert alert-danger">{{ error }}</div>{% else %}
+<section class="card card-body mb-4"><h2 class="h5">Global sales</h2><div><strong>{{ count }} payments</strong> · Total sales: {{ total|floatformat:2 }}</div>
+<div class="table-responsive mt-3"><table class="table table-striped"><thead><tr><th>Paid at</th><th>Site</th><th>Order</th><th>Cashier</th><th>Method</th><th class="text-end">Amount</th></tr></thead><tbody>
+{% for p in payments %}<tr><td>{{ p.fecha|date:'Y-m-d H:i' }}</td><td>{{ p.pedido.mesa.sede.nombre }}</td><td>#{{ p.pedido_id }}</td><td>{{ p.cajero.nombre }}</td><td>{{ p.get_metodo_pago_display }}</td><td class="text-end">{{ p.valor|floatformat:2 }}</td></tr>{% empty %}<tr><td colspan="6">No payments found for this period.</td></tr>{% endfor %}
+</tbody></table></div></section>
+<section class="card card-body"><h2 class="h5">Current inventory by site</h2><div class="table-responsive"><table class="table table-striped"><thead><tr><th>Site</th><th>Product</th><th class="text-end">Available units</th></tr></thead><tbody>
+{% for item in stock %}<tr><td>{{ item.sede.nombre }}</td><td>{{ item.producto.nombre }}</td><td class="text-end">{{ item.cantidad }}</td></tr>{% empty %}<tr><td colspan="3">No inventory records found.</td></tr>{% endfor %}
+</tbody></table></div></section>
+{% endif %}
+{% endblock %}

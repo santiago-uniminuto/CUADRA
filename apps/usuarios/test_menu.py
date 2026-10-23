@@ -6,7 +6,7 @@ from django.urls import reverse
 from .models import Sede, Usuario
 
 PWD = "Str0ng-Pass#2026"
-ADMIN_MENU = ["Dashboard", "Users", "Sites", "Activity log", "Products", "Suppliers", "Product types", "Inventory"]
+ADMIN_MENU = ["Dashboard", "Users", "Sites", "Activity log", "Products", "Suppliers", "Product types", "Inventory", "Tables", "Consolidated report", "Sales report", "Inventory report"]
 
 
 def items(resp):
@@ -31,9 +31,9 @@ class MenuTests(TestCase):
 
     def test_waiter_and_cashier_menus(self):
         resp = self.client_for(self.mesero1).get(reverse("inventario:inventario_list"))
-        self.assertEqual([label for label, _ in items(resp)], ["Inventory"])
+        self.assertEqual([label for label, _ in items(resp)], ["Inventory", "Tables & orders"])
         resp = self.client_for(self.cajero1).get(reverse("autenticacion:home"))
-        self.assertEqual([label for label, _ in items(resp)], ["Home"])
+        self.assertEqual([label for label, _ in items(resp)], ["Home", "Payments", "Sales report", "Inventory report"])
 
     def test_menu_never_offers_pages_the_role_cannot_open(self):
         for user in (self.admin, self.mesero1):
@@ -53,7 +53,15 @@ class MenuTests(TestCase):
         c = self.client_for(self.admin)
         c.post(reverse("usuarios:act_as"), {"rol": "WAITER", "sede": self.sede.pk})
         resp = c.get(reverse("inventario:inventario_list"))
-        self.assertEqual([label for label, _ in items(resp)], ["Inventory"])
+        self.assertEqual([label for label, _ in items(resp)], ["Inventory", "Tables & orders"])
+        # Acting Mode intentionally prevents switching roles directly.
+        # Return to Admin first, then enter Cashier mode.
+        c.post(reverse("usuarios:return_to_admin"))
+        resp = c.post(reverse("usuarios:act_as"), {"rol": "CASHIER", "sede": self.sede.pk})
+        self.assertEqual(resp.status_code, 302)
+        resp = c.get(reverse("autenticacion:home"))
+        self.assertEqual(resp.status_code, 200)
+        self.assertEqual([label for label, _ in items(resp)], ["Home", "Payments", "Sales report", "Inventory report"])
         c.post(reverse("usuarios:return_to_admin"))
         self.assertEqual([l for l, _ in items(c.get(reverse("usuarios:usuario_list")))], ADMIN_MENU)
 

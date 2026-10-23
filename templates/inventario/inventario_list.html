@@ -30,11 +30,24 @@
             <div class="pos-tile-qty">{{ item.cantidad }} <small>in stock</small></div>
             <div class="pos-tile-price">${{ item.producto.valor_venta|floatformat:"-2g" }}</div>
           </div>
-          {% comment %}
-            Botón "Add": queda deshabilitado sin stock (HU021).
-            La acción real de agregar al pedido se conecta en HU023 (Sprint 4).
-          {% endcomment %}
-          <button type="button" class="btn btn-primary w-100" {% if item.cantidad == 0 %}disabled title="Out of stock"{% endif %}>Add</button>
+          {% if item.cantidad == 0 %}
+            <button type="button" class="btn btn-primary w-100" disabled title="Out of stock">Add</button>
+          {% elif open_orders %}
+            <form method="post" action="{% url 'pedidos:add_product' open_orders.0.pk %}" class="inventory-add-form">
+              {% csrf_token %}
+              <input type="hidden" name="product" value="{{ item.producto.pk }}">
+              <label for="order-{{ item.producto.pk }}" class="form-label">Open order</label>
+              <select id="order-{{ item.producto.pk }}" class="form-select mb-2" aria-label="Select open order" required>
+                {% for order in open_orders %}<option value="{% url 'pedidos:add_product' order.pk %}">Table {{ order.mesa.numero }} — Order #{{ order.pk }}</option>{% endfor %}
+              </select>
+              <div class="d-flex gap-2">
+                <input type="number" name="quantity" min="1" max="{{ item.cantidad }}" value="1" required class="form-control" aria-label="Quantity" style="max-width:100px">
+                <button type="submit" class="btn btn-primary flex-grow-1">Add</button>
+              </div>
+            </form>
+          {% else %}
+            <a href="{% url 'pedidos:tables' %}" class="btn btn-outline-primary w-100">Open an order first</a>
+          {% endif %}
         </div>
       </div>
       {% endfor %}
@@ -44,4 +57,13 @@
   {% else %}
     <p class="text-muted fs-5">No products in inventory for your branch yet.</p>
   {% endif %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+  document.querySelectorAll('.inventory-add-form').forEach(function (form) {
+    var select = form.querySelector('select');
+    form.addEventListener('submit', function () { form.action = select.value; });
+  });
+</script>
 {% endblock %}

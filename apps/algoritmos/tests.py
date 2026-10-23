@@ -1,7 +1,9 @@
 """Los algoritmos de ordenamiento hechos a mano deben dar el mismo resultado que sorted()."""
 import random
 
-from django.test import SimpleTestCase
+from django.test import SimpleTestCase, TestCase
+from django.urls import reverse
+from apps.usuarios.models import Sede, Usuario
 
 from .ordenamiento import bubble_sort, insertion_sort, merge_sort, selection_sort
 
@@ -46,3 +48,29 @@ class OrdenamientoTests(SimpleTestCase):
         for _ in range(5):
             resultado = selection_sort(filas, key=lambda f: (f[1], f[0]))
             self.assertEqual([f[0] for f in resultado], ["c", "a", "b", "d"])
+
+
+class QuickSortTests(TestCase):
+    def test_quicksort_orders_numbers_without_mutating_input(self):
+        from apps.algoritmos.ordenamiento import quick_sort
+        values = [8, 2, 7, 1, 2, 4, 9]
+        self.assertEqual(quick_sort(values), [1, 2, 2, 4, 7, 8, 9])
+        self.assertEqual(values, [8, 2, 7, 1, 2, 4, 9])
+
+    def test_quicksort_preserves_equal_keys(self):
+        from apps.algoritmos.ordenamiento import quick_sort
+        values = [(3, 'A'), (1, 'B'), (3, 'C'), (2, 'D')]
+        self.assertEqual(quick_sort(values, key=lambda value: value[0]),
+                         [(1, 'B'), (2, 'D'), (3, 'A'), (3, 'C')])
+
+    def test_tables_are_displayed_in_numeric_order(self):
+        from apps.pedidos.models import Mesa
+        sede = Sede.objects.create(nombre='Quick Site', direccion='x')
+        mesero = Usuario.objects.create_user(username='quickwaiter', password="test-pass",
+                                              nombre='Waiter', rol='WAITER', sede=sede)
+        for number in (10, 3, 7, 1):
+            Mesa.objects.create(sede=sede, numero=number)
+        self.client.force_login(mesero)
+        response = self.client.get(reverse('pedidos:tables'))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual([table.numero for table in response.context['tables']], [1, 3, 7, 10])

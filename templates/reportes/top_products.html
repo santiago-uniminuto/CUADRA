@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block title %}Top-selling products — CUADRA{% endblock %}
+{% block content %}
+<h1 class="h3 mb-3">Top-selling products</h1>
+<p class="text-muted">Ranking by units in paid orders. Revenue uses the sale price recorded on each order line.</p>
+<form method="get" class="card card-body mb-3">
+  <div class="row g-2 align-items-end">
+    {% if is_admin_report %}<div class="col-md-3"><label class="form-label" for="site">Site</label><select class="form-select" id="site" name="site"><option value="">All sites</option>{% for s in sites %}<option value="{{ s.pk }}" {% if site.pk == s.pk %}selected{% endif %}>{{ s.nombre }}</option>{% endfor %}</select></div>{% endif %}
+    <div class="col-md-3"><label class="form-label" for="start">From</label><input class="form-control" type="date" name="start" id="start" value="{{ start }}"></div>
+    <div class="col-md-3"><label class="form-label" for="end">To</label><input class="form-control" type="date" name="end" id="end" value="{{ end }}"></div>
+    <div class="col-md-2"><button class="btn btn-primary w-100" type="submit">Filter</button></div>
+  </div>
+</form>
+{% if error %}<div class="alert alert-danger">{{ error }}</div>{% else %}
+<div class="card card-body"><div class="table-responsive"><table class="table table-striped">
+<thead><tr><th>Rank</th><th>Product</th><th class="text-end">Units sold</th><th class="text-end">Sales revenue</th></tr></thead>
+<tbody>{% for item in ranking %}<tr><td>{{ forloop.counter }}</td><td>{{ item.name }}</td><td class="text-end">{{ item.units }}</td><td class="text-end">{{ item.revenue|floatformat:2 }}</td></tr>{% empty %}<tr><td colspan="4">No paid products found for these filters.</td></tr>{% endfor %}</tbody>
+</table></div></div>{% endif %}
+{% endblock %}

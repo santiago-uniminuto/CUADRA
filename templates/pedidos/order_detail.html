@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}Order {{ order.pk }} — CUADRA{% endblock %}
+{% block content %}
+<a href="{% url 'pedidos:tables' %}" class="btn btn-outline-secondary mb-3">Back to tables</a>
+<h1 class="h3">Order #{{ order.pk }} — Table {{ order.mesa.numero }}</h1>
+<p>Status: {{ order.get_estado_display }}</p>
+<div class="table-responsive"><table class="table"><thead><tr><th>Product</th><th>Quantity</th><th>Unit price</th><th>Action</th></tr></thead><tbody>
+{% for detail in details %}<tr><td>{{ detail.producto.nombre }}</td><td>{{ detail.cantidad }}</td><td>${{ detail.valor_venta_unitario }}</td><td>{% if order.estado == 'OPEN' %}<form method="post" action="{% url 'pedidos:remove_product' order.pk detail.pk %}">{% csrf_token %}<button class="btn btn-sm btn-outline-danger">Remove</button></form>{% endif %}</td></tr>{% empty %}<tr><td colspan="4">No products added.</td></tr>{% endfor %}
+</tbody></table></div>
+<p class="fw-bold">Total: ${{ total }}</p>
+{% if order.estado == 'OPEN' %}
+<h2 class="h5">Add product</h2>
+<form method="post" action="{% url 'pedidos:add_product' order.pk %}" class="d-flex flex-wrap gap-2 align-items-end">{% csrf_token %}
+<div><label for="product" class="form-label">Product</label><select id="product" name="product" class="form-select" required>{% for product in products %}<option value="{{ product.pk }}">{{ product.nombre }}</option>{% endfor %}</select></div>
+<div><label for="quantity" class="form-label">Quantity</label><input id="quantity" type="number" name="quantity" min="1" max="100000" value="1" class="form-control" required></div>
+<button class="btn btn-primary" {% if not products %}disabled{% endif %}>Add</button></form>
+{% if not details %}<form method="post" action="{% url 'pedidos:discard_empty' order.pk %}" class="mt-3">{% csrf_token %}<button class="btn btn-outline-secondary">Discard empty order</button></form>{% endif %}
+<p class="text-muted mt-3">The cashier registers payment and closes the order. Stock is not deducted at this stage.</p>
+{% endif %}
+{% endblock %}

@@ -19,6 +19,12 @@
   <div class="col-md-5">
     <input type="search" name="q" value="{{ query }}" class="form-control" placeholder="Search product..." aria-label="Search product">
   </div>
+  <div class="col-md-2">
+    <select name="sort" class="form-select" aria-label="Sort inventory">
+      <option value="name"{% if sort_mode == 'name' %} selected{% endif %}>Product name</option>
+      <option value="quantity"{% if sort_mode == 'quantity' %} selected{% endif %}>Lowest stock first</option>
+    </select>
+  </div>
   <div class="col-auto">
     <button class="btn btn-outline-secondary" type="submit">Search</button>
     {% if query %}<a href="{% url 'inventario:stock_list' %}?sede={{ sede.pk }}" class="btn btn-link">Clear</a>{% endif %}

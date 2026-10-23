@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.shortcuts import get_object_or_404, redirect, render
 
-from apps.algoritmos.ordenamiento import selection_sort
+from apps.algoritmos.ordenamiento import binary_search, selection_sort
 from apps.auditoria.utils import registrar
 from apps.usuarios.decorators import role_required
 
@@ -19,9 +19,17 @@ def producto_list(request):
     """
     query = request.GET.get("q", "").strip()
     productos_qs = Producto.objects.select_related("tipo_producto", "proveedor")
-    if query:
-        productos_qs = productos_qs.filter(nombre__icontains=query)
-    productos = selection_sort(productos_qs, key=lambda p: (p.valor_venta, p.nombre.lower()))
+    if query.startswith("#") and query[1:].isascii() and query[1:].isdecimal():
+        # Búsqueda exacta por código: el índice binario requiere ordenar por PK,
+        # no por precio. El catálogo es global y solo ADMIN accede a esta vista.
+        product_id = int(query[1:])
+        by_code = list(productos_qs.order_by("pk"))
+        found = binary_search(by_code, product_id, key=lambda p: p.pk)
+        productos = [found] if found is not None else []
+    else:
+        if query:
+            productos_qs = productos_qs.filter(nombre__icontains=query)
+        productos = selection_sort(productos_qs, key=lambda p: (p.valor_venta, p.nombre.lower()))
     return render(request, "catalogo/producto_list.html", {"productos": productos, "query": query})
 
 

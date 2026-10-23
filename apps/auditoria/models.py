@@ -17,6 +17,12 @@ ACCIONES = {
     "STOCK_ADJUST": ("Stock adjusted", "change"),
     "ACT_AS": ("Acting mode started", "change"),
     "RETURN_TO_ADMIN": ("Acting mode ended", "change"),
+    "ORDER_OPEN": ("Order opened", "change"),
+    "ORDER_EDIT": ("Order updated", "change"),
+    "ORDER_DISCARD": ("Empty order discarded", "change"),
+    "ORDER_CLOSE": ("Order closed", "change"),
+    "PAYMENT": ("Payment registered", "change"),
+    "TABLE_RELEASE": ("Table released", "change"),
 }
 
 
