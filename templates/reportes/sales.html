@@ -1,8 +1,7 @@
 {% extends 'base.html' %}
 {% block title %}Sales report — CUADRA{% endblock %}
 {% block content %}
-<p><a class="btn btn-outline-primary" href="{% url 'reportes:top_products' %}">Top-selling products</a></p>
-<h1 class="h3 mb-3">Sales report</h1>
+<div class="cuadra-report-heading"><h1 class="h3 mb-0">Sales report</h1><a class="btn cuadra-btn-report" href="{% url 'reportes:top_products' %}">Top-selling products →</a></div>
 <form method="get" class="card card-body mb-3">
   <div class="row g-2 align-items-end">
     {% if is_admin_report %}<div class="col-md-4"><label class="form-label" for="site">Site</label><select class="form-select" id="site" name="site"><option value="">All sites</option>{% for s in sites %}<option value="{{ s.pk }}" {% if site.pk == s.pk %}selected{% endif %}>{{ s.nombre }}</option>{% endfor %}</select></div>{% endif %}
@@ -14,6 +13,6 @@
 {% if error %}<div class="alert alert-danger">{{ error }}</div>{% else %}
 <div class="card card-body mb-3"><strong>{{ count }} payments</strong><span>Total sales: {{ total|floatformat:2 }}</span></div>
 <div class="table-responsive"><table class="table table-striped"><thead><tr><th>Paid at</th><th>Site</th><th>Order</th><th>Cashier</th><th>Method</th><th class="text-end">Amount</th><th>Receipt</th></tr></thead><tbody>
-{% for p in payments %}<tr><td>{{ p.fecha|date:'Y-m-d H:i' }}</td><td>{{ p.pedido.mesa.sede.nombre }}</td><td>#{{ p.pedido_id }}</td><td>{{ p.cajero.nombre }}</td><td>{{ p.get_metodo_pago_display }}</td><td class="text-end">{{ p.valor|floatformat:2 }}</td><td><a class="btn btn-sm btn-outline-primary" href="{% url 'pagos:receipt' p.pedido_id %}">View receipt</a></td></tr>{% empty %}<tr><td colspan="7">No payments found.</td></tr>{% endfor %}
+{% for p in payments %}<tr><td>{{ p.fecha|date:'Y-m-d H:i' }}</td><td>{{ p.pedido.mesa.sede.nombre }}</td><td>#{{ p.pedido_id }}</td><td>{{ p.cajero.nombre }}</td><td>{{ p.get_metodo_pago_display }}</td><td class="text-end">{{ p.valor|floatformat:2 }}</td><td><a class="btn btn-sm cuadra-btn-receipt" href="{% url 'pagos:receipt' p.pedido_id %}">View receipt</a></td></tr>{% empty %}<tr><td colspan="7">No payments found.</td></tr>{% endfor %}
 </tbody></table></div>{% endif %}
 {% endblock %}

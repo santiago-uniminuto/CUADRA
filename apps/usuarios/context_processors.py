@@ -41,7 +41,7 @@ MENU_POR_ROL = {
         ("Reports", "Inventory report", "reportes:inventory"),
     ],
     "WAITER": [("", "Inventory", "inventario:inventario_list"), ("", "Tables & orders", "pedidos:tables")],
-    "CASHIER": [("", "Home", "autenticacion:home"), ("", "Payments", "pagos:queue"), ("", "Sales report", "reportes:sales"), ("", "Inventory report", "reportes:inventory")],
+    "CASHIER": [("", "Payments", "pagos:queue"), ("", "Sales report", "reportes:sales"), ("", "Inventory report", "reportes:inventory")],
 }
 
 

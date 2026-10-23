@@ -83,7 +83,7 @@ class LayoutTests(DashboardBase):
         self.assertNotIn('data-bs-theme="dark"', html)
 
     def test_waiter_and_cashier_get_the_pos_interface(self):
-        for user, name in [(self.mesero, "inventario:inventario_list"), (self.cajero, "autenticacion:home")]:
+        for user, name in [(self.mesero, "inventario:inventario_list"), (self.cajero, "pagos:queue")]:
             html = self.get(user, name).content.decode()
             self.assertIn("layout-pos", html, user.username)
             self.assertIn('data-bs-theme="dark"', html)

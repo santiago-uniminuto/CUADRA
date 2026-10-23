@@ -1,20 +1,136 @@
 {% extends 'base.html' %}
-{% block title %}Order {{ order.pk }} — CUADRA{% endblock %}
+{% block title %}Order {{ order.pk }} — CUADRA
+<!-- Accessible in-page confirmation, shared by waiter forms. -->
+<dialog id="cuadra-confirm-dialog" class="cuadra-confirm-dialog" aria-labelledby="cuadra-confirm-title" aria-describedby="cuadra-confirm-description">
+  <div class="cuadra-confirm-inner">
+    <div class="cuadra-confirm-symbol" aria-hidden="true">!</div>
+    <h2 id="cuadra-confirm-title">Confirm action</h2>
+    <p id="cuadra-confirm-description"></p>
+    <div class="cuadra-confirm-actions">
+      <button type="button" class="btn cuadra-confirm-cancel" data-confirm-cancel>Cancel</button>
+      <button type="button" class="btn cuadra-confirm-proceed" data-confirm-proceed>Confirm</button>
+    </div>
+  </div>
+</dialog>
+<script>
+(function () {
+  'use strict';
+  const dialog = document.getElementById('cuadra-confirm-dialog');
+  if (!dialog || typeof dialog.showModal !== 'function') return;
+  const title = document.getElementById('cuadra-confirm-title');
+  const description = document.getElementById('cuadra-confirm-description');
+  const proceed = dialog.querySelector('[data-confirm-proceed]');
+  const cancel = dialog.querySelector('[data-confirm-cancel]');
+  let pendingForm = null;
+  document.querySelectorAll('form[data-cuadra-confirm]').forEach(function (form) {
+    form.addEventListener('submit', function (event) {
+      if (form.dataset.confirmed === 'true') return;
+      event.preventDefault();
+      pendingForm = form;
+      const release = form.dataset.cuadraConfirm === 'release';
+      title.textContent = release ? 'Release table?' : 'Discard empty order?';
+      description.textContent = release
+        ? 'Table ' + (form.dataset.cuadraTable || '') + ' will become available. Make sure the guests have left.'
+        : 'This empty order will be permanently discarded. This action cannot be undone.';
+      proceed.textContent = release ? 'Release table' : 'Discard order';
+      proceed.classList.toggle('is-danger', !release);
+      dialog.showModal();
+      cancel.focus();
+    });
+  });
+  cancel.addEventListener('click', function () { dialog.close(); });
+  dialog.addEventListener('close', function () { pendingForm = null; });
+  proceed.addEventListener('click', function () {
+    if (!pendingForm) return;
+    const form = pendingForm;
+    form.dataset.confirmed = 'true';
+    proceed.disabled = true;
+    form.requestSubmit();
+  });
+})();
+</script>
+{% endblock %}
 {% block content %}
-<a href="{% url 'pedidos:tables' %}" class="btn btn-outline-secondary mb-3">Back to tables</a>
-<h1 class="h3">Order #{{ order.pk }} — Table {{ order.mesa.numero }}</h1>
-<p>Status: {{ order.get_estado_display }}</p>
-<div class="table-responsive"><table class="table"><thead><tr><th>Product</th><th>Quantity</th><th>Unit price</th><th>Action</th></tr></thead><tbody>
-{% for detail in details %}<tr><td>{{ detail.producto.nombre }}</td><td>{{ detail.cantidad }}</td><td>${{ detail.valor_venta_unitario }}</td><td>{% if order.estado == 'OPEN' %}<form method="post" action="{% url 'pedidos:remove_product' order.pk detail.pk %}">{% csrf_token %}<button class="btn btn-sm btn-outline-danger">Remove</button></form>{% endif %}</td></tr>{% empty %}<tr><td colspan="4">No products added.</td></tr>{% endfor %}
-</tbody></table></div>
-<p class="fw-bold">Total: ${{ total }}</p>
-{% if order.estado == 'OPEN' %}
-<h2 class="h5">Add product</h2>
-<form method="post" action="{% url 'pedidos:add_product' order.pk %}" class="d-flex flex-wrap gap-2 align-items-end">{% csrf_token %}
-<div><label for="product" class="form-label">Product</label><select id="product" name="product" class="form-select" required>{% for product in products %}<option value="{{ product.pk }}">{{ product.nombre }}</option>{% endfor %}</select></div>
-<div><label for="quantity" class="form-label">Quantity</label><input id="quantity" type="number" name="quantity" min="1" max="100000" value="1" class="form-control" required></div>
-<button class="btn btn-primary" {% if not products %}disabled{% endif %}>Add</button></form>
-{% if not details %}<form method="post" action="{% url 'pedidos:discard_empty' order.pk %}" class="mt-3">{% csrf_token %}<button class="btn btn-outline-secondary">Discard empty order</button></form>{% endif %}
-<p class="text-muted mt-3">The cashier registers payment and closes the order. Stock is not deducted at this stage.</p>
-{% endif %}
+<section class="cuadra-pos-workspace" aria-labelledby="order-title">
+  <a href="{% url 'pedidos:tables' %}" class="cuadra-back-link">← Back to tables</a>
+  <div class="cuadra-workspace-head">
+    <div><div class="cuadra-eyebrow">TABLE {{ order.mesa.numero }} · FLOOR SERVICE</div><h1 id="order-title">Order #{{ order.pk }}</h1><p>Manage items before the cashier completes payment.</p></div>
+    <span class="cuadra-order-status">{{ order.get_estado_display }}</span>
+  </div>
+  <div class="cuadra-order-grid">
+    <section class="cuadra-service-panel" aria-labelledby="items-title">
+      <div class="cuadra-panel-heading"><h2 id="items-title">Order items</h2><span>{{ details|length }} line items</span></div>
+      <div class="table-responsive"><table class="table cuadra-order-table"><thead><tr><th>Product</th><th>Qty.</th><th>Unit price</th><th>Action</th></tr></thead><tbody>
+      {% for detail in details %}
+        <tr><td class="fw-semibold">{{ detail.producto.nombre }}</td><td>{{ detail.cantidad }}</td><td>${{ detail.valor_venta_unitario }}</td><td>{% if order.estado == 'OPEN' %}<form method="post" action="{% url 'pedidos:remove_product' order.pk detail.pk %}">{% csrf_token %}<button type="submit" class="btn btn-sm btn-outline-danger">Remove</button></form>{% else %}—{% endif %}</td></tr>
+      {% empty %}<tr><td colspan="4" class="cuadra-empty-items">No products added yet.</td></tr>{% endfor %}
+      </tbody></table></div>
+      <div class="cuadra-order-total"><span>Order total</span><strong>${{ total }}</strong></div>
+    </section>
+    <aside class="cuadra-service-panel cuadra-add-panel" aria-labelledby="add-title">
+      {% if order.estado == 'OPEN' %}
+        <div class="cuadra-panel-heading"><h2 id="add-title">Add product</h2></div>
+        <form method="post" action="{% url 'pedidos:add_product' order.pk %}">{% csrf_token %}
+          <div class="mb-3"><label for="product" class="form-label">Product</label><select id="product" name="product" class="form-select" required>{% for product in products %}<option value="{{ product.pk }}">{{ product.nombre }}</option>{% endfor %}</select></div>
+          <div class="mb-3"><label for="quantity" class="form-label">Quantity</label><input id="quantity" type="number" name="quantity" min="1" max="100000" value="1" class="form-control" required></div>
+          <button type="submit" class="btn btn-primary w-100" {% if not products %}disabled{% endif %}>+ Add to order</button>
+        </form>
+        {% if not details %}<form method="post" action="{% url 'pedidos:discard_empty' order.pk %}" data-cuadra-confirm="discard" class="mt-3">{% csrf_token %}<button type="submit" class="btn cuadra-btn-danger w-100">Discard empty order</button></form>{% endif %}
+        <p class="cuadra-service-hint mb-0">The cashier registers payment and closes the order. Stock is deducted at payment.</p>
+      {% else %}
+        <div class="cuadra-panel-heading"><h2 id="add-title">Order closed</h2></div><p class="cuadra-service-hint">This order can no longer be edited.</p>
+      {% endif %}
+    </aside>
+  </div>
+</section>
+
+<!-- Accessible in-page confirmation, shared by waiter forms. -->
+<dialog id="cuadra-confirm-dialog" class="cuadra-confirm-dialog" aria-labelledby="cuadra-confirm-title" aria-describedby="cuadra-confirm-description">
+  <div class="cuadra-confirm-inner">
+    <div class="cuadra-confirm-symbol" aria-hidden="true">!</div>
+    <h2 id="cuadra-confirm-title">Confirm action</h2>
+    <p id="cuadra-confirm-description"></p>
+    <div class="cuadra-confirm-actions">
+      <button type="button" class="btn cuadra-confirm-cancel" data-confirm-cancel>Cancel</button>
+      <button type="button" class="btn cuadra-confirm-proceed" data-confirm-proceed>Confirm</button>
+    </div>
+  </div>
+</dialog>
+<script>
+(function () {
+  'use strict';
+  const dialog = document.getElementById('cuadra-confirm-dialog');
+  if (!dialog || typeof dialog.showModal !== 'function') return;
+  const title = document.getElementById('cuadra-confirm-title');
+  const description = document.getElementById('cuadra-confirm-description');
+  const proceed = dialog.querySelector('[data-confirm-proceed]');
+  const cancel = dialog.querySelector('[data-confirm-cancel]');
+  let pendingForm = null;
+  document.querySelectorAll('form[data-cuadra-confirm]').forEach(function (form) {
+    form.addEventListener('submit', function (event) {
+      if (form.dataset.confirmed === 'true') return;
+      event.preventDefault();
+      pendingForm = form;
+      const release = form.dataset.cuadraConfirm === 'release';
+      title.textContent = release ? 'Release table?' : 'Discard empty order?';
+      description.textContent = release
+        ? 'Table ' + (form.dataset.cuadraTable || '') + ' will become available. Make sure the guests have left.'
+        : 'This empty order will be permanently discarded. This action cannot be undone.';
+      proceed.textContent = release ? 'Release table' : 'Discard order';
+      proceed.classList.toggle('is-danger', !release);
+      dialog.showModal();
+      cancel.focus();
+    });
+  });
+  cancel.addEventListener('click', function () { dialog.close(); });
+  dialog.addEventListener('close', function () { pendingForm = null; });
+  proceed.addEventListener('click', function () {
+    if (!pendingForm) return;
+    const form = pendingForm;
+    form.dataset.confirmed = 'true';
+    proceed.disabled = true;
+    form.requestSubmit();
+  });
+})();
+</script>
 {% endblock %}

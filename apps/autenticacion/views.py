@@ -88,8 +88,7 @@ class HomeView(LoginRequiredMixin, TemplateView):
 
     - Administrator -> dashboard de inicio (bienvenida y resumen).
     - Waiter        -> inventario de su sede.
-    - Cashier       -> pantalla de bienvenida (sus pantallas de pagos se
-                       construyen en el Sprint 5).
+    - Cashier       -> cola de pagos pendientes.
 
     Si el admin está en modo actuación, se usa el rol con el que actúa.
     """
@@ -98,6 +97,7 @@ class HomeView(LoginRequiredMixin, TemplateView):
     DESTINOS = {
         Usuario.Rol.ADMIN: "reportes:dashboard",
         Usuario.Rol.MESERO: "inventario:inventario_list",
+        Usuario.Rol.CAJERO: "pagos:queue",
     }
 
     def get(self, request, *args, **kwargs):

@@ -27,10 +27,9 @@ class HomePorRolTests(TestCase):
         resp = self.login("mesero1").get(reverse("autenticacion:home"))
         self.assertRedirects(resp, reverse("inventario:inventario_list"))
 
-    def test_cashier_gets_welcome_screen(self):
+    def test_cashier_goes_directly_to_payments(self):
         resp = self.login("cajero1").get(reverse("autenticacion:home"))
-        self.assertEqual(resp.status_code, 200)
-        self.assertContains(resp, "Welcome")
+        self.assertRedirects(resp, reverse("pagos:queue"))
 
     def test_anonymous_goes_to_login(self):
         resp = Client().get(reverse("autenticacion:home"))
@@ -43,6 +42,17 @@ class HomePorRolTests(TestCase):
         self.assertEqual(resp.redirect_chain[-1][0], reverse("inventario:inventario_list"))
         resp = Client().post(reverse("autenticacion:login"), {"username": "admin", "password": PWD}, follow=True)
         self.assertEqual(resp.redirect_chain[-1][0], reverse("reportes:dashboard"))
+
+    def test_real_cashier_login_lands_on_payments(self):
+        c = Client()
+        resp = c.post(reverse("autenticacion:login"), {"username": "cajero1", "password": PWD}, follow=True)
+        self.assertEqual(resp.redirect_chain[-1][0], reverse("pagos:queue"))
+
+    def test_admin_acting_as_cashier_is_sent_to_payments(self):
+        c = self.login("admin")
+        sede = Sede.objects.get()
+        resp = c.post(reverse("usuarios:act_as"), {"rol": "CASHIER", "sede": sede.pk}, follow=True)
+        self.assertEqual(resp.redirect_chain[-1][0], reverse("pagos:queue"))
 
     def test_admin_acting_as_waiter_is_sent_to_inventory(self):
         c = self.login("admin")

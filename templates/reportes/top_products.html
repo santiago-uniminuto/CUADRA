@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block title %}Top-selling products — CUADRA{% endblock %}
 {% block content %}
-<h1 class="h3 mb-3">Top-selling products</h1>
+<div class="cuadra-report-heading"><h1 class="h3 mb-0">Top-selling products</h1><a class="btn cuadra-btn-report" href="{% url 'reportes:sales' %}">← Back to sales report</a></div>
 <p class="text-muted">Ranking by units in paid orders. Revenue uses the sale price recorded on each order line.</p>
 <form method="get" class="card card-body mb-3">
   <div class="row g-2 align-items-end">

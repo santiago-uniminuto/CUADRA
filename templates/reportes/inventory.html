@@ -7,7 +7,7 @@
 {% if is_admin_report %}<div class="col-md-5"><label class="form-label" for="site">Site</label><select class="form-select" id="site" name="site"><option value="">All sites</option>{% for s in sites %}<option value="{{ s.pk }}" {% if site.pk == s.pk %}selected{% endif %}>{{ s.nombre }}</option>{% endfor %}</select></div>{% endif %}
 <div class="col-md-3"><button class="btn btn-primary" type="submit">Filter</button></div></div></form>{% endif %}
 {% if error %}<div class="alert alert-danger">{{ error }}</div>{% else %}
-<div class="mb-3"><a class="btn btn-outline-success" href="{% url 'reportes:inventory_export' %}?site={{ request.GET.site|urlencode }}">Export to Excel</a></div>
+<div class="mb-3"><a class="btn cuadra-btn-export" href="{% url 'reportes:inventory_export' %}?site={{ request.GET.site|urlencode }}">↓ Export to Excel</a></div>
 <div class="table-responsive"><table class="table table-striped"><thead><tr><th>Site</th><th>Product</th><th class="text-end">Available units</th></tr></thead><tbody>
 {% for item in stock %}<tr><td>{{ item.sede.nombre }}</td><td>{{ item.producto.nombre }}</td><td class="text-end">{{ item.cantidad }}</td></tr>{% empty %}<tr><td colspan="3">No inventory records found.</td></tr>{% endfor %}
 </tbody></table></div>{% endif %}

@@ -6,7 +6,7 @@
   <title>{% block title %}CUADRA{% endblock %}</title>
   {# Bootstrap va dentro del proyecto (static/vendor): en el servidor de la red local puede no haber internet. #}
   <link href="{% static 'vendor/bootstrap/bootstrap.min.css' %}" rel="stylesheet">
-  <link href="{% static 'css/cuadra.css' %}" rel="stylesheet">
+  <link href="{% static 'css/cuadra.css' %}?v=cuadra-brand-1-1" rel="stylesheet">
 </head>
 {# Dos interfaces: "admin" (panel de gestión) y "pos" (punto de venta, mesero y cajero). Ver nav_menu(). #}
 <body class="layout-{{ layout|default:'guest' }}"{% if layout == 'pos' %} data-bs-theme="dark"{% endif %}>
@@ -17,7 +17,7 @@
           aria-controls="sidebar" aria-label="Open menu">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <a class="topbar-brand" href="{% url 'autenticacion:home' %}">CUADRA</a>
+  <a class="topbar-brand brand-lockup" href="{% url 'autenticacion:home' %}"><img src="{% static 'img/cuadra-mark.svg' %}" alt="" class="brand-mark" width="40" height="40" style="width:40px;height:40px;max-width:40px;max-height:40px;flex:0 0 40px;display:block"><span>CUADRA<small>BAR &amp; RESTAURANT</small></span></a>
 
   <div class="ms-auto d-flex align-items-center gap-2">
     {% if all_sedes %}
@@ -48,7 +48,7 @@
 </header>
 {% elif user.is_authenticated %}
 <header class="pos-topbar d-flex align-items-center flex-wrap gap-3 px-3 py-2">
-  <a class="pos-brand" href="{% url 'autenticacion:home' %}">CUADRA</a>
+  <a class="pos-brand brand-lockup" href="{% url 'autenticacion:home' %}"><img src="{% static 'img/cuadra-mark.svg' %}" alt="" class="brand-mark" width="40" height="40" style="width:40px;height:40px;max-width:40px;max-height:40px;flex:0 0 40px;display:block"><span>CUADRA<small>BAR &amp; RESTAURANT</small></span></a>
   <span class="pos-site">{{ sede_actual }}</span>
   {% if acting_as %}<span class="badge text-bg-warning fs-6">Acting as {{ acting_as_display }}</span>{% endif %}
 
@@ -83,7 +83,7 @@
           <a class="sidebar-link{% if item.active %} active{% endif %}" href="{{ item.url }}">{{ item.label }}</a>
         {% endfor %}
       </nav>
-      <div class="sidebar-foot">Engineery Solutions S.A.S.</div>
+      <div class="sidebar-foot">CUADRA POS <span class="d-block">Powered by Engineery Solutions S.A.S.</span></div>
     </div>
   </aside>
   {% endif %}

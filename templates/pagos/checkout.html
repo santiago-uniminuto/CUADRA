@@ -1,22 +1,31 @@
 {% extends 'base.html' %}
 {% block title %}Checkout — Order #{{ order.pk }}{% endblock %}
 {% block content %}
-<a class="btn btn-outline-secondary mb-3" href="{% url 'pagos:queue' %}">Back to pending payments</a>
-<h1 class="h3">Order #{{ order.pk }} — Table {{ order.mesa.numero }}</h1>
-<p>Status: {{ order.get_estado_display }}</p>
-<div class="table-responsive"><table class="table"><thead><tr><th>Product</th><th>Quantity</th><th>Unit price</th></tr></thead><tbody>
-{% for detail in details %}<tr><td>{{ detail.producto.nombre }}</td><td>{{ detail.cantidad }}</td><td>${{ detail.valor_venta_unitario }}</td></tr>{% empty %}<tr><td colspan="3">No products added.</td></tr>{% endfor %}
-</tbody></table></div><p class="fw-bold">Total: ${{ total }}</p>
-{% if payment %}<p class="alert alert-success">Payment registered — {{ payment.get_metodo_pago_display }} · ${{ payment.valor }}</p>
-<p><a class="btn btn-primary" href="{% url 'pagos:receipt' order.pk %}">View / print receipt</a></p>
-{% if payment.efectivo_recibido is not None %}<p>Cash received: ${{ payment.efectivo_recibido }} · Change due: ${{ payment.cambio }}</p>{% endif %}
-{% elif order.estado == 'OPEN' and details %}
-<form method="post" action="{% url 'pagos:register_payment' order.pk %}">{% csrf_token %}
-<label for="method" class="form-label">Payment method</label><select name="method" id="method" class="form-select mb-3" required>{% for value,label in methods %}<option value="{{ value }}">{{ label }}</option>{% endfor %}</select>
-<div id="cash-fields" class="mb-3"><label class="form-label" for="cash_received">Cash received</label><input class="form-control" id="cash_received" name="cash_received" type="number" min="0" step="0.01" inputmode="decimal"><p class="mt-2">Change due: <strong id="change-due">—</strong></p><p id="cash-error" class="text-danger" role="status"></p></div>
-<button class="btn btn-primary" type="submit">Confirm payment and close order</button>
-</form>
-<script>
+<section class="cuadra-cash-workspace cuadra-checkout" aria-labelledby="checkout-title">
+  <a class="cuadra-cash-back" href="{% url 'pagos:queue' %}">← Back to pending payments</a>
+  <div class="cuadra-cash-heading"><div><div class="cuadra-cash-eyebrow">CASHIER · TABLE {{ order.mesa.numero }}</div><h1 id="checkout-title">Checkout · Order #{{ order.pk }}</h1><p>Review the items and confirm payment.</p></div><span class="cuadra-cash-state">{{ order.get_estado_display }}</span></div>
+  <div class="cuadra-checkout-grid">
+    <section class="cuadra-cash-panel" aria-labelledby="summary-title">
+      <div class="cuadra-cash-panel-title"><h2 id="summary-title">Order summary</h2><span>Table {{ order.mesa.numero }}</span></div>
+      <div class="table-responsive"><table class="table cuadra-cash-items"><thead><tr><th>Product</th><th>Quantity</th><th>Unit price</th></tr></thead><tbody>
+      {% for detail in details %}<tr><td class="fw-semibold">{{ detail.producto.nombre }}</td><td>{{ detail.cantidad }}</td><td>${{ detail.valor_venta_unitario }}</td></tr>{% empty %}<tr><td colspan="3" class="cuadra-cash-empty-line">No products added.</td></tr>{% endfor %}
+      </tbody></table></div>
+      <div class="cuadra-cash-total"><span>Total due</span><strong>${{ total }}</strong></div>
+    </section>
+    <section class="cuadra-cash-panel cuadra-cash-payment" aria-labelledby="payment-title">
+      <div class="cuadra-cash-panel-title"><h2 id="payment-title">Payment</h2><span>Secure checkout</span></div>
+      {% if payment %}
+        <div class="cuadra-cash-success" role="status"><strong>Payment registered</strong><span>{{ payment.get_metodo_pago_display }} · ${{ payment.valor }}</span></div>
+        {% if payment.efectivo_recibido is not None %}<div class="cuadra-cash-change"><span>Cash received</span><strong>${{ payment.efectivo_recibido }}</strong><span>Change due</span><strong>${{ payment.cambio }}</strong></div>{% endif %}
+        <a class="btn cuadra-btn-receipt" href="{% url 'pagos:receipt' order.pk %}">View receipt</a>
+      {% elif order.estado == 'OPEN' and details %}
+        <form method="post" action="{% url 'pagos:register_payment' order.pk %}">{% csrf_token %}
+          <label for="method" class="form-label">Payment method</label>
+          <select name="method" id="method" class="form-select mb-3" required>{% for value,label in methods %}<option value="{{ value }}">{{ label }}</option>{% endfor %}</select>
+          <div id="cash-fields" class="cuadra-cash-fields mb-3"><label class="form-label" for="cash_received">Cash received</label><input class="form-control" id="cash_received" name="cash_received" type="number" min="0" step="0.01" inputmode="decimal"><div class="cuadra-cash-change"><span>Change due</span><strong id="change-due" aria-live="polite">—</strong></div><p id="cash-error" class="cuadra-cash-error" role="status"></p></div>
+          <button class="btn btn-primary cuadra-cash-confirm" type="submit">Confirm payment and close order</button>
+        </form>
+        <script>
 (function () {
  const method = document.getElementById('method');
  const cash = document.getElementById('cash_received');
@@ -34,6 +43,12 @@
  }
  method.addEventListener('change', update); cash.addEventListener('input', update); update();
 })();
-</script><p class="text-muted mt-3">Inventory is deducted when payment is registered. The table stays occupied.</p>
-{% endif %}
+</script>
+        <p class="cuadra-cash-note">Inventory is deducted when payment is registered. The table stays occupied.</p>
+      {% else %}
+        <p class="cuadra-cash-note">This order is not available for payment.</p>
+      {% endif %}
+    </section>
+  </div>
+</section>
 {% endblock %}
