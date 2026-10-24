@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Products — CUADRA{% endblock %}
+{% block content %}
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="h4 mb-0">Products</h1>
+    <a href="{% url 'catalogo:producto_create' %}" class="btn btn-primary btn-sm">+ New product</a>
+  </div>
+
+  <form method="get" class="row g-2 mb-3">
+    <div class="col-md-5">
+      <input type="search" name="q" value="{{ query }}" class="form-control" placeholder="Search by name or #code..." aria-label="Search by product name or #code">
+    </div>
+    <div class="col-auto">
+      <button class="btn btn-outline-secondary" type="submit">Search</button>
+      {% if query %}<a href="{% url 'catalogo:producto_list' %}" class="btn btn-link">Clear</a>{% endif %}
+    </div>
+  </form>
+
+  {% if productos %}
+  <div class="table-responsive">
+    <table class="table table-striped align-middle">
+      <thead>
+        <tr><th>Code</th><th>Name</th><th>Type</th><th>Supplier</th><th class="text-end">Sale price</th><th>Status</th><th></th></tr>
+      </thead>
+      <tbody>
+        {% for p in productos %}
+        <tr class="{% if not p.activo %}text-muted{% endif %}">
+          <td>{{ p.pk }}</td>
+          <td>{{ p.nombre }}</td>
+          <td>{{ p.tipo_producto }}</td>
+          <td>{{ p.proveedor }}</td>
+          <td class="text-end">${{ p.valor_venta|floatformat:"-2g" }}</td>
+          <td>{% if p.activo %}<span class="badge text-bg-success">Active</span>{% else %}<span class="badge text-bg-secondary">Inactive</span>{% endif %}</td>
+          <td class="text-end text-nowrap">
+            <a href="{% url 'catalogo:producto_edit' p.pk %}" class="btn btn-outline-secondary btn-sm">Edit</a>
+            {% if p.activo %}
+            <a href="{% url 'catalogo:producto_toggle' p.pk %}" class="btn btn-outline-danger btn-sm">DEACTIVATE</a>
+            {% else %}
+            <a href="{% url 'catalogo:producto_toggle' p.pk %}" class="btn btn-outline-success btn-sm">REACTIVATE</a>
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% elif query %}
+    <p class="text-muted">No results found for "{{ query }}".</p>
+  {% else %}
+    <p class="text-muted">No products registered yet.</p>
+  {% endif %}
+{% endblock %}

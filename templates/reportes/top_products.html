@@ -1,19 +1,18 @@
 {% extends 'base.html' %}
 {% block title %}Top-selling products — CUADRA{% endblock %}
 {% block content %}
-<div class="cuadra-report-heading"><h1 class="h3 mb-0">Top-selling products</h1><a class="btn cuadra-btn-report" href="{% url 'reportes:sales' %}">← Back to sales report</a></div>
-<p class="text-muted">Ranking by units in paid orders. Revenue uses the sale price recorded on each order line.</p>
-<form method="get" class="card card-body mb-3">
-  <div class="row g-2 align-items-end">
+<div class="cuadra-admin-report">
+  <header class="cuadra-admin-report-hero"><div><span class="cuadra-admin-report-eyebrow">CUADRA / SALES INTELLIGENCE</span><h1>Top-selling products</h1><p>Ranked by units in paid orders. Revenue uses the price recorded at the time of sale.</p></div><a class="btn cuadra-btn-report" href="{% url 'reportes:sales' %}">← Back to sales report</a></header>
+  <form method="get" class="card cuadra-admin-filter mb-4"><div class="card-body"><div class="row g-3 align-items-end">
     {% if is_admin_report %}<div class="col-md-3"><label class="form-label" for="site">Site</label><select class="form-select" id="site" name="site"><option value="">All sites</option>{% for s in sites %}<option value="{{ s.pk }}" {% if site.pk == s.pk %}selected{% endif %}>{{ s.nombre }}</option>{% endfor %}</select></div>{% endif %}
     <div class="col-md-3"><label class="form-label" for="start">From</label><input class="form-control" type="date" name="start" id="start" value="{{ start }}"></div>
     <div class="col-md-3"><label class="form-label" for="end">To</label><input class="form-control" type="date" name="end" id="end" value="{{ end }}"></div>
-    <div class="col-md-2"><button class="btn btn-primary w-100" type="submit">Filter</button></div>
-  </div>
-</form>
-{% if error %}<div class="alert alert-danger">{{ error }}</div>{% else %}
-<div class="card card-body"><div class="table-responsive"><table class="table table-striped">
-<thead><tr><th>Rank</th><th>Product</th><th class="text-end">Units sold</th><th class="text-end">Sales revenue</th></tr></thead>
-<tbody>{% for item in ranking %}<tr><td>{{ forloop.counter }}</td><td>{{ item.name }}</td><td class="text-end">{{ item.units }}</td><td class="text-end">{{ item.revenue|floatformat:2 }}</td></tr>{% empty %}<tr><td colspan="4">No paid products found for these filters.</td></tr>{% endfor %}</tbody>
-</table></div></div>{% endif %}
+    <div class="col-md-2"><button class="btn btn-primary w-100" type="submit">Apply filters</button></div>
+  </div></div></form>
+  {% if error %}<div class="alert alert-danger" role="alert">{{ error }}</div>{% else %}
+  <section class="card cuadra-admin-report-panel"><div class="card-header"><h2>Product ranking</h2><span>Paid orders only · ranked by units sold</span></div><div class="table-responsive"><table class="table align-middle mb-0"><thead><tr><th>Rank</th><th>Product</th><th class="text-end">Units sold</th><th class="text-end">Sales revenue</th></tr></thead><tbody>
+    {% for item in ranking %}<tr><td><span class="cuadra-admin-rank{% if forloop.first %} is-first{% endif %}">{{ forloop.counter }}</span></td><td class="fw-semibold">{{ item.name }}</td><td class="text-end">{{ item.units }}</td><td class="text-end fw-semibold">{{ item.revenue|floatformat:2 }}</td></tr>{% empty %}<tr><td colspan="4" class="cuadra-admin-empty">No paid products found for these filters.</td></tr>{% endfor %}
+  </tbody></table></div></section>
+  {% endif %}
+</div>
 {% endblock %}

@@ -3,13 +3,13 @@
 {% block title %}Sites — CUADRA{% endblock %}
 
 {% block content %}
-<div class="d-flex justify-content-between align-items-center mb-3">
-  <h1 class="h4 mb-0">Sites</h1>
-  <a href="{% url 'usuarios:sede_create' %}" class="btn btn-primary btn-sm">+ New site</a>
-</div>
+<div class="cuadra-management" data-cuadra-patch="CUADRA-MANAGEMENT-6">
+<section class="cuadra-management-hero"><div><div class="cuadra-management-eyebrow">MANAGEMENT / SITES</div><h1>Sites</h1><p>Manage restaurant locations and availability.</p></div><a class="btn" href="{% url 'usuarios:sede_create' %}">+ New site</a></section>
+
+
 
 {% if sedes %}
-<div class="table-responsive">
+<div class="table-responsive cuadra-management-table">
   <table class="table table-striped align-middle">
     <thead>
       <tr><th>Name</th><th>Address</th><th>Status</th><th></th></tr>
@@ -36,4 +36,6 @@
 {% else %}
 <p class="text-muted">No sites registered yet.</p>
 {% endif %}
+
+</div>
 {% endblock %}

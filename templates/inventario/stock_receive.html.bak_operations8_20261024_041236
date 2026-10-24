@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Receive stock — CUADRA{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+  <h1 class="h4 mb-0">Receive stock</h1>
+</div>
+
+{# Cambiar de sede recarga la pantalla para mostrar las existencias actuales de esa sede #}
+<form method="get" class="row g-2 mb-3">
+  <div class="col-md-4">
+    <label class="form-label" for="sede-select">Site that received the delivery</label>
+    <select id="sede-select" name="sede" class="form-select" onchange="this.form.submit()">
+      {% for s in sedes %}<option value="{{ s.pk }}"{% if s.pk == sede.pk %} selected{% endif %}>{{ s.nombre }}</option>{% endfor %}
+    </select>
+  </div>
+</form>
+
+{% if filas %}
+<form method="post" novalidate>
+  {% csrf_token %}
+  <input type="hidden" name="sede" value="{{ sede.pk }}">
+  <p class="text-muted">Type how many units arrived of each product. Leave blank (or 0) the ones that did not.</p>
+  <div class="table-responsive">
+    <table class="table table-striped align-middle">
+      <thead><tr><th>Product</th><th>Type</th><th class="text-end">Current stock</th><th style="width: 160px;">Units received</th></tr></thead>
+      <tbody>
+        {% for f in filas %}
+        <tr>
+          <td>{{ f.producto.nombre }}</td>
+          <td>{{ f.producto.tipo_producto }}</td>
+          <td class="text-end">{{ f.actual }}</td>
+          <td><input type="number" name="qty_{{ f.producto.pk }}" value="{{ f.ingresado }}" min="0" step="1" inputmode="numeric" class="form-control" placeholder="0" aria-label="Units received of {{ f.producto.nombre }}"></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <button type="submit" class="btn btn-primary">RECEIVE STOCK</button>
+  <a href="{% url 'inventario:stock_list' %}?sede={{ sede.pk }}" class="btn btn-secondary">CANCEL</a>
+</form>
+{% else %}
+  <p class="text-muted">No active products yet. Create products in the catalog first.</p>
+{% endif %}
+{% endblock %}

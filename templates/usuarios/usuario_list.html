@@ -3,10 +3,10 @@
 {% block title %}Users — CUADRA{% endblock %}
 
 {% block content %}
-<div class="d-flex justify-content-between align-items-center mb-3">
-  <h4 class="mb-0">Users</h4>
-  <a href="{% url 'usuarios:usuario_create' %}" class="btn btn-primary btn-sm">+ New user</a>
-</div>
+<div class="cuadra-management" data-cuadra-patch="CUADRA-MANAGEMENT-6">
+<section class="cuadra-management-hero"><div><div class="cuadra-management-eyebrow">MANAGEMENT / USERS</div><h1>Users</h1><p>Manage team accounts, roles and site assignments.</p></div><a class="btn" href="{% url 'usuarios:usuario_create' %}">+ New user</a></section>
+
+
 
 <form method="get" class="row g-2 mb-4">
   <div class="col-md-5">
@@ -19,7 +19,7 @@
 </form>
 
 {% if usuarios %}
-<table class="table table-striped align-middle">
+<div class="cuadra-management-table"><table class="table table-striped align-middle">
   <thead>
     <tr><th>Name</th><th>Username</th><th>Role</th><th>Site</th><th>Status</th><th></th></tr>
   </thead>
@@ -47,7 +47,7 @@
     </tr>
     {% endfor %}
   </tbody>
-</table>
+</table></div>
 {% elif query %}
 <p class="text-muted">No results found for "{{ query }}".</p>
 {% else %}
@@ -87,5 +87,7 @@
       </div>
     </form>
   </div>
+</div>
+
 </div>
 {% endblock %}

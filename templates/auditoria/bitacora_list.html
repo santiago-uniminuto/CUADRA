@@ -2,9 +2,12 @@
 {% block title %}Activity log — CUADRA{% endblock %}
 
 {% block content %}
+<div class="cuadra-management" data-cuadra-patch="CUADRA-MANAGEMENT-6">
+<section class="cuadra-management-hero"><div><div class="cuadra-management-eyebrow">MANAGEMENT / ACTIVITY</div><h1>Activity log</h1><p>Search and review recorded system activity.</p></div></section>
+
 <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
-  <h1 class="h4 mb-0">Activity log</h1>
-  <span class="text-muted">{{ pagina.paginator.count }} event{{ pagina.paginator.count|pluralize }}</span>
+  <span class="fw-semibold">{{ pagina.paginator.count }} recorded events</span>
+  
 </div>
 
 <form method="get" class="card card-body mb-3">
@@ -50,7 +53,7 @@
 </form>
 
 {% if pagina.object_list %}
-<div class="table-responsive">
+<div class="table-responsive cuadra-management-table">
   <table class="table table-striped align-middle">
     <thead><tr><th>When</th><th>User</th><th>Event</th><th>Detail</th></tr></thead>
     <tbody>
@@ -80,4 +83,6 @@
 {% else %}
   <p class="text-muted">No events match these filters.</p>
 {% endif %}
+
+</div>
 {% endblock %}

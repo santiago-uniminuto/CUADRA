@@ -1,7 +1,11 @@
 {% extends 'base.html' %}
 {% block title %}Manage tables — CUADRA{% endblock %}
 {% block content %}
-<h1 class="h3 mb-3">Manage tables</h1>
+<!-- CUADRA OPERATIONS 8 HEADER -->
+<section class="cuadra-operations-hero">
+  <div><span class="cuadra-operations-eyebrow">OPERATIONS / CUADRA</span>
+  <h1>Manage tables</h1><p>Manage table availability and numbering by site.</p></div>
+</section>
 <form method="get" class="row g-2 mb-4 align-items-end">
   <div class="col-md-5"><label for="site" class="form-label">Site</label><select id="site" name="site" class="form-select" required>
   {% for s in sites %}<option value="{{ s.pk }}" {% if site.pk == s.pk %}selected{% endif %}>{{ s.nombre }}</option>{% endfor %}

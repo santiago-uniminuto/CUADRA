@@ -1,14 +1,93 @@
 {% extends 'base.html' %}
 {% block title %}Inventory report — CUADRA{% endblock %}
 {% block content %}
-<h1 class="h3 mb-3">Inventory report</h1>
-<p class="text-muted">Current inventory snapshot. Historical stock by date is not available.</p>
-{% if is_admin_report %}<form method="get" class="card card-body mb-3"><div class="row g-2 align-items-end">
-{% if is_admin_report %}<div class="col-md-5"><label class="form-label" for="site">Site</label><select class="form-select" id="site" name="site"><option value="">All sites</option>{% for s in sites %}<option value="{{ s.pk }}" {% if site.pk == s.pk %}selected{% endif %}>{{ s.nombre }}</option>{% endfor %}</select></div>{% endif %}
-<div class="col-md-3"><button class="btn btn-primary" type="submit">Filter</button></div></div></form>{% endif %}
-{% if error %}<div class="alert alert-danger">{{ error }}</div>{% else %}
-<div class="mb-3"><a class="btn cuadra-btn-export" href="{% url 'reportes:inventory_export' %}?site={{ request.GET.site|urlencode }}">↓ Export to Excel</a></div>
-<div class="table-responsive"><table class="table table-striped"><thead><tr><th>Site</th><th>Product</th><th class="text-end">Available units</th></tr></thead><tbody>
-{% for item in stock %}<tr><td>{{ item.sede.nombre }}</td><td>{{ item.producto.nombre }}</td><td class="text-end">{{ item.cantidad }}</td></tr>{% empty %}<tr><td colspan="3">No inventory records found.</td></tr>{% endfor %}
-</tbody></table></div>{% endif %}
+<style>
+/* Fase 4 · Inventory report — estilos aislados */
+.cuadra-inv-report{max-width:1450px;margin:0 auto;padding-bottom:2rem}
+.cuadra-inv-hero{position:relative;overflow:hidden;background:linear-gradient(115deg,#092d24,#15503f 75%,#41644b);border:1px solid rgba(212,175,103,.35);border-radius:1.15rem;padding:1.7rem 1.9rem;color:#fff;box-shadow:0 16px 38px rgba(8,44,35,.17);margin-bottom:1.35rem}
+.cuadra-inv-hero:after{content:'';position:absolute;width:220px;height:220px;right:-65px;top:-120px;border:1px solid rgba(212,175,103,.27);border-radius:50%;box-shadow:0 0 0 34px rgba(212,175,103,.055),0 0 0 72px rgba(212,175,103,.04);pointer-events:none}
+.cuadra-inv-eyebrow{font-size:.73rem;letter-spacing:.17em;font-weight:800;color:#e6c486;margin-bottom:.45rem}
+.cuadra-inv-hero h1{font-size:clamp(1.6rem,3vw,2.3rem);font-weight:800;letter-spacing:-.025em;color:#fff;margin:0 0 .45rem}
+.cuadra-inv-hero p{max-width:690px;margin:0;color:#e2eee6;line-height:1.55}
+.cuadra-inv-panel{background:rgba(255,255,255,.88);border:1px solid rgba(14,59,47,.1);border-radius:1.05rem;box-shadow:0 12px 32px rgba(12,44,33,.065);overflow:hidden;margin-bottom:1.2rem}
+.cuadra-inv-panel-body{padding:1.35rem}
+.cuadra-inv-panel-title{font-size:1.08rem;font-weight:800;color:#153d30;margin:0 0 1rem}
+.cuadra-inv-panel .form-label{font-weight:700;color:#385b4b;font-size:.88rem}
+.cuadra-inv-panel .form-select{min-height:44px;border-radius:.65rem}
+.cuadra-inv-panel .btn{min-height:44px;border-radius:.65rem;font-weight:700}
+.cuadra-inv-results-head{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;padding:1.15rem 1.35rem;border-bottom:1px solid #e6ede7}
+.cuadra-inv-results-head h2{font-size:1.13rem;font-weight:800;color:#153d30;margin:0}
+.cuadra-inv-results-head p{font-size:.82rem;color:#64736d;margin:.25rem 0 0}
+.cuadra-inv-table{margin:0;--bs-table-bg:transparent;--bs-table-striped-bg:#f6f9f5;--bs-table-color:#253b31}
+.cuadra-inv-table>thead>tr>th{background:#e7eee7;color:#173d30;border-bottom:2px solid #c6a15e;padding:.9rem 1.2rem;font-size:.79rem;letter-spacing:.05em;text-transform:uppercase}
+.cuadra-inv-table>tbody>tr>td{padding:.9rem 1.2rem;vertical-align:middle;border-color:#e8eee9}
+.cuadra-inv-site{font-weight:650;color:#365e4a}
+.cuadra-inv-product{font-weight:700;color:#173d30}
+.cuadra-inv-quantity{display:inline-block;min-width:3rem;text-align:center;padding:.3rem .65rem;border-radius:.55rem;background:#e7f0e8;color:#164632;font-weight:800;font-variant-numeric:tabular-nums}
+.cuadra-inv-quantity.is-empty{background:#f9e6e3;color:#923c35}
+.cuadra-inv-empty{text-align:center;padding:2.8rem 1rem!important;color:#64736d}
+.cuadra-inv-hint{display:flex;align-items:flex-start;gap:.7rem;background:#f6f0e3;border:1px solid #e7d5af;border-radius:.8rem;padding:.9rem 1.05rem;color:#64522f;font-size:.87rem;line-height:1.5;margin-bottom:1.2rem}
+.cuadra-inv-hint strong{color:#473718}
+@media(max-width:575px){.cuadra-inv-hero{padding:1.3rem}.cuadra-inv-panel-body{padding:1rem}.cuadra-inv-results-head{padding:1rem}.cuadra-inv-results-head .btn{width:100%}.cuadra-inv-table>thead>tr>th,.cuadra-inv-table>tbody>tr>td{padding:.75rem}}
+@media print{.cuadra-inv-hero,.cuadra-inv-panel{box-shadow:none}.cuadra-inv-filter,.cuadra-inv-export{display:none!important}}
+</style>
+<div class="cuadra-inv-report">
+  <header class="cuadra-inv-hero">
+    <div class="cuadra-inv-eyebrow">CUADRA / OPERATIONS</div>
+    <h1>Inventory report</h1>
+    <p>Review current stock availability by site and product. Keep your team informed with a clear inventory snapshot.</p>
+  </header>
+
+  <div class="cuadra-inv-hint" role="note"><span aria-hidden="true">ⓘ</span><span><strong>Current stock snapshot.</strong> Historical inventory by date is not available. Quantities reflect the inventory currently registered in CUADRA.</span></div>
+
+  {% if is_admin_report %}
+  <section class="cuadra-inv-panel cuadra-inv-filter" aria-labelledby="inventory-filter-title">
+    <div class="cuadra-inv-panel-body">
+      <h2 class="cuadra-inv-panel-title" id="inventory-filter-title">Filter inventory</h2>
+      <form method="get">
+        <div class="row g-3 align-items-end">
+          <div class="col-md-8 col-lg-6">
+            <label class="form-label" for="site">Site</label>
+            <select class="form-select" id="site" name="site">
+              <option value="">All sites</option>
+              {% for s in sites %}<option value="{{ s.pk }}" {% if site.pk == s.pk %}selected{% endif %}>{{ s.nombre }}</option>{% endfor %}
+            </select>
+          </div>
+          <div class="col-md-4 col-lg-3"><button class="btn btn-primary w-100" type="submit">Apply filter</button></div>
+        </div>
+      </form>
+    </div>
+  </section>
+  {% endif %}
+
+  {% if error %}
+  <div class="alert alert-danger" role="alert">{{ error }}</div>
+  {% else %}
+  <section class="cuadra-inv-panel" aria-labelledby="inventory-results-title">
+    <div class="cuadra-inv-results-head">
+      <div>
+        <h2 id="inventory-results-title">Stock by site</h2>
+        <p>{% if site %}{{ site.nombre }}{% else %}All sites{% endif %} · Current availability</p>
+      </div>
+      <a class="btn cuadra-btn-export cuadra-inv-export" href="{% url 'reportes:inventory_export' %}?{% if is_admin_report and site %}site={{ site.pk }}{% endif %}">↓ Export to Excel</a>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-striped cuadra-inv-table">
+        <thead><tr><th scope="col">Site</th><th scope="col">Product</th><th scope="col" class="text-end">Available units</th></tr></thead>
+        <tbody>
+          {% for item in stock %}
+          <tr>
+            <td class="cuadra-inv-site">{{ item.sede.nombre }}</td>
+            <td class="cuadra-inv-product">{{ item.producto.nombre }}</td>
+            <td class="text-end"><span class="cuadra-inv-quantity{% if item.cantidad == 0 %} is-empty{% endif %}">{{ item.cantidad }}</span></td>
+          </tr>
+          {% empty %}
+          <tr><td colspan="3" class="cuadra-inv-empty">No inventory records found for this selection.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+  {% endif %}
+</div>
 {% endblock %}

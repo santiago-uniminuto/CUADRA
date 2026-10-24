@@ -1,77 +1,57 @@
 {% extends "base.html" %}
 {% block title %}Dashboard — CUADRA{% endblock %}
-
 {% block content %}
-<section class="welcome-banner mb-4">
-  <h1>Welcome back, {{ user.nombre|default:user.username }}</h1>
-  <p>Here is an overview of CUADRA today, {% now "l, F j" %}.</p>
-</section>
-
-<div class="row g-3 mb-4">
-  {% for t in tarjetas %}
-  <div class="col-6 col-md-4 col-xl">
-    <a class="stat-card" href="{% url t.url %}">
-      <div class="stat-label">{{ t.label }}</div>
-      <div class="stat-value">{{ t.value }}</div>
-      <div class="stat-sub">{{ t.sub }}</div>
-    </a>
-  </div>
-  {% endfor %}
-</div>
-
-<div class="row g-4">
-  <div class="col-lg-7">
-    <div class="card h-100">
-      <div class="card-header">Team by site</div>
-      <div class="table-responsive">
-        <table class="table align-middle mb-0">
-          <thead><tr><th>Site</th><th class="text-center">Waiters</th><th class="text-center">Cashiers</th><th class="text-center">Admins</th><th class="text-center">Total</th></tr></thead>
-          <tbody>
-            {% for s in por_sede %}
-            <tr>
-              <td class="fw-semibold">{{ s.nombre }}</td>
-              <td class="text-center">{{ s.meseros }}</td>
-              <td class="text-center">{{ s.cajeros }}</td>
-              <td class="text-center">{{ s.admins }}</td>
-              <td class="text-center fw-semibold">{{ s.total }}</td>
-            </tr>
-            {% empty %}
-            <tr><td colspan="5" class="text-muted">No active sites yet.</td></tr>
-            {% endfor %}
-          </tbody>
-        </table>
+<div class="cuadra-admin-dashboard">
+  <section class="cuadra-admin-hero" aria-labelledby="admin-dashboard-title">
+    <div class="cuadra-admin-hero-copy">
+      <div class="cuadra-admin-kicker">CUADRA · MANAGEMENT OVERVIEW</div>
+      <h1 id="admin-dashboard-title">Welcome back, {{ user.nombre|default:user.username }}</h1>
+      <p>Your operations at a glance. {% now "l, F j, Y" %}.</p>
+      <div class="cuadra-admin-hero-actions">
+        <a href="{% url 'reportes:sales' %}" class="cuadra-admin-hero-primary">View sales report <span aria-hidden="true">↗</span></a>
+        <a href="{% url 'reportes:inventory' %}" class="cuadra-admin-hero-secondary">Inventory report <span aria-hidden="true">→</span></a>
       </div>
     </div>
+    <div class="cuadra-admin-hero-emblem" aria-hidden="true"><span>CUADRA</span><small>BAR &amp; RESTAURANT</small><div class="cuadra-admin-hero-orbit"></div></div>
+  </section>
+
+  <div class="cuadra-admin-section-title"><div><span class="cuadra-admin-section-kicker">BUSINESS DIRECTORY</span><h2>System overview</h2><p>Active records across your restaurant operation.</p></div></div>
+  <section class="cuadra-admin-stats" aria-label="System overview">
+    {% for t in tarjetas %}
+      <a class="cuadra-admin-stat" href="{% url t.url %}">
+        <span class="cuadra-admin-stat-top"><span class="cuadra-admin-stat-label">{{ t.label }}</span><span class="cuadra-admin-stat-arrow" aria-hidden="true">↗</span></span>
+        <strong class="cuadra-admin-stat-number">{{ t.value }}</strong>
+        <span class="cuadra-admin-stat-foot"><span class="cuadra-admin-stat-dot" aria-hidden="true"></span>{{ t.sub }}</span>
+      </a>
+    {% endfor %}
+  </section>
+
+  <div class="cuadra-admin-content-grid">
+    <section class="cuadra-admin-panel cuadra-admin-team" aria-labelledby="cuadra-admin-team-title">
+      <div class="cuadra-admin-panel-heading"><div><span class="cuadra-admin-section-kicker">PEOPLE &amp; LOCATIONS</span><h2 id="cuadra-admin-team-title">Team by site</h2></div><a href="{% url 'usuarios:usuario_list' %}">Manage users <span aria-hidden="true">↗</span></a></div>
+      <div class="table-responsive"><table class="table align-middle mb-0 cuadra-admin-table"><thead><tr><th scope="col">Site</th><th scope="col" class="text-center">Waiters</th><th scope="col" class="text-center">Cashiers</th><th scope="col" class="text-center">Admins</th><th scope="col" class="text-center">Total</th></tr></thead><tbody>
+      {% for s in por_sede %}<tr><td class="fw-semibold">{{ s.nombre }}</td><td class="text-center">{{ s.meseros }}</td><td class="text-center">{{ s.cajeros }}</td><td class="text-center">{{ s.admins }}</td><td class="text-center fw-bold">{{ s.total }}</td></tr>
+      {% empty %}<tr><td colspan="5" class="cuadra-admin-empty">No active sites yet.</td></tr>{% endfor %}
+      </tbody></table></div>
+    </section>
+
+    <section class="cuadra-admin-panel cuadra-admin-shortcuts" aria-labelledby="cuadra-admin-shortcuts-title">
+      <div class="cuadra-admin-panel-heading"><div><span class="cuadra-admin-section-kicker">OPERATIONS</span><h2 id="cuadra-admin-shortcuts-title">Quick actions</h2></div></div>
+      <div class="cuadra-admin-shortcut-grid">
+        <a href="{% url 'usuarios:usuario_create' %}" class="cuadra-admin-shortcut"><span class="cuadra-admin-shortcut-icon" aria-hidden="true">＋</span><span>New user<small>Add team member</small></span><span aria-hidden="true">↗</span></a>
+        <a href="{% url 'inventario:stock_receive' %}" class="cuadra-admin-shortcut"><span class="cuadra-admin-shortcut-icon" aria-hidden="true">▣</span><span>Receive stock<small>Register incoming goods</small></span><span aria-hidden="true">↗</span></a>
+        <a href="{% url 'catalogo:producto_create' %}" class="cuadra-admin-shortcut"><span class="cuadra-admin-shortcut-icon" aria-hidden="true">◇</span><span>New product<small>Expand your catalog</small></span><span aria-hidden="true">↗</span></a>
+        <a href="{% url 'catalogo:proveedor_create' %}" class="cuadra-admin-shortcut"><span class="cuadra-admin-shortcut-icon" aria-hidden="true">⌂</span><span>New supplier<small>Manage your partners</small></span><span aria-hidden="true">↗</span></a>
+      </div>
+    </section>
   </div>
 
-  <div class="col-lg-5">
-    <div class="card h-100">
-      <div class="card-header">Quick actions</div>
-      <div class="card-body">
-        <div class="row g-2">
-          <div class="col-6"><a href="{% url 'usuarios:usuario_create' %}" class="btn btn-primary w-100">+ New user</a></div>
-          <div class="col-6"><a href="{% url 'inventario:stock_receive' %}" class="btn btn-outline-primary w-100">+ Receive stock</a></div>
-          <div class="col-6"><a href="{% url 'catalogo:producto_create' %}" class="btn btn-outline-primary w-100">+ New product</a></div>
-          <div class="col-6"><a href="{% url 'catalogo:proveedor_create' %}" class="btn btn-outline-primary w-100">+ New supplier</a></div>
-        </div>
-      </div>
+  <section class="cuadra-admin-panel cuadra-admin-activity" aria-labelledby="cuadra-admin-activity-title">
+    <div class="cuadra-admin-panel-heading"><div><span class="cuadra-admin-section-kicker">AUDIT TRAIL</span><h2 id="cuadra-admin-activity-title">Recent activity</h2></div><a href="{% url 'auditoria:bitacora_list' %}">View all activity <span aria-hidden="true">↗</span></a></div>
+    <div class="cuadra-admin-activity-list">
+      {% for r in recientes %}<div class="cuadra-admin-activity-row"><span class="cuadra-admin-activity-mark" aria-hidden="true"></span><div class="cuadra-admin-activity-description"><strong>{{ r.quien }}</strong> · {{ r.accion_legible }}{% if r.detalle %}<span class="cuadra-admin-activity-detail"> — {{ r.detalle }}</span>{% endif %}</div><time class="cuadra-admin-activity-time" datetime="{{ r.fecha|date:'c' }}">{{ r.fecha|date:"M j, H:i" }}</time></div>
+      {% empty %}<p class="cuadra-admin-empty">No activity recorded yet.</p>{% endfor %}
     </div>
-  </div>
-
-  <div class="col-12">
-    <div class="card">
-      <div class="card-header d-flex justify-content-between align-items-center">Recent activity <a href="{% url 'auditoria:bitacora_list' %}" class="small fw-normal">View all activity</a></div>
-      <div class="card-body py-2">
-        {% for r in recientes %}
-        <div class="activity-item d-flex flex-wrap gap-2 justify-content-between">
-          <span><strong>{{ r.quien }}</strong> · {{ r.accion_legible }}{% if r.detalle %} — <span class="text-muted">{{ r.detalle }}</span>{% endif %}</span>
-          <span class="text-muted small">{{ r.fecha|date:"M j, H:i" }}</span>
-        </div>
-        {% empty %}
-        <p class="text-muted my-2">No activity recorded yet.</p>
-        {% endfor %}
-      </div>
-    </div>
-  </div>
+  </section>
 </div>
 {% endblock %}

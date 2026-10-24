@@ -3,14 +3,19 @@
 {% block title %}Deactivate user — CUADRA{% endblock %}
 
 {% block content %}
-<h4 class="mb-4">Deactivate user</h4>
+<div class="cuadra-management" data-cuadra-patch="CUADRA-MANAGEMENT-6">
+<section class="cuadra-management-hero"><div><div class="cuadra-management-eyebrow">MANAGEMENT / USERS</div><h1>Deactivate user</h1><p>Review this action before continuing.</p></div></section>
+
+
 <div class="alert alert-warning col-md-6">
   Are you sure you want to deactivate <strong>{{ usuario.nombre }}</strong> ({{ usuario.username }})?
   The user will no longer be able to log in and any open session will be closed immediately.
 </div>
-<form method="post" class="col-md-6">
+<div class="card cuadra-management-form"><div class="card-body"><form method="post" class="col-md-6">
   {% csrf_token %}
   <button type="submit" class="btn btn-danger">CONFIRM</button>
   <a href="{% url 'usuarios:usuario_list' %}" class="btn btn-secondary">CANCEL</a>
-</form>
+</form></div></div>
+
+</div>
 {% endblock %}

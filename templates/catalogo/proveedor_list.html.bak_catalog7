@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}Suppliers — CUADRA{% endblock %}
+{% block content %}
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="h4 mb-0">Suppliers</h1>
+    <a href="{% url 'catalogo:proveedor_create' %}" class="btn btn-primary btn-sm">+ New supplier</a>
+  </div>
+  {% if proveedores %}
+  <div class="table-responsive">
+    <table class="table table-striped align-middle">
+      <thead><tr><th>Name</th><th>Contact</th><th>Status</th><th></th></tr></thead>
+      <tbody>
+        {% for p in proveedores %}
+        <tr class="{% if not p.activo %}text-muted{% endif %}">
+          <td>{{ p.nombre }}</td>
+          <td>{{ p.contacto }}</td>
+          <td>{% if p.activo %}<span class="badge text-bg-success">Active</span>{% else %}<span class="badge text-bg-secondary">Inactive</span>{% endif %}</td>
+          <td class="text-end text-nowrap">
+            <a href="{% url 'catalogo:proveedor_edit' p.pk %}" class="btn btn-outline-secondary btn-sm">Edit</a>
+            {% if p.activo %}
+            <a href="{% url 'catalogo:proveedor_toggle' p.pk %}" class="btn btn-outline-danger btn-sm">DEACTIVATE</a>
+            {% else %}
+            <a href="{% url 'catalogo:proveedor_toggle' p.pk %}" class="btn btn-outline-success btn-sm">REACTIVATE</a>
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+    <p class="text-muted">No suppliers registered yet.</p>
+  {% endif %}
+{% endblock %}
