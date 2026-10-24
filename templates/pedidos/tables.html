@@ -1,55 +1,5 @@
 {% extends 'base.html' %}
-{% block title %}Tables — CUADRA
-<!-- Accessible in-page confirmation, shared by waiter forms. -->
-<dialog id="cuadra-confirm-dialog" class="cuadra-confirm-dialog" aria-labelledby="cuadra-confirm-title" aria-describedby="cuadra-confirm-description">
-  <div class="cuadra-confirm-inner">
-    <div class="cuadra-confirm-symbol" aria-hidden="true">!</div>
-    <h2 id="cuadra-confirm-title">Confirm action</h2>
-    <p id="cuadra-confirm-description"></p>
-    <div class="cuadra-confirm-actions">
-      <button type="button" class="btn cuadra-confirm-cancel" data-confirm-cancel>Cancel</button>
-      <button type="button" class="btn cuadra-confirm-proceed" data-confirm-proceed>Confirm</button>
-    </div>
-  </div>
-</dialog>
-<script>
-(function () {
-  'use strict';
-  const dialog = document.getElementById('cuadra-confirm-dialog');
-  if (!dialog || typeof dialog.showModal !== 'function') return;
-  const title = document.getElementById('cuadra-confirm-title');
-  const description = document.getElementById('cuadra-confirm-description');
-  const proceed = dialog.querySelector('[data-confirm-proceed]');
-  const cancel = dialog.querySelector('[data-confirm-cancel]');
-  let pendingForm = null;
-  document.querySelectorAll('form[data-cuadra-confirm]').forEach(function (form) {
-    form.addEventListener('submit', function (event) {
-      if (form.dataset.confirmed === 'true') return;
-      event.preventDefault();
-      pendingForm = form;
-      const release = form.dataset.cuadraConfirm === 'release';
-      title.textContent = release ? 'Release table?' : 'Discard empty order?';
-      description.textContent = release
-        ? 'Table ' + (form.dataset.cuadraTable || '') + ' will become available. Make sure the guests have left.'
-        : 'This empty order will be permanently discarded. This action cannot be undone.';
-      proceed.textContent = release ? 'Release table' : 'Discard order';
-      proceed.classList.toggle('is-danger', !release);
-      dialog.showModal();
-      cancel.focus();
-    });
-  });
-  cancel.addEventListener('click', function () { dialog.close(); });
-  dialog.addEventListener('close', function () { pendingForm = null; });
-  proceed.addEventListener('click', function () {
-    if (!pendingForm) return;
-    const form = pendingForm;
-    form.dataset.confirmed = 'true';
-    proceed.disabled = true;
-    form.requestSubmit();
-  });
-})();
-</script>
-{% endblock %}
+{% block title %}Tables — CUADRA{% endblock %}
 {% block content %}
 <section class="cuadra-pos-workspace" aria-labelledby="tables-title">
   <div class="cuadra-workspace-head">
