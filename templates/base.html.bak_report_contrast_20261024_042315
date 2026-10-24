@@ -1,0 +1,129 @@
+{% load static %}<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}CUADRA{% endblock %}</title>
+  {# Bootstrap va dentro del proyecto (static/vendor): en el servidor de la red local puede no haber internet. #}
+  <link href="{% static 'vendor/bootstrap/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'css/cuadra.css' %}?v=cuadra-brand-1-1" rel="stylesheet">
+  <link href="{% static 'css/admin_dashboard_phase4.css' %}?v=1" rel="stylesheet">
+</head>
+{# Dos interfaces: "admin" (panel de gestión) y "pos" (punto de venta, mesero y cajero). Ver nav_menu(). #}
+<body class="layout-{{ layout|default:'guest' }}"{% if layout == 'pos' %} data-bs-theme="dark"{% endif %}>
+
+{% if user.is_authenticated and layout == 'admin' %}
+<header class="topbar d-flex align-items-center gap-2 px-3">
+  <button class="btn btn-sm text-white d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar"
+          aria-controls="sidebar" aria-label="Open menu">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <a class="topbar-brand brand-lockup" href="{% url 'autenticacion:home' %}"><img src="{% static 'img/cuadra-mark.svg' %}" alt="" class="brand-mark" width="40" height="40" style="width:40px;height:40px;max-width:40px;max-height:40px;flex:0 0 40px;display:block"><span>CUADRA<small>BAR &amp; RESTAURANT</small></span></a>
+
+  <div class="ms-auto d-flex align-items-center gap-2">
+    {% if all_sedes %}
+    <div class="dropdown">
+      <button class="btn btn-sm btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+        Act as…
+      </button>
+      <form method="post" action="{% url 'usuarios:act_as' %}" class="dropdown-menu dropdown-menu-end p-3 act-as-menu">
+        {% csrf_token %}
+        <p class="small text-muted mb-2">Help out at a site as a waiter or cashier. You keep your admin access: use “Return to Admin” to come back.</p>
+        <select name="rol" class="form-select form-select-sm mb-2" aria-label="Role">
+          <option value="WAITER">Act as Waiter</option>
+          <option value="CASHIER">Act as Cashier</option>
+        </select>
+        <select name="sede" class="form-select form-select-sm mb-2" aria-label="Site">
+          {% for s in all_sedes %}<option value="{{ s.pk }}">{{ s.nombre }}</option>{% endfor %}
+        </select>
+        <button type="submit" class="btn btn-primary btn-sm w-100">Go</button>
+      </form>
+    </div>
+    {% endif %}
+    <span class="user-chip d-none d-sm-flex">
+      <span class="user-avatar">{{ user.nombre|default:user.username|slice:":1"|upper }}</span>
+      <span class="lh-sm"><span class="d-block small fw-semibold">{{ user.nombre|default:user.username }}</span><span class="d-block user-role">{{ user.get_rol_display }} · {{ user.sede }}</span></span>
+    </span>
+    <a href="{% url 'autenticacion:logout' %}" class="btn btn-sm btn-outline-light">Log out</a>
+  </div>
+</header>
+{% elif user.is_authenticated %}
+<header class="pos-topbar d-flex align-items-center flex-wrap gap-3 px-3 py-2">
+  <a class="pos-brand brand-lockup" href="{% url 'autenticacion:home' %}"><img src="{% static 'img/cuadra-mark.svg' %}" alt="" class="brand-mark" width="40" height="40" style="width:40px;height:40px;max-width:40px;max-height:40px;flex:0 0 40px;display:block"><span>CUADRA<small>BAR &amp; RESTAURANT</small></span></a>
+  <span class="pos-site">{{ sede_actual }}</span>
+  {% if acting_as %}<span class="badge text-bg-warning fs-6">Acting as {{ acting_as_display }}</span>{% endif %}
+
+  <div class="ms-auto d-flex align-items-center gap-3">
+    <span class="pos-clock" id="pos-clock" aria-label="Current time"></span>
+    <span class="user-chip">
+      <span class="user-avatar">{{ user.nombre|default:user.username|slice:":1"|upper }}</span>
+      <span class="lh-sm"><span class="d-block fw-semibold">{{ user.nombre|default:user.username }}</span><span class="d-block user-role">{{ user.get_rol_display }}</span></span>
+    </span>
+    {% if acting_as %}
+    <form method="post" action="{% url 'usuarios:return_to_admin' %}" class="d-inline">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-warning">Return to Admin</button>
+    </form>
+    {% endif %}
+    <a href="{% url 'autenticacion:logout' %}" class="btn btn-outline-light">Log out</a>
+  </div>
+</header>
+{% endif %}
+
+<div class="app-shell">
+  {% if user.is_authenticated and layout == 'admin' %}
+  <aside class="offcanvas-lg offcanvas-start sidebar" tabindex="-1" id="sidebar" aria-labelledby="sidebarLabel">
+    <div class="offcanvas-header d-lg-none">
+      <h5 class="offcanvas-title" id="sidebarLabel">Menu</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebar" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body flex-column p-0">
+      <nav class="sidebar-nav" aria-label="Main">
+        {% for item in nav_items %}
+          {% ifchanged item.group %}{% if item.group %}<div class="sidebar-group">{{ item.group }}</div>{% endif %}{% endifchanged %}
+          <a class="sidebar-link{% if item.active %} active{% endif %}" href="{{ item.url }}">{{ item.label }}</a>
+        {% endfor %}
+      </nav>
+      <div class="sidebar-foot">CUADRA POS <span class="d-block">Powered by Engineery Solutions S.A.S.</span></div>
+    </div>
+  </aside>
+  {% endif %}
+
+  <main class="app-main">
+    {% if user.is_authenticated and layout == 'pos' %}
+    <nav class="pos-tabs" aria-label="Main">
+      {% for item in nav_items %}
+        <a class="pos-tab{% if item.active %} active{% endif %}" href="{{ item.url }}">{{ item.label }}</a>
+      {% endfor %}
+    </nav>
+    {% endif %}
+
+    {% if messages and user.is_authenticated %}
+      {% for message in messages %}
+      <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags|default:'info' }}{% endif %} alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      {% endfor %}
+    {% endif %}
+
+    {% block content %}{% endblock %}
+  </main>
+</div>
+
+<script src="{% static 'vendor/bootstrap/bootstrap.bundle.min.js' %}"></script>
+{% if layout == 'pos' %}
+<script>
+  (function () {
+    var el = document.getElementById("pos-clock");
+    function tick() {
+      if (el) el.textContent = new Date().toLocaleTimeString([], {hour: "2-digit", minute: "2-digit"});
+    }
+    tick();
+    setInterval(tick, 15000);
+  })();
+</script>
+{% endif %}
+{% block scripts %}{% endblock %}
+</body>
+</html>

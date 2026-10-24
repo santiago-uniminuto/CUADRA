@@ -8,6 +8,7 @@
   <link href="{% static 'vendor/bootstrap/bootstrap.min.css' %}" rel="stylesheet">
   <link href="{% static 'css/cuadra.css' %}?v=cuadra-brand-1-1" rel="stylesheet">
   <link href="{% static 'css/admin_dashboard_phase4.css' %}?v=1" rel="stylesheet">
+  <link href="{% static 'css/report_contrast_phase4.css' %}?v=1" rel="stylesheet">
 </head>
 {# Dos interfaces: "admin" (panel de gestión) y "pos" (punto de venta, mesero y cajero). Ver nav_menu(). #}
 <body class="layout-{{ layout|default:'guest' }}"{% if layout == 'pos' %} data-bs-theme="dark"{% endif %}>

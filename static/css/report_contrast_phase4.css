@@ -1,0 +1,43 @@
+/* CUADRA Report Contrast 9.1 — isolated light report surfaces, including POS cashier dark theme. */
+/* Explicit Bootstrap table variables prevent dark POS text from bleeding into white rows. */
+.layout-pos .cuadra-inv-report .cuadra-inv-panel,
+.layout-pos .cuadra-admin-report .cuadra-admin-report-panel,
+.layout-pos .cuadra-admin-report .cuadra-admin-filter {
+  color:#253b31;
+  --bs-body-color:#253b31;
+  --bs-secondary-color:#61766b;
+  background:rgba(255,255,255,.96);
+}
+.layout-pos .cuadra-inv-report .cuadra-inv-table,
+.layout-pos .cuadra-admin-report .cuadra-admin-report-panel .table {
+  --bs-table-color:#253b31;
+  --bs-table-bg:#ffffff;
+  --bs-table-striped-color:#253b31;
+  --bs-table-striped-bg:#f5f8f4;
+  --bs-table-hover-color:#173d30;
+  --bs-table-hover-bg:#edf4ec;
+  --bs-table-border-color:#e5ece6;
+  color:#253b31;
+}
+/* Inventory: explicit color for the actual cell content in both striped and unstriped rows. */
+.cuadra-inv-report .cuadra-inv-table > tbody > tr > td,
+.cuadra-inv-report .cuadra-inv-table > tbody > tr > td.cuadra-inv-site,
+.cuadra-inv-report .cuadra-inv-table > tbody > tr > td.cuadra-inv-product {
+  color:#253b31!important;
+  -webkit-text-fill-color:#253b31;
+}
+.cuadra-inv-report .cuadra-inv-table > tbody > tr > td.cuadra-inv-site{color:#365e4a!important;-webkit-text-fill-color:#365e4a}
+.cuadra-inv-report .cuadra-inv-table > tbody > tr > td.cuadra-inv-product{color:#173d30!important;-webkit-text-fill-color:#173d30}
+.cuadra-inv-report .cuadra-inv-table > tbody > tr > td .cuadra-inv-quantity{color:#164632!important;-webkit-text-fill-color:#164632}
+.cuadra-inv-report .cuadra-inv-table > tbody > tr > td .cuadra-inv-quantity.is-empty{color:#923c35!important;-webkit-text-fill-color:#923c35}
+.cuadra-inv-report .cuadra-inv-table > thead > tr > th{color:#173d30!important;-webkit-text-fill-color:#173d30}
+/* Ranking: restore high-contrast header and row labels in cashier and admin layouts. */
+.cuadra-admin-report .cuadra-admin-report-panel .card-header{background:#edf3ed!important;color:#173d30!important}
+.cuadra-admin-report .cuadra-admin-report-panel .card-header h2{color:#173d30!important;-webkit-text-fill-color:#173d30}
+.cuadra-admin-report .cuadra-admin-report-panel .card-header span{color:#496657!important;-webkit-text-fill-color:#496657}
+.cuadra-admin-report .cuadra-admin-report-panel .table > thead > tr > th{background:#e8eee6!important;color:#173d30!important;-webkit-text-fill-color:#173d30}
+.cuadra-admin-report .cuadra-admin-report-panel .table > tbody > tr > td{color:#253b31!important;-webkit-text-fill-color:#253b31}
+.cuadra-admin-report .cuadra-admin-report-panel .table .cuadra-admin-rank{color:#496252!important;-webkit-text-fill-color:#496252}
+.cuadra-admin-report .cuadra-admin-report-panel .table .cuadra-admin-rank.is-first{color:#70501b!important;-webkit-text-fill-color:#70501b}
+.cuadra-admin-report .cuadra-admin-report-panel .table .cuadra-admin-empty{color:#63776b!important;-webkit-text-fill-color:#63776b}
+.cuadra-admin-report .cuadra-admin-filter .form-label{color:#294d3e!important}
