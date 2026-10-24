@@ -9,9 +9,14 @@
     <div class="card-body">
       <div class="login-identity text-center mb-4"><img src="{% static 'img/cuadra-mark.svg' %}" alt="CUADRA emblem" width="78" height="78"><div class="login-wordmark">CUADRA</div><div class="login-tagline">BAR &amp; RESTAURANT · POS</div></div><h4 class="card-title mb-4 text-center">Sign in</h4>
 
-      {% for message in messages %}
-        <div class="alert alert-warning">{{ message }}</div>
-      {% endfor %}
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags|default:'info' }}{% endif %} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        {% endfor %}
+      {% endif %}
 
       {% if form.non_field_errors %}
         <div class="alert alert-danger">

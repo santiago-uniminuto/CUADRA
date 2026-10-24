@@ -14,14 +14,16 @@
         <span class="cuadra-table-status {% if table.estado == 'OCCUPIED' %}is-occupied{% else %}is-available{% endif %}"><span class="cuadra-status-dot"></span>{{ table.get_estado_display }}</span>
       </div>
       <div class="cuadra-table-number"><small>TABLE</small><strong>{{ table.numero }}</strong></div>
-      <div class="cuadra-table-note">{% if table.has_open_order %}Order in progress{% elif table.estado == 'OCCUPIED' %}Awaiting table release{% else %}Ready for service{% endif %}</div>
+      <div class="cuadra-table-note">{% if table.is_other_waiter %}Assigned to {{ table.owner_name }}{% elif table.has_open_order %}Order in progress{% elif table.estado == 'OCCUPIED' %}Awaiting table release{% else %}Ready for service{% endif %}</div>
       <div class="cuadra-table-actions">
-        {% if table.has_open_order %}
+        {% if table.is_other_waiter %}
+          <span class="btn btn-outline-secondary w-100 disabled" aria-disabled="true">Assigned to another waiter</span>
+        {% elif table.has_open_order %}
           <a class="btn btn-primary w-100" href="{% url 'pedidos:order_detail' table.open_order_id %}">Continue order →</a>
         {% else %}
           <form method="post" action="{% url 'pedidos:open_order' table.pk %}">{% csrf_token %}<button type="submit" class="btn btn-primary w-100">+ New order</button></form>
         {% endif %}
-        {% if table.estado == 'OCCUPIED' and not table.has_open_order %}
+        {% if table.estado == 'OCCUPIED' and not table.has_open_order and not table.is_other_waiter %}
           <form method="post" action="{% url 'pedidos:release_table' table.pk %}" data-cuadra-confirm="release" data-cuadra-table="{{ table.numero }}">{% csrf_token %}<button type="submit" class="btn cuadra-btn-release w-100">Release table</button></form>
         {% endif %}
       </div>
@@ -30,7 +32,7 @@
     <div class="cuadra-empty-state">No tables available at this site.</div>
   {% endfor %}
   </div>
-  <p class="cuadra-service-hint">An occupied table may receive a new order after payment. Release it when the guests leave.</p>
+  <p class="cuadra-service-hint">Only the assigned waiter can manage an occupied table. After payment, the same waiter can open another order or release the table when guests leave.</p>
 </section>
 
 <!-- Accessible in-page confirmation, shared by waiter forms. -->

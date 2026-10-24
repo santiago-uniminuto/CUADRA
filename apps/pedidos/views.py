@@ -1,6 +1,7 @@
 """Waiter operations. Payment and stock deduction belong to the cashier sprint."""
 from django.contrib import messages
 from django.db import IntegrityError, transaction
+from django.core.exceptions import PermissionDenied
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.views.decorators.http import require_POST
@@ -16,6 +17,17 @@ from .models import DetallePedido, Mesa, Pedido
 
 def _integer(value):
     return int(value) if value and value.isascii() and value.isdecimal() and len(value) <= 9 else None
+
+
+def _assert_owner(request, waiter_id):
+    """Admin sin modo actuacion puede intervenir; los meseros no comparten pedidos."""
+    if waiter_id != request.user.pk and not (request.user.rol == 'ADMIN' and not get_actuando_como(request)):
+        raise PermissionDenied('This table is assigned to another waiter.')
+
+
+def _last_order(table):
+    """El ultimo pedido identifica al responsable hasta liberar la mesa."""
+    return Pedido.objects.filter(mesa=table).order_by('-fecha', '-pk').first()
 
 
 def _table(request, pk, lock=False):
@@ -35,6 +47,10 @@ def tables(request):
     for item in items:
         item.open_order_id = open_orders.get(item.pk)
         item.has_open_order = bool(item.open_order_id)
+        last = _last_order(item) if item.estado == Mesa.Estado.OCCUPIED else None
+        item.owner_name = last.mesero.nombre or last.mesero.username if last else None
+        item.is_other_waiter = bool(last and last.mesero_id != request.user.pk and
+                                    not (request.user.rol == 'ADMIN' and not get_actuando_como(request)))
     return render(request, 'pedidos/tables.html', {'tables': items, 'site': site})
 
 
@@ -43,6 +59,9 @@ def tables(request):
 def open_order(request, table_id):
     with transaction.atomic():
         table = _table(request, table_id, lock=True)
+        last = _last_order(table) if table.estado == Mesa.Estado.OCCUPIED else None
+        if last:
+            _assert_owner(request, last.mesero_id)
         if Pedido.objects.filter(mesa=table, estado=Pedido.Estado.OPEN).exists():
             messages.error(request, 'This table already has an open order.')
             return redirect('pedidos:tables')
@@ -56,6 +75,7 @@ def open_order(request, table_id):
 @role_required('WAITER')
 def order_detail(request, pk):
     order = get_object_or_404(Pedido.objects.select_related('mesa', 'mesa__sede'), pk=pk, mesa__sede=get_sede_efectiva(request))
+    _assert_owner(request, order.mesero_id)
     details = list(order.detalles.select_related('producto').order_by('producto__nombre'))
     products = Producto.objects.filter(activo=True, inventario__sede=order.mesa.sede, inventario__cantidad__gt=0).distinct().order_by('nombre') if order.estado == Pedido.Estado.OPEN else []
     total = sum(d.cantidad * d.valor_venta_unitario for d in details)
@@ -71,6 +91,7 @@ def add_product(request, pk):
         return redirect('pedidos:order_detail', pk=pk)
     with transaction.atomic():
         order = get_object_or_404(Pedido.objects.select_for_update().select_related('mesa'), pk=pk, mesa__sede=get_sede_efectiva(request), estado=Pedido.Estado.OPEN)
+        _assert_owner(request, order.mesero_id)
         product = get_object_or_404(Producto, pk=product_id, activo=True)
         inventory = Inventario.objects.filter(producto=product, sede=order.mesa.sede).first()
         detail = DetallePedido.objects.filter(pedido=order, producto=product).first()
@@ -92,6 +113,7 @@ def add_product(request, pk):
 def remove_product(request, pk, detail_id):
     with transaction.atomic():
         order = get_object_or_404(Pedido.objects.select_for_update(), pk=pk, mesa__sede=get_sede_efectiva(request), estado=Pedido.Estado.OPEN)
+        _assert_owner(request, order.mesero_id)
         detail = get_object_or_404(DetallePedido, pk=detail_id, pedido=order)
         product_id = detail.producto_id
         detail.delete()
@@ -104,11 +126,18 @@ def remove_product(request, pk, detail_id):
 def discard_empty(request, pk):
     with transaction.atomic():
         order = get_object_or_404(Pedido.objects.select_for_update(), pk=pk, mesa__sede=get_sede_efectiva(request), estado=Pedido.Estado.OPEN)
+        _assert_owner(request, order.mesero_id)
         if order.detalles.exists():
             messages.error(request, 'Only empty orders may be discarded.')
             return redirect('pedidos:order_detail', pk=pk)
         registrar(request, 'ORDER_DISCARD', 'Pedido', order, 'Discarded an empty order')
+        table = Mesa.objects.select_for_update().get(pk=order.mesa_id)
         order.delete()
+        # Si el pedido descartado era el ultimo de la mesa, termina su atencion.
+        # Si habia una venta pagada anterior, conserva la mesa ocupada y su responsable.
+        if not Pedido.objects.filter(mesa=table).exists():
+            table.estado = Mesa.Estado.AVAILABLE
+            table.save(update_fields=['estado'])
     return redirect('pedidos:tables')
 
 
@@ -117,6 +146,9 @@ def discard_empty(request, pk):
 def release_table(request, table_id):
     with transaction.atomic():
         table = _table(request, table_id, lock=True)
+        last = _last_order(table) if table.estado == Mesa.Estado.OCCUPIED else None
+        if last:
+            _assert_owner(request, last.mesero_id)
         if Pedido.objects.filter(mesa=table, estado=Pedido.Estado.OPEN).exists():
             messages.error(request, 'A table with an open order cannot be released.')
             return redirect('pedidos:tables')

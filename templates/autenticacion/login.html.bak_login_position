@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Sign in — CUADRA{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-center">
+  <div class="card shadow-sm mt-5" style="max-width: 400px; width: 100%;">
+    <div class="card-body">
+      <div class="login-identity text-center mb-4"><img src="{% static 'img/cuadra-mark.svg' %}" alt="CUADRA emblem" width="78" height="78"><div class="login-wordmark">CUADRA</div><div class="login-tagline">BAR &amp; RESTAURANT · POS</div></div><h4 class="card-title mb-4 text-center">Sign in</h4>
+
+      {% if form.non_field_errors %}
+        <div class="alert alert-danger">
+          {% for error in form.non_field_errors %}{{ error }}{% endfor %}
+        </div>
+      {% endif %}
+
+      <form method="post" id="login-form">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label for="{{ form.username.id_for_label }}" class="form-label">Username</label>
+          {{ form.username.errors }}
+          <input type="text" name="{{ form.username.html_name }}"
+                 class="form-control" id="{{ form.username.id_for_label }}"
+                 required autofocus>
+        </div>
+        <div class="mb-3">
+          <label for="{{ form.password.id_for_label }}" class="form-label">Password</label>
+          {{ form.password.errors }}
+          <div class="input-group">
+            <input type="password" name="{{ form.password.html_name }}"
+                   class="form-control" id="{{ form.password.id_for_label }}"
+                   required>
+            <button type="button" class="btn btn-outline-secondary" id="toggle-password"
+                    aria-label="Show password" title="Show / hide password">
+              <svg id="icon-eye" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                   stroke-linecap="round" stroke-linejoin="round">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+              <svg id="icon-eye-off" class="d-none" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                   stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/>
+                <line x1="1" y1="1" x2="23" y2="23"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div class="d-flex gap-2">
+          <button type="submit" class="btn btn-primary flex-fill">Sign in</button>
+          <button type="reset" class="btn btn-outline-secondary flex-fill">CANCEL</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    var form = document.getElementById("login-form");
+    var password = document.getElementById("{{ form.password.id_for_label }}");
+    var toggle = document.getElementById("toggle-password");
+    var iconEye = document.getElementById("icon-eye");
+    var iconEyeOff = document.getElementById("icon-eye-off");
+
+    function setVisible(visible) {
+      password.type = visible ? "text" : "password";
+      iconEye.classList.toggle("d-none", visible);
+      iconEyeOff.classList.toggle("d-none", !visible);
+      toggle.setAttribute("aria-label", visible ? "Hide password" : "Show password");
+    }
+
+    toggle.addEventListener("click", function () {
+      setVisible(password.type === "password");
+    });
+    // CANCEL clears the fields (type="reset") and hides the password again.
+    form.addEventListener("reset", function () { setVisible(false); });
+  })();
+</script>
+{% endblock %}

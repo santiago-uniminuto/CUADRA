@@ -40,8 +40,12 @@ def inventario_list(request):
     if query:
         items_qs = items_qs.filter(producto__nombre__icontains=query)
     items = insertion_sort(items_qs, key=lambda i: (i.cantidad, i.producto.nombre.lower()))
-    open_orders = list(Pedido.objects.filter(mesa__sede=sede, estado=Pedido.Estado.OPEN)
-                       .select_related('mesa').order_by('mesa__numero', 'pk'))
+    # El selector de Inventory solo ofrece pedidos del mesero actual.
+    # El endpoint pedidos:add_product valida tambien la propiedad del pedido
+    # en el servidor (parche Control de Mesas por Mesero).
+    open_orders = list(Pedido.objects.filter(
+        mesa__sede=sede, estado=Pedido.Estado.OPEN, mesero=request.user,
+    ).select_related('mesa').order_by('mesa__numero', 'pk'))
     return render(request, "inventario/inventario_list.html", {
         "items": items, "query": query, "sede": sede, "open_orders": open_orders,
     })

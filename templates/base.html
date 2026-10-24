@@ -97,7 +97,7 @@
     </nav>
     {% endif %}
 
-    {% if messages %}
+    {% if messages and user.is_authenticated %}
       {% for message in messages %}
       <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags|default:'info' }}{% endif %} alert-dismissible fade show" role="alert">
         {{ message }}
