@@ -84,5 +84,54 @@
 @media(max-width:700px){.cuadra-sales-hero{padding:1.3rem}.cuadra-sales-metrics{grid-template-columns:1fr}.cuadra-sales-panel{padding:1rem}.cuadra-sales-results{padding:1rem 0 .3rem}.cuadra-sales-results>.cuadra-sales-panel-heading{padding:0 1rem}.cuadra-sales-table td,.cuadra-sales-table thead th{padding:.7rem!important}}
 @media(prefers-reduced-motion:reduce){.cuadra-sales-hero-link{transition:none}}
 @media print{.cuadra-sales-hero,.cuadra-sales-panel,.cuadra-sales-metric{box-shadow:none;backdrop-filter:none}}
+
+/* CUADRA SALES CASHIER CONTRAST FIX 2026-10 */
+/* Bootstrap dark-mode inherits --bs-body-color and --bs-table-color.
+   Pin light panel surfaces, text and native form widgets independently. */
+.cuadra-sales-v2 .cuadra-sales-panel,
+.cuadra-sales-v2 .cuadra-sales-metric:not(.cuadra-sales-metric-total){
+  color:#233e33!important;--bs-body-color:#233e33;--bs-secondary-color:#607469;
+}
+.cuadra-sales-v2 .cuadra-sales-filters .form-control,
+.cuadra-sales-v2 .cuadra-sales-filters .form-select{
+  background-color:#fff!important;color:#233e33!important;
+  -webkit-text-fill-color:#233e33!important;
+  border-color:#ccd8cf!important;color-scheme:light;
+}
+.cuadra-sales-v2 .cuadra-sales-filters input[type=date]::-webkit-calendar-picker-indicator{filter:none;opacity:.85}
+.cuadra-sales-v2 .cuadra-sales-filter-button{
+  background:#0e3b2f!important;border-color:#0e3b2f!important;color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+.cuadra-sales-v2 .cuadra-sales-filter-button:hover{background:#175540!important;border-color:#175540!important}
+.cuadra-sales-v2 .cuadra-sales-results .cuadra-sales-table{
+  --bs-table-bg:#fff!important;
+  --bs-table-color:#233e33!important;
+  --bs-table-striped-bg:#f5f8f5!important;
+  --bs-table-striped-color:#233e33!important;
+  --bs-table-hover-bg:#f4f0e5!important;
+  --bs-table-hover-color:#233e33!important;
+  --bs-table-border-color:#e5ece6!important;
+  color:#233e33!important;
+}
+.cuadra-sales-v2 .cuadra-sales-table>tbody>tr>td{
+  color:#233e33!important;-webkit-text-fill-color:#233e33!important;
+  background-color:var(--bs-table-bg)!important;
+  box-shadow:inset 0 0 0 9999px var(--bs-table-accent-bg,transparent);
+}
+.cuadra-sales-v2 .cuadra-sales-table>thead>tr>th{
+  color:#173d30!important;-webkit-text-fill-color:#173d30!important;
+  background:#e7eee7!important;border-bottom:2px solid #c6a15e!important;
+}
+.cuadra-sales-v2 .cuadra-sales-table .cuadra-btn-receipt{
+  color:#173d30!important;-webkit-text-fill-color:#173d30!important;
+  background:#f7ecd4!important;border:1px solid #c6a15e!important;
+  font-weight:750!important;
+}
+.cuadra-sales-v2 .cuadra-sales-table .cuadra-btn-receipt:hover{
+  background:#e9d19d!important;color:#102f24!important;-webkit-text-fill-color:#102f24!important;
+}
+.cuadra-sales-v2 .cuadra-sales-empty{color:#607469!important;-webkit-text-fill-color:#607469!important}
+
 </style>
 {% endblock %}
