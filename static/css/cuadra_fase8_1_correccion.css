@@ -1,0 +1,104 @@
+
+/* CUADRA FASE 8.1 — Fix confirmation buttons and table dialogs. */
+.layout-admin .cuadra-toggle-confirm-form .btn-success,
+.layout-admin .cuadra-toggle-confirm-form .btn-success:visited {
+  background-color: #0E3B2F !important;
+  border-color: #0E3B2F !important;
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+  font-weight: 750 !important;
+}
+.layout-admin .cuadra-toggle-confirm-form .btn-success:hover,
+.layout-admin .cuadra-toggle-confirm-form .btn-success:focus-visible {
+  background-color: #14634D !important;
+  border-color: #14634D !important;
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+}
+.layout-admin .cuadra-table-toggle-form { display: inline; }
+.layout-admin .cuadra-table-toggle-form .btn-outline-success {
+  background-color: #FFFFFF !important;
+  color: #0E3B2F !important;
+  -webkit-text-fill-color: #0E3B2F !important;
+  border: 1px solid #0E3B2F !important;
+  border-radius: .55rem !important;
+  font-weight: 750 !important;
+}
+.layout-admin .cuadra-table-toggle-form .btn-outline-success:hover,
+.layout-admin .cuadra-table-toggle-form .btn-outline-success:focus-visible {
+  background-color: #0E3B2F !important;
+  border-color: #0E3B2F !important;
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+}
+.layout-admin .cuadra-table-toggle-form .btn-outline-danger {
+  background-color: #FFFFFF !important;
+  color: #A5222D !important;
+  -webkit-text-fill-color: #A5222D !important;
+  border: 1px solid #A5222D !important;
+  border-radius: .55rem !important;
+  font-weight: 750 !important;
+}
+.layout-admin .cuadra-table-toggle-form .btn-outline-danger:hover,
+.layout-admin .cuadra-table-toggle-form .btn-outline-danger:focus-visible {
+  background-color: #A5222D !important;
+  border-color: #A5222D !important;
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+}
+.cuadra-table-confirm-dialog {
+  width: min(440px, calc(100% - 2rem));
+  max-width: 440px;
+  padding: 0;
+  border: 1px solid rgba(212,175,103,.45);
+  border-radius: 1.1rem;
+  background: #17352C;
+  color: #F4F5EE;
+  box-shadow: 0 25px 80px rgba(0,0,0,.42);
+}
+.cuadra-table-confirm-dialog::backdrop {
+  background: rgba(2,15,12,.72);
+  backdrop-filter: blur(4px);
+}
+.cuadra-table-confirm-inner { padding: 1.6rem; }
+.cuadra-table-confirm-symbol {
+  display: grid; place-items: center; width: 42px; height: 42px;
+  margin-bottom: .9rem; border-radius: 50%;
+  background: rgba(212,175,103,.15); border: 1px solid #D4AF67;
+  color: #F1D69E; font-size: 1.3rem; font-weight: 800;
+}
+.cuadra-table-confirm-inner h2 { margin: 0 0 .65rem; color: #FFFFFF; font-size: 1.3rem; font-weight: 800; }
+.cuadra-table-confirm-inner p { margin: 0 0 1.4rem; color: #D3E2D7; line-height: 1.55; }
+.cuadra-table-confirm-actions { display: flex; justify-content: flex-end; gap: .65rem; flex-wrap: wrap; }
+.cuadra-table-confirm-actions .btn { min-height: 42px; border-radius: .6rem; font-weight: 750; padding: .55rem .95rem; }
+.cuadra-table-confirm-cancel {
+  border: 1px solid #A7B8AE !important; background: transparent !important;
+  color: #EDF4ED !important; -webkit-text-fill-color: #EDF4ED !important;
+}
+.cuadra-table-confirm-cancel:hover, .cuadra-table-confirm-cancel:focus-visible {
+  background: #315347 !important; border-color: #B8C8BE !important;
+  color: #FFFFFF !important; -webkit-text-fill-color: #FFFFFF !important;
+}
+.cuadra-table-confirm-proceed {
+  border: 1px solid #D4AF67 !important; background: #D4AF67 !important;
+  color: #172B22 !important; -webkit-text-fill-color: #172B22 !important;
+}
+.cuadra-table-confirm-proceed:hover, .cuadra-table-confirm-proceed:focus-visible {
+  border-color: #E6C587 !important; background: #E6C587 !important;
+  color: #172B22 !important; -webkit-text-fill-color: #172B22 !important;
+}
+.cuadra-table-confirm-proceed.is-danger {
+  border-color: #B64D48 !important; background: #B64D48 !important;
+  color: #FFFFFF !important; -webkit-text-fill-color: #FFFFFF !important;
+}
+.cuadra-table-confirm-proceed.is-danger:hover, .cuadra-table-confirm-proceed.is-danger:focus-visible {
+  border-color: #D25E58 !important; background: #D25E58 !important;
+}
+.cuadra-table-confirm-cancel:focus-visible, .cuadra-table-confirm-proceed:focus-visible {
+  outline: 3px solid #F1D69E; outline-offset: 3px;
+}
+@media (max-width: 480px) {
+  .cuadra-table-confirm-inner { padding: 1.2rem; }
+  .cuadra-table-confirm-actions { justify-content: stretch; }
+  .cuadra-table-confirm-actions .btn { flex: 1 1 auto; }
+}

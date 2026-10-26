@@ -46,7 +46,7 @@
     <input id="motivo" type="text" name="motivo" value="{{ motivo }}" maxlength="{{ max_motivo }}" class="form-control" placeholder="e.g. Physical count, broken bottles, typing mistake" required>
   </div>
   <button type="submit" class="btn btn-primary">ADJUST STOCK</button>
-  <a href="{% url 'inventario:stock_list' %}?sede={{ sede.pk }}" class="btn btn-secondary">CANCEL</a>
+  <a href="{% url 'inventario:stock_list' %}?sede={{ sede.pk }}" class="btn btn-secondary cuadra-stock-cancel">CANCEL</a>
 </form>
 {% else %}
   <p class="text-muted">No active products yet. Create products in the catalog first.</p>

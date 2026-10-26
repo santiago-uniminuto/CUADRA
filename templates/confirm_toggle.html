@@ -8,7 +8,7 @@
   Are you sure you want to {% if reactivar %}reactivate{% else %}deactivate{% endif %} <strong>{{ objeto }}</strong>?
   {% if aviso %}<br>{{ aviso }}{% endif %}
 </div>
-<form method="post" class="col-md-6">
+<form method="post" class="col-md-6 cuadra-toggle-confirm-form">
   {% csrf_token %}
   <button type="submit" class="btn {% if reactivar %}btn-success{% else %}btn-danger{% endif %}">CONFIRM</button>
   <a href="{% url cancel_url %}" class="btn btn-secondary">CANCEL</a>

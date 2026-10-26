@@ -30,7 +30,7 @@
     </select>
   </div>
   <div class="col-auto">
-    <button class="btn btn-outline-secondary" type="submit">Search</button>
+    <button class="btn btn-outline-secondary cuadra-inventory-search" type="submit">Search</button>
     {% if query %}<a href="{% url 'inventario:stock_list' %}?sede={{ sede.pk }}" class="btn btn-link">Clear</a>{% endif %}
   </div>
 </form>

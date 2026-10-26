@@ -21,9 +21,92 @@
 {% for table in tables %}<tr><td>{{ table.numero }}</td><td>{{ table.get_estado_display }}</td><td>{% if table.activo %}Enabled{% else %}Disabled{% endif %}</td>
 <td>{% if table.activo and table.has_open_order %}<span class="text-muted">Open order — cannot disable</span>
 {% elif table.activo and table.estado == 'OCCUPIED' %}<span class="text-muted">Occupied — release first</span>
-{% else %}<form method="post" action="{% url 'pedidos:toggle_table' table.pk %}">{% csrf_token %}<button class="btn btn-sm {% if table.activo %}btn-outline-danger{% else %}btn-outline-success{% endif %}">{% if table.activo %}Disable{% else %}Enable{% endif %}</button></form>{% endif %}</td></tr>
+{% else %}
+<form method="post" action="{% url 'pedidos:toggle_table' table.pk %}" class="cuadra-table-toggle-form" data-table-action="{% if table.activo %}disable{% else %}enable{% endif %}" data-table-number="{{ table.numero }}">{% csrf_token %}
+<button type="submit" class="btn btn-sm {% if table.activo %}btn-outline-danger{% else %}btn-outline-success{% endif %}">{% if table.activo %}Disable{% else %}Enable{% endif %}</button>
+</form>
+{% endif %}</td></tr>
 {% empty %}<tr><td colspan="4">No tables at this site yet.</td></tr>{% endfor %}
 </tbody></table></div>
 <p class="text-muted small">Disabling a table preserves its order and sales history. Occupied tables must be released by a waiter before they can be disabled.</p>
 {% else %}<p>No active sites available. Create a site first.</p>{% endif %}
+
+<dialog class="cuadra-table-confirm-dialog" id="cuadraTableConfirmDialog" aria-labelledby="cuadraTableConfirmTitle">
+  <div class="cuadra-table-confirm-inner">
+    <div class="cuadra-table-confirm-symbol" aria-hidden="true">!</div>
+    <h2 id="cuadraTableConfirmTitle">Confirm table change</h2>
+    <p id="cuadraTableConfirmMessage">Are you sure you want to change this table?</p>
+    <div class="cuadra-table-confirm-actions">
+      <button type="button" class="btn cuadra-table-confirm-cancel" id="cuadraTableConfirmCancel">Cancel</button>
+      <button type="button" class="btn cuadra-table-confirm-proceed" id="cuadraTableConfirmProceed">Confirm</button>
+    </div>
+  </div>
+</dialog>
+{% endblock %}
+
+{% block scripts %}
+{{ block.super }}
+<script>
+(function () {
+  "use strict";
+  const dialog = document.getElementById("cuadraTableConfirmDialog");
+  const message = document.getElementById("cuadraTableConfirmMessage");
+  const title = document.getElementById("cuadraTableConfirmTitle");
+  const cancel = document.getElementById("cuadraTableConfirmCancel");
+  const proceed = document.getElementById("cuadraTableConfirmProceed");
+  if (!dialog || !message || !title || !cancel || !proceed) return;
+
+  let pendingForm = null;
+
+  document.querySelectorAll(".cuadra-table-toggle-form").forEach(function (form) {
+    form.addEventListener("submit", function (event) {
+      if (form.dataset.confirmed === "true") {
+        form.dataset.confirmed = "false";
+        return;
+      }
+      event.preventDefault();
+      pendingForm = form;
+      const action = form.dataset.tableAction;
+      const number = form.dataset.tableNumber;
+      const disabling = action === "disable";
+      title.textContent = disabling ? "Disable table?" : "Enable table?";
+      message.textContent = disabling
+        ? "Disable table " + number + "? Its order and sales history will be preserved."
+        : "Enable table " + number + "?";
+      proceed.textContent = disabling ? "Disable table" : "Enable table";
+      proceed.classList.toggle("is-danger", disabling);
+      if (typeof dialog.showModal === "function") dialog.showModal();
+      else {
+        // Graceful fallback for browsers without HTML dialog support.
+        if (window.confirm(message.textContent)) {
+          form.dataset.confirmed = "true";
+          form.requestSubmit();
+        }
+      }
+    });
+  });
+
+  cancel.addEventListener("click", function () {
+    pendingForm = null;
+    dialog.close();
+  });
+  proceed.addEventListener("click", function () {
+    if (!pendingForm) {
+      dialog.close();
+      return;
+    }
+    const form = pendingForm;
+    pendingForm = null;
+    dialog.close();
+    form.dataset.confirmed = "true";
+    form.requestSubmit();
+  });
+  dialog.addEventListener("click", function (event) {
+    if (event.target === dialog) {
+      pendingForm = null;
+      dialog.close();
+    }
+  });
+})();
+</script>
 {% endblock %}
