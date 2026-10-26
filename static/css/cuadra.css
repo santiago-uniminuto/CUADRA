@@ -603,3 +603,16 @@ body:has(.cuadra-operations-hero) .card{border:1px solid #dce4dc;border-radius:1
     color: #805600 !important;
     border-color: #805600 !important;
 }
+
+/* CUADRA FASE 6 - USER SAVE */
+body.layout-admin .cuadra-user-form > button.btn-success[type="submit"] {
+    color: #FFFFFF !important;
+    background-color: #0E3B2F !important;
+    border-color: #0E3B2F !important;
+}
+body.layout-admin .cuadra-user-form > button.btn-success[type="submit"]:hover,
+body.layout-admin .cuadra-user-form > button.btn-success[type="submit"]:focus-visible {
+    color: #FFFFFF !important;
+    background-color: #14634D !important;
+    border-color: #14634D !important;
+}
