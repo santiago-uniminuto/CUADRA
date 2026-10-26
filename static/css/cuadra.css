@@ -595,4 +595,11 @@ body:has(.cuadra-operations-hero) .card{border:1px solid #dce4dc;border-radius:1
   color: #15251D !important;
   background-color: #D4AF67 !important;
 }
-/* CUADRA FASE 5 WAITER AVAILABLE CONTRAST END */
+
+/* CUADRA — Fase 6: contraste de Reset password */
+
+/* Estado normal */
+.layout-admin .cuadra-management-table .btn-outline-warning:not(:hover):not(:focus-visible) {
+    color: #805600 !important;
+    border-color: #805600 !important;
+}
