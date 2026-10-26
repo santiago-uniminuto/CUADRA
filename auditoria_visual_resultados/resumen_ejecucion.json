@@ -1,0 +1,20 @@
+{
+  "created_at": "2026-10-25T21:27:54",
+  "roles": [
+    {
+      "role": "admin",
+      "exit_code": 0,
+      "report_exists": true
+    },
+    {
+      "role": "cashier",
+      "exit_code": 0,
+      "report_exists": true
+    },
+    {
+      "role": "waiter",
+      "exit_code": 0,
+      "report_exists": true
+    }
+  ]
+}

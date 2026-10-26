@@ -41,3 +41,40 @@
 .cuadra-admin-report .cuadra-admin-report-panel .table .cuadra-admin-rank.is-first{color:#70501b!important;-webkit-text-fill-color:#70501b}
 .cuadra-admin-report .cuadra-admin-report-panel .table .cuadra-admin-empty{color:#63776b!important;-webkit-text-fill-color:#63776b}
 .cuadra-admin-report .cuadra-admin-filter .form-label{color:#294d3e!important}
+
+/* CUADRA FASE 5 CASHIER VISUAL PATCH v1 — scoped light report controls. */
+.layout-pos .cuadra-admin-report .cuadra-admin-filter input.form-control[type="date"] {
+  background-color:#fff!important;
+  color:#233e33!important;
+  -webkit-text-fill-color:#233e33!important;
+  border-color:#aebfb3!important;
+  color-scheme:light;
+}
+.layout-pos .cuadra-admin-report .cuadra-admin-filter input.form-control[type="date"]::-webkit-calendar-picker-indicator {
+  filter:none;opacity:1;
+}
+/* Sales: make muted secondary labels legible on the light cards. */
+.cuadra-sales-v2 .cuadra-sales-panel-heading span:not(.cuadra-sales-count),
+.cuadra-sales-v2 .cuadra-sales-metric:not(.cuadra-sales-metric-total)>span,
+.cuadra-sales-v2 .cuadra-sales-metric:not(.cuadra-sales-metric-total)>small {
+  color:#405b4d!important;
+  -webkit-text-fill-color:#405b4d!important;
+}
+/* Make horizontal navigation obvious on narrow viewports; do not shrink data. */
+.cuadra-sales-v2 .cuadra-sales-scroll-hint {
+  display:none;
+  color:#405b4d;
+  font-size:.82rem;
+  font-weight:650;
+  margin:.1rem 1rem .6rem;
+}
+@media(max-width:767.98px){
+  .cuadra-sales-v2 .cuadra-sales-scroll-hint {display:block;}
+  .cuadra-sales-v2 .cuadra-sales-results .table-responsive {
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:auto;
+    scrollbar-color:#789586 #e8eee9;
+  }
+}
+

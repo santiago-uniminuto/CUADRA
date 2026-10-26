@@ -1,0 +1,4596 @@
+{
+  "date": "2026-10-25T21:27:06",
+  "role": "admin",
+  "base_url": "http://127.0.0.1:8000",
+  "results": [
+    {
+      "name": "Dashboard",
+      "path": "/reports/dashboard/",
+      "screenshots": {
+        "desktop": "reports_dashboard_desktop.png",
+        "mobile": "reports_dashboard_mobile.png"
+      },
+      "issues": [
+        {
+          "tag": "button",
+          "text": "Act as…",
+          "ratio": 1.04,
+          "required": 4.5,
+          "fg": "rgb(248, 249, 250)",
+          "bg": "rgb(243,245,240)",
+          "selector": "button.btn.btn-sm",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "a",
+          "text": "Log out",
+          "ratio": 1.04,
+          "required": 4.5,
+          "fg": "rgb(248, 249, 250)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.btn.btn-sm",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "Administrator · Zona T",
+          "ratio": 1.07,
+          "required": 4.5,
+          "fg": "rgba(255, 255, 255, 0.7)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span.d-block.user-role",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "a",
+          "text": "CUADRA\nBAR & RESTAURANT",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.topbar-brand.brand-lockup",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "CUADRA\nBAR & RESTAURANT",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "A\nAdministrator\nAdministrator · Zona T",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span.user-chip.d-none",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "Administrator\nAdministrator · Zona T",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span.lh-sm",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "Administrator",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span.d-block.small",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "h1",
+          "text": "Welcome back, Administrator",
+          "ratio": 1.1,
+          "required": 3,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "#admin-dashboard-title",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "a",
+          "text": "Inventory report\n→",
+          "ratio": 1.15,
+          "required": 4.5,
+          "fg": "rgb(245, 227, 190)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.cuadra-admin-hero-secondary",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "→",
+          "ratio": 1.15,
+          "required": 4.5,
+          "fg": "rgb(245, 227, 190)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "p",
+          "text": "Your operations at a glance. Sunday, October 25, 2026.",
+          "ratio": 1.17,
+          "required": 4.5,
+          "fg": "rgb(217, 231, 220)",
+          "bg": "rgb(243,245,240)",
+          "selector": "p",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "CUADRA",
+          "ratio": 1.3,
+          "required": 3,
+          "fg": "rgb(239, 213, 160)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "small",
+          "text": "BAR & RESTAURANT",
+          "ratio": 1.3,
+          "required": 4.5,
+          "fg": "rgb(239, 213, 160)",
+          "bg": "rgb(243,245,240)",
+          "selector": "small",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "small",
+          "text": "BAR & RESTAURANT",
+          "ratio": 1.61,
+          "required": 4.5,
+          "fg": "rgb(227, 190, 120)",
+          "bg": "rgb(243,245,240)",
+          "selector": "small",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "BUSINESS DIRECTORY",
+          "ratio": 2.86,
+          "required": 4.5,
+          "fg": "rgb(181, 138, 72)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span.cuadra-admin-section-kicker",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "PEOPLE & LOCATIONS",
+          "ratio": 3.1,
+          "required": 4.5,
+          "fg": "rgb(181, 138, 72)",
+          "bg": "rgb(254,254,253)",
+          "selector": "span.cuadra-admin-section-kicker",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "OPERATIONS",
+          "ratio": 3.1,
+          "required": 4.5,
+          "fg": "rgb(181, 138, 72)",
+          "bg": "rgb(254,254,253)",
+          "selector": "span.cuadra-admin-section-kicker",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "AUDIT TRAIL",
+          "ratio": 3.1,
+          "required": 4.5,
+          "fg": "rgb(181, 138, 72)",
+          "bg": "rgb(254,254,253)",
+          "selector": "span.cuadra-admin-section-kicker",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "↗",
+          "ratio": 3.31,
+          "required": 4.5,
+          "fg": "rgb(173, 134, 72)",
+          "bg": "rgb(254,254,253)",
+          "selector": "span.cuadra-admin-stat-arrow",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "↗",
+          "ratio": 3.31,
+          "required": 4.5,
+          "fg": "rgb(173, 134, 72)",
+          "bg": "rgb(254,254,253)",
+          "selector": "span.cuadra-admin-stat-arrow",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "↗",
+          "ratio": 3.31,
+          "required": 4.5,
+          "fg": "rgb(173, 134, 72)",
+          "bg": "rgb(254,254,253)",
+          "selector": "span.cuadra-admin-stat-arrow",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "↗",
+          "ratio": 3.31,
+          "required": 4.5,
+          "fg": "rgb(173, 134, 72)",
+          "bg": "rgb(254,254,253)",
+          "selector": "span.cuadra-admin-stat-arrow",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "↗",
+          "ratio": 3.31,
+          "required": 4.5,
+          "fg": "rgb(173, 134, 72)",
+          "bg": "rgb(254,254,253)",
+          "selector": "span.cuadra-admin-stat-arrow",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "small",
+          "text": "Add team member",
+          "ratio": 3.85,
+          "required": 4.5,
+          "fg": "rgb(115, 130, 119)",
+          "bg": "rgb(248,250,246)",
+          "selector": "small",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "small",
+          "text": "Register incoming goods",
+          "ratio": 3.85,
+          "required": 4.5,
+          "fg": "rgb(115, 130, 119)",
+          "bg": "rgb(248,250,246)",
+          "selector": "small",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "small",
+          "text": "Expand your catalog",
+          "ratio": 3.85,
+          "required": 4.5,
+          "fg": "rgb(115, 130, 119)",
+          "bg": "rgb(248,250,246)",
+          "selector": "small",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "small",
+          "text": "Manage your partners",
+          "ratio": 3.85,
+          "required": 4.5,
+          "fg": "rgb(115, 130, 119)",
+          "bg": "rgb(248,250,246)",
+          "selector": "small",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "p",
+          "text": "Active records across your restaurant operation.",
+          "ratio": 4.28,
+          "required": 4.5,
+          "fg": "rgb(101, 120, 110)",
+          "bg": "rgb(243,245,240)",
+          "selector": "p",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "0 inactive",
+          "ratio": 4.33,
+          "required": 4.5,
+          "fg": "rgb(110, 124, 115)",
+          "bg": "rgb(254,254,253)",
+          "selector": "span.cuadra-admin-stat-foot",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "0 inactive",
+          "ratio": 4.33,
+          "required": 4.5,
+          "fg": "rgb(110, 124, 115)",
+          "bg": "rgb(254,254,253)",
+          "selector": "span.cuadra-admin-stat-foot",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "0 inactive",
+          "ratio": 4.33,
+          "required": 4.5,
+          "fg": "rgb(110, 124, 115)",
+          "bg": "rgb(254,254,253)",
+          "selector": "span.cuadra-admin-stat-foot",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "0 inactive",
+          "ratio": 4.33,
+          "required": 4.5,
+          "fg": "rgb(110, 124, 115)",
+          "bg": "rgb(254,254,253)",
+          "selector": "span.cuadra-admin-stat-foot",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "0 inactive",
+          "ratio": 4.33,
+          "required": 4.5,
+          "fg": "rgb(110, 124, 115)",
+          "bg": "rgb(254,254,253)",
+          "selector": "span.cuadra-admin-stat-foot",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "— from 127.0.0.1",
+          "ratio": 4.43,
+          "required": 4.5,
+          "fg": "rgb(107, 123, 112)",
+          "bg": "rgb(254,254,253)",
+          "selector": "span.cuadra-admin-activity-detail",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "— Previous session closed: signed in again from 127.0.0.1",
+          "ratio": 4.43,
+          "required": 4.5,
+          "fg": "rgb(107, 123, 112)",
+          "bg": "rgb(254,254,253)",
+          "selector": "span.cuadra-admin-activity-detail",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "— from 127.0.0.1",
+          "ratio": 4.43,
+          "required": 4.5,
+          "fg": "rgb(107, 123, 112)",
+          "bg": "rgb(254,254,253)",
+          "selector": "span.cuadra-admin-activity-detail",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "— from 127.0.0.1",
+          "ratio": 4.43,
+          "required": 4.5,
+          "fg": "rgb(107, 123, 112)",
+          "bg": "rgb(254,254,253)",
+          "selector": "span.cuadra-admin-activity-detail",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "— from 127.0.0.1",
+          "ratio": 4.43,
+          "required": 4.5,
+          "fg": "rgb(107, 123, 112)",
+          "bg": "rgb(254,254,253)",
+          "selector": "span.cuadra-admin-activity-detail",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "— from 127.0.0.1",
+          "ratio": 4.43,
+          "required": 4.5,
+          "fg": "rgb(107, 123, 112)",
+          "bg": "rgb(254,254,253)",
+          "selector": "span.cuadra-admin-activity-detail",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "— Session closed after 3 minutes without activity",
+          "ratio": 4.43,
+          "required": 4.5,
+          "fg": "rgb(107, 123, 112)",
+          "bg": "rgb(254,254,253)",
+          "selector": "span.cuadra-admin-activity-detail",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "— from 127.0.0.1",
+          "ratio": 4.43,
+          "required": 4.5,
+          "fg": "rgb(107, 123, 112)",
+          "bg": "rgb(254,254,253)",
+          "selector": "span.cuadra-admin-activity-detail",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "— Session closed after 3 minutes without activity",
+          "ratio": 4.43,
+          "required": 4.5,
+          "fg": "rgb(107, 123, 112)",
+          "bg": "rgb(254,254,253)",
+          "selector": "span.cuadra-admin-activity-detail",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "— Admin acting as CASHIER at Galerias",
+          "ratio": 4.43,
+          "required": 4.5,
+          "fg": "rgb(107, 123, 112)",
+          "bg": "rgb(254,254,253)",
+          "selector": "span.cuadra-admin-activity-detail",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "button",
+          "text": "Act as…",
+          "ratio": 1.04,
+          "required": 4.5,
+          "fg": "rgb(248, 249, 250)",
+          "bg": "rgb(243,245,240)",
+          "selector": "button.btn.btn-sm",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "a",
+          "text": "Log out",
+          "ratio": 1.04,
+          "required": 4.5,
+          "fg": "rgb(248, 249, 250)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.btn.btn-sm",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "a",
+          "text": "CUADRA\nBAR & RESTAURANT",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.topbar-brand.brand-lockup",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "span",
+          "text": "CUADRA\nBAR & RESTAURANT",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "h1",
+          "text": "Welcome back, Administrator",
+          "ratio": 1.1,
+          "required": 3,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "#admin-dashboard-title",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "a",
+          "text": "Inventory report\n→",
+          "ratio": 1.15,
+          "required": 4.5,
+          "fg": "rgb(245, 227, 190)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.cuadra-admin-hero-secondary",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "span",
+          "text": "→",
+          "ratio": 1.15,
+          "required": 4.5,
+          "fg": "rgb(245, 227, 190)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "p",
+          "text": "Your operations at a glance. Sunday, October 25, 2026.",
+          "ratio": 1.17,
+          "required": 4.5,
+          "fg": "rgb(217, 231, 220)",
+          "bg": "rgb(243,245,240)",
+          "selector": "p",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "small",
+          "text": "BAR & RESTAURANT",
+          "ratio": 1.61,
+          "required": 4.5,
+          "fg": "rgb(227, 190, 120)",
+          "bg": "rgb(243,245,240)",
+          "selector": "small",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "span",
+          "text": "BUSINESS DIRECTORY",
+          "ratio": 2.86,
+          "required": 4.5,
+          "fg": "rgb(181, 138, 72)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span.cuadra-admin-section-kicker",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "span",
+          "text": "PEOPLE & LOCATIONS",
+          "ratio": 3.1,
+          "required": 4.5,
+          "fg": "rgb(181, 138, 72)",
+          "bg": "rgb(254,254,253)",
+          "selector": "span.cuadra-admin-section-kicker",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "span",
+          "text": "OPERATIONS",
+          "ratio": 3.1,
+          "required": 4.5,
+          "fg": "rgb(181, 138, 72)",
+          "bg": "rgb(254,254,253)",
+          "selector": "span.cuadra-admin-section-kicker",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "span",
+          "text": "AUDIT TRAIL",
+          "ratio": 3.1,
+          "required": 4.5,
+          "fg": "rgb(181, 138, 72)",
+          "bg": "rgb(254,254,253)",
+          "selector": "span.cuadra-admin-section-kicker",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "span",
+          "text": "↗",
+          "ratio": 3.31,
+          "required": 4.5,
+          "fg": "rgb(173, 134, 72)",
+          "bg": "rgb(254,254,253)",
+          "selector": "span.cuadra-admin-stat-arrow",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "span",
+          "text": "↗",
+          "ratio": 3.31,
+          "required": 4.5,
+          "fg": "rgb(173, 134, 72)",
+          "bg": "rgb(254,254,253)",
+          "selector": "span.cuadra-admin-stat-arrow",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "span",
+          "text": "↗",
+          "ratio": 3.31,
+          "required": 4.5,
+          "fg": "rgb(173, 134, 72)",
+          "bg": "rgb(254,254,253)",
+          "selector": "span.cuadra-admin-stat-arrow",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "span",
+          "text": "↗",
+          "ratio": 3.31,
+          "required": 4.5,
+          "fg": "rgb(173, 134, 72)",
+          "bg": "rgb(254,254,253)",
+          "selector": "span.cuadra-admin-stat-arrow",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "span",
+          "text": "↗",
+          "ratio": 3.31,
+          "required": 4.5,
+          "fg": "rgb(173, 134, 72)",
+          "bg": "rgb(254,254,253)",
+          "selector": "span.cuadra-admin-stat-arrow",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "small",
+          "text": "Add team member",
+          "ratio": 3.85,
+          "required": 4.5,
+          "fg": "rgb(115, 130, 119)",
+          "bg": "rgb(248,250,246)",
+          "selector": "small",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "small",
+          "text": "Register incoming goods",
+          "ratio": 3.85,
+          "required": 4.5,
+          "fg": "rgb(115, 130, 119)",
+          "bg": "rgb(248,250,246)",
+          "selector": "small",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "small",
+          "text": "Expand your catalog",
+          "ratio": 3.85,
+          "required": 4.5,
+          "fg": "rgb(115, 130, 119)",
+          "bg": "rgb(248,250,246)",
+          "selector": "small",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "small",
+          "text": "Manage your partners",
+          "ratio": 3.85,
+          "required": 4.5,
+          "fg": "rgb(115, 130, 119)",
+          "bg": "rgb(248,250,246)",
+          "selector": "small",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "p",
+          "text": "Active records across your restaurant operation.",
+          "ratio": 4.28,
+          "required": 4.5,
+          "fg": "rgb(101, 120, 110)",
+          "bg": "rgb(243,245,240)",
+          "selector": "p",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "span",
+          "text": "0 inactive",
+          "ratio": 4.33,
+          "required": 4.5,
+          "fg": "rgb(110, 124, 115)",
+          "bg": "rgb(254,254,253)",
+          "selector": "span.cuadra-admin-stat-foot",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "span",
+          "text": "0 inactive",
+          "ratio": 4.33,
+          "required": 4.5,
+          "fg": "rgb(110, 124, 115)",
+          "bg": "rgb(254,254,253)",
+          "selector": "span.cuadra-admin-stat-foot",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "span",
+          "text": "0 inactive",
+          "ratio": 4.33,
+          "required": 4.5,
+          "fg": "rgb(110, 124, 115)",
+          "bg": "rgb(254,254,253)",
+          "selector": "span.cuadra-admin-stat-foot",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "span",
+          "text": "0 inactive",
+          "ratio": 4.33,
+          "required": 4.5,
+          "fg": "rgb(110, 124, 115)",
+          "bg": "rgb(254,254,253)",
+          "selector": "span.cuadra-admin-stat-foot",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "span",
+          "text": "0 inactive",
+          "ratio": 4.33,
+          "required": 4.5,
+          "fg": "rgb(110, 124, 115)",
+          "bg": "rgb(254,254,253)",
+          "selector": "span.cuadra-admin-stat-foot",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "span",
+          "text": "— from 127.0.0.1",
+          "ratio": 4.43,
+          "required": 4.5,
+          "fg": "rgb(107, 123, 112)",
+          "bg": "rgb(254,254,253)",
+          "selector": "span.cuadra-admin-activity-detail",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "span",
+          "text": "— Previous session closed: signed in again from 127.0.0.1",
+          "ratio": 4.43,
+          "required": 4.5,
+          "fg": "rgb(107, 123, 112)",
+          "bg": "rgb(254,254,253)",
+          "selector": "span.cuadra-admin-activity-detail",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "span",
+          "text": "— from 127.0.0.1",
+          "ratio": 4.43,
+          "required": 4.5,
+          "fg": "rgb(107, 123, 112)",
+          "bg": "rgb(254,254,253)",
+          "selector": "span.cuadra-admin-activity-detail",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "span",
+          "text": "— from 127.0.0.1",
+          "ratio": 4.43,
+          "required": 4.5,
+          "fg": "rgb(107, 123, 112)",
+          "bg": "rgb(254,254,253)",
+          "selector": "span.cuadra-admin-activity-detail",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "span",
+          "text": "— from 127.0.0.1",
+          "ratio": 4.43,
+          "required": 4.5,
+          "fg": "rgb(107, 123, 112)",
+          "bg": "rgb(254,254,253)",
+          "selector": "span.cuadra-admin-activity-detail",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "span",
+          "text": "— from 127.0.0.1",
+          "ratio": 4.43,
+          "required": 4.5,
+          "fg": "rgb(107, 123, 112)",
+          "bg": "rgb(254,254,253)",
+          "selector": "span.cuadra-admin-activity-detail",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "span",
+          "text": "— Session closed after 3 minutes without activity",
+          "ratio": 4.43,
+          "required": 4.5,
+          "fg": "rgb(107, 123, 112)",
+          "bg": "rgb(254,254,253)",
+          "selector": "span.cuadra-admin-activity-detail",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "span",
+          "text": "— from 127.0.0.1",
+          "ratio": 4.43,
+          "required": 4.5,
+          "fg": "rgb(107, 123, 112)",
+          "bg": "rgb(254,254,253)",
+          "selector": "span.cuadra-admin-activity-detail",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "span",
+          "text": "— Session closed after 3 minutes without activity",
+          "ratio": 4.43,
+          "required": 4.5,
+          "fg": "rgb(107, 123, 112)",
+          "bg": "rgb(254,254,253)",
+          "selector": "span.cuadra-admin-activity-detail",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "span",
+          "text": "— Admin acting as CASHIER at Galerias",
+          "ratio": 4.43,
+          "required": 4.5,
+          "fg": "rgb(107, 123, 112)",
+          "bg": "rgb(254,254,253)",
+          "selector": "span.cuadra-admin-activity-detail",
+          "viewport": "mobile"
+        }
+      ],
+      "status": 200,
+      "url": "http://127.0.0.1:8000/reports/dashboard/",
+      "horizontal_overflow": {
+        "desktop": false,
+        "mobile": false
+      }
+    },
+    {
+      "name": "Users",
+      "path": "/users/",
+      "screenshots": {
+        "desktop": "users_desktop.png",
+        "mobile": "users_mobile.png"
+      },
+      "issues": [
+        {
+          "tag": "button",
+          "text": "Act as…",
+          "ratio": 1.04,
+          "required": 4.5,
+          "fg": "rgb(248, 249, 250)",
+          "bg": "rgb(243,245,240)",
+          "selector": "button.btn.btn-sm",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "a",
+          "text": "Log out",
+          "ratio": 1.04,
+          "required": 4.5,
+          "fg": "rgb(248, 249, 250)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.btn.btn-sm",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "Administrator · Zona T",
+          "ratio": 1.07,
+          "required": 4.5,
+          "fg": "rgba(255, 255, 255, 0.7)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span.d-block.user-role",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "a",
+          "text": "CUADRA\nBAR & RESTAURANT",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.topbar-brand.brand-lockup",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "CUADRA\nBAR & RESTAURANT",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "A\nAdministrator\nAdministrator · Zona T",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span.user-chip.d-none",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "Administrator\nAdministrator · Zona T",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span.lh-sm",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "Administrator",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span.d-block.small",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "h1",
+          "text": "Users",
+          "ratio": 1.1,
+          "required": 3,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "h1",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "p",
+          "text": "Manage team accounts, roles and site assignments.",
+          "ratio": 1.17,
+          "required": 4.5,
+          "fg": "rgb(216, 231, 220)",
+          "bg": "rgb(243,245,240)",
+          "selector": "p",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "small",
+          "text": "BAR & RESTAURANT",
+          "ratio": 1.61,
+          "required": 4.5,
+          "fg": "rgb(227, 190, 120)",
+          "bg": "rgb(243,245,240)",
+          "selector": "small",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "a",
+          "text": "Reset password",
+          "ratio": 1.61,
+          "required": 4.5,
+          "fg": "rgb(255, 193, 7)",
+          "bg": "rgb(253,254,253)",
+          "selector": "a.btn.btn-outline-warning",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "a",
+          "text": "Reset password",
+          "ratio": 1.61,
+          "required": 4.5,
+          "fg": "rgb(255, 193, 7)",
+          "bg": "rgb(253,254,253)",
+          "selector": "a.btn.btn-outline-warning",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "a",
+          "text": "Reset password",
+          "ratio": 1.61,
+          "required": 4.5,
+          "fg": "rgb(255, 193, 7)",
+          "bg": "rgb(253,254,253)",
+          "selector": "a.btn.btn-outline-warning",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "a",
+          "text": "Reset password",
+          "ratio": 1.61,
+          "required": 4.5,
+          "fg": "rgb(255, 193, 7)",
+          "bg": "rgb(253,254,253)",
+          "selector": "a.btn.btn-outline-warning",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "a",
+          "text": "Reset password",
+          "ratio": 1.61,
+          "required": 4.5,
+          "fg": "rgb(255, 193, 7)",
+          "bg": "rgb(253,254,253)",
+          "selector": "a.btn.btn-outline-warning",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "a",
+          "text": "Reset password",
+          "ratio": 1.61,
+          "required": 4.5,
+          "fg": "rgb(255, 193, 7)",
+          "bg": "rgb(253,254,253)",
+          "selector": "a.btn.btn-outline-warning",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "a",
+          "text": "Reset password",
+          "ratio": 1.61,
+          "required": 4.5,
+          "fg": "rgb(255, 193, 7)",
+          "bg": "rgb(253,254,253)",
+          "selector": "a.btn.btn-outline-warning",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "a",
+          "text": "Reset password",
+          "ratio": 1.61,
+          "required": 4.5,
+          "fg": "rgb(255, 193, 7)",
+          "bg": "rgb(253,254,253)",
+          "selector": "a.btn.btn-outline-warning",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "a",
+          "text": "Reset password",
+          "ratio": 1.61,
+          "required": 4.5,
+          "fg": "rgb(255, 193, 7)",
+          "bg": "rgb(253,254,253)",
+          "selector": "a.btn.btn-outline-warning",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "Active",
+          "ratio": 2.07,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(212,175,103)",
+          "selector": "span.badge.text-bg-success",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "Active",
+          "ratio": 2.07,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(212,175,103)",
+          "selector": "span.badge.text-bg-success",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "Active",
+          "ratio": 2.07,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(212,175,103)",
+          "selector": "span.badge.text-bg-success",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "Active",
+          "ratio": 2.07,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(212,175,103)",
+          "selector": "span.badge.text-bg-success",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "Active",
+          "ratio": 2.07,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(212,175,103)",
+          "selector": "span.badge.text-bg-success",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "Active",
+          "ratio": 2.07,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(212,175,103)",
+          "selector": "span.badge.text-bg-success",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "Active",
+          "ratio": 2.07,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(212,175,103)",
+          "selector": "span.badge.text-bg-success",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "Active",
+          "ratio": 2.07,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(212,175,103)",
+          "selector": "span.badge.text-bg-success",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "Active",
+          "ratio": 2.07,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(212,175,103)",
+          "selector": "span.badge.text-bg-success",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "button",
+          "text": "SEARCH",
+          "ratio": 4.27,
+          "required": 4.5,
+          "fg": "rgb(108, 117, 125)",
+          "bg": "rgb(243,245,240)",
+          "selector": "button.btn.btn-outline-secondary",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "a",
+          "text": "DEACTIVATE",
+          "ratio": 4.47,
+          "required": 4.5,
+          "fg": "rgb(220, 53, 69)",
+          "bg": "rgb(253,254,253)",
+          "selector": "a.btn.btn-outline-danger",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "a",
+          "text": "DEACTIVATE",
+          "ratio": 4.47,
+          "required": 4.5,
+          "fg": "rgb(220, 53, 69)",
+          "bg": "rgb(253,254,253)",
+          "selector": "a.btn.btn-outline-danger",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "a",
+          "text": "DEACTIVATE",
+          "ratio": 4.47,
+          "required": 4.5,
+          "fg": "rgb(220, 53, 69)",
+          "bg": "rgb(253,254,253)",
+          "selector": "a.btn.btn-outline-danger",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "a",
+          "text": "DEACTIVATE",
+          "ratio": 4.47,
+          "required": 4.5,
+          "fg": "rgb(220, 53, 69)",
+          "bg": "rgb(253,254,253)",
+          "selector": "a.btn.btn-outline-danger",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "a",
+          "text": "DEACTIVATE",
+          "ratio": 4.47,
+          "required": 4.5,
+          "fg": "rgb(220, 53, 69)",
+          "bg": "rgb(253,254,253)",
+          "selector": "a.btn.btn-outline-danger",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "a",
+          "text": "DEACTIVATE",
+          "ratio": 4.47,
+          "required": 4.5,
+          "fg": "rgb(220, 53, 69)",
+          "bg": "rgb(253,254,253)",
+          "selector": "a.btn.btn-outline-danger",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "a",
+          "text": "DEACTIVATE",
+          "ratio": 4.47,
+          "required": 4.5,
+          "fg": "rgb(220, 53, 69)",
+          "bg": "rgb(253,254,253)",
+          "selector": "a.btn.btn-outline-danger",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "a",
+          "text": "DEACTIVATE",
+          "ratio": 4.47,
+          "required": 4.5,
+          "fg": "rgb(220, 53, 69)",
+          "bg": "rgb(253,254,253)",
+          "selector": "a.btn.btn-outline-danger",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "button",
+          "text": "Act as…",
+          "ratio": 1.04,
+          "required": 4.5,
+          "fg": "rgb(248, 249, 250)",
+          "bg": "rgb(243,245,240)",
+          "selector": "button.btn.btn-sm",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "a",
+          "text": "Log out",
+          "ratio": 1.04,
+          "required": 4.5,
+          "fg": "rgb(248, 249, 250)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.btn.btn-sm",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "a",
+          "text": "CUADRA\nBAR & RESTAURANT",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.topbar-brand.brand-lockup",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "span",
+          "text": "CUADRA\nBAR & RESTAURANT",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "h1",
+          "text": "Users",
+          "ratio": 1.1,
+          "required": 3,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "h1",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "p",
+          "text": "Manage team accounts, roles and site assignments.",
+          "ratio": 1.17,
+          "required": 4.5,
+          "fg": "rgb(216, 231, 220)",
+          "bg": "rgb(243,245,240)",
+          "selector": "p",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "small",
+          "text": "BAR & RESTAURANT",
+          "ratio": 1.61,
+          "required": 4.5,
+          "fg": "rgb(227, 190, 120)",
+          "bg": "rgb(243,245,240)",
+          "selector": "small",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "a",
+          "text": "Reset password",
+          "ratio": 1.61,
+          "required": 4.5,
+          "fg": "rgb(255, 193, 7)",
+          "bg": "rgb(253,254,253)",
+          "selector": "a.btn.btn-outline-warning",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "a",
+          "text": "Reset password",
+          "ratio": 1.61,
+          "required": 4.5,
+          "fg": "rgb(255, 193, 7)",
+          "bg": "rgb(253,254,253)",
+          "selector": "a.btn.btn-outline-warning",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "a",
+          "text": "Reset password",
+          "ratio": 1.61,
+          "required": 4.5,
+          "fg": "rgb(255, 193, 7)",
+          "bg": "rgb(253,254,253)",
+          "selector": "a.btn.btn-outline-warning",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "a",
+          "text": "Reset password",
+          "ratio": 1.61,
+          "required": 4.5,
+          "fg": "rgb(255, 193, 7)",
+          "bg": "rgb(253,254,253)",
+          "selector": "a.btn.btn-outline-warning",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "a",
+          "text": "Reset password",
+          "ratio": 1.61,
+          "required": 4.5,
+          "fg": "rgb(255, 193, 7)",
+          "bg": "rgb(253,254,253)",
+          "selector": "a.btn.btn-outline-warning",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "a",
+          "text": "Reset password",
+          "ratio": 1.61,
+          "required": 4.5,
+          "fg": "rgb(255, 193, 7)",
+          "bg": "rgb(253,254,253)",
+          "selector": "a.btn.btn-outline-warning",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "a",
+          "text": "Reset password",
+          "ratio": 1.61,
+          "required": 4.5,
+          "fg": "rgb(255, 193, 7)",
+          "bg": "rgb(253,254,253)",
+          "selector": "a.btn.btn-outline-warning",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "a",
+          "text": "Reset password",
+          "ratio": 1.61,
+          "required": 4.5,
+          "fg": "rgb(255, 193, 7)",
+          "bg": "rgb(253,254,253)",
+          "selector": "a.btn.btn-outline-warning",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "a",
+          "text": "Reset password",
+          "ratio": 1.61,
+          "required": 4.5,
+          "fg": "rgb(255, 193, 7)",
+          "bg": "rgb(253,254,253)",
+          "selector": "a.btn.btn-outline-warning",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "span",
+          "text": "Active",
+          "ratio": 2.07,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(212,175,103)",
+          "selector": "span.badge.text-bg-success",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "span",
+          "text": "Active",
+          "ratio": 2.07,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(212,175,103)",
+          "selector": "span.badge.text-bg-success",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "span",
+          "text": "Active",
+          "ratio": 2.07,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(212,175,103)",
+          "selector": "span.badge.text-bg-success",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "span",
+          "text": "Active",
+          "ratio": 2.07,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(212,175,103)",
+          "selector": "span.badge.text-bg-success",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "span",
+          "text": "Active",
+          "ratio": 2.07,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(212,175,103)",
+          "selector": "span.badge.text-bg-success",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "span",
+          "text": "Active",
+          "ratio": 2.07,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(212,175,103)",
+          "selector": "span.badge.text-bg-success",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "span",
+          "text": "Active",
+          "ratio": 2.07,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(212,175,103)",
+          "selector": "span.badge.text-bg-success",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "span",
+          "text": "Active",
+          "ratio": 2.07,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(212,175,103)",
+          "selector": "span.badge.text-bg-success",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "span",
+          "text": "Active",
+          "ratio": 2.07,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(212,175,103)",
+          "selector": "span.badge.text-bg-success",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "button",
+          "text": "SEARCH",
+          "ratio": 4.27,
+          "required": 4.5,
+          "fg": "rgb(108, 117, 125)",
+          "bg": "rgb(243,245,240)",
+          "selector": "button.btn.btn-outline-secondary",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "a",
+          "text": "DEACTIVATE",
+          "ratio": 4.47,
+          "required": 4.5,
+          "fg": "rgb(220, 53, 69)",
+          "bg": "rgb(253,254,253)",
+          "selector": "a.btn.btn-outline-danger",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "a",
+          "text": "DEACTIVATE",
+          "ratio": 4.47,
+          "required": 4.5,
+          "fg": "rgb(220, 53, 69)",
+          "bg": "rgb(253,254,253)",
+          "selector": "a.btn.btn-outline-danger",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "a",
+          "text": "DEACTIVATE",
+          "ratio": 4.47,
+          "required": 4.5,
+          "fg": "rgb(220, 53, 69)",
+          "bg": "rgb(253,254,253)",
+          "selector": "a.btn.btn-outline-danger",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "a",
+          "text": "DEACTIVATE",
+          "ratio": 4.47,
+          "required": 4.5,
+          "fg": "rgb(220, 53, 69)",
+          "bg": "rgb(253,254,253)",
+          "selector": "a.btn.btn-outline-danger",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "a",
+          "text": "DEACTIVATE",
+          "ratio": 4.47,
+          "required": 4.5,
+          "fg": "rgb(220, 53, 69)",
+          "bg": "rgb(253,254,253)",
+          "selector": "a.btn.btn-outline-danger",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "a",
+          "text": "DEACTIVATE",
+          "ratio": 4.47,
+          "required": 4.5,
+          "fg": "rgb(220, 53, 69)",
+          "bg": "rgb(253,254,253)",
+          "selector": "a.btn.btn-outline-danger",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "a",
+          "text": "DEACTIVATE",
+          "ratio": 4.47,
+          "required": 4.5,
+          "fg": "rgb(220, 53, 69)",
+          "bg": "rgb(253,254,253)",
+          "selector": "a.btn.btn-outline-danger",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "a",
+          "text": "DEACTIVATE",
+          "ratio": 4.47,
+          "required": 4.5,
+          "fg": "rgb(220, 53, 69)",
+          "bg": "rgb(253,254,253)",
+          "selector": "a.btn.btn-outline-danger",
+          "viewport": "mobile"
+        }
+      ],
+      "status": 200,
+      "url": "http://127.0.0.1:8000/users/",
+      "horizontal_overflow": {
+        "desktop": false,
+        "mobile": false
+      }
+    },
+    {
+      "name": "Sites",
+      "path": "/users/sedes/",
+      "screenshots": {
+        "desktop": "users_sedes_desktop.png",
+        "mobile": "users_sedes_mobile.png"
+      },
+      "issues": [
+        {
+          "tag": "button",
+          "text": "Act as…",
+          "ratio": 1.04,
+          "required": 4.5,
+          "fg": "rgb(248, 249, 250)",
+          "bg": "rgb(243,245,240)",
+          "selector": "button.btn.btn-sm",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "a",
+          "text": "Log out",
+          "ratio": 1.04,
+          "required": 4.5,
+          "fg": "rgb(248, 249, 250)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.btn.btn-sm",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "Administrator · Zona T",
+          "ratio": 1.07,
+          "required": 4.5,
+          "fg": "rgba(255, 255, 255, 0.7)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span.d-block.user-role",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "a",
+          "text": "CUADRA\nBAR & RESTAURANT",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.topbar-brand.brand-lockup",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "CUADRA\nBAR & RESTAURANT",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "A\nAdministrator\nAdministrator · Zona T",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span.user-chip.d-none",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "Administrator\nAdministrator · Zona T",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span.lh-sm",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "Administrator",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span.d-block.small",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "h1",
+          "text": "Sites",
+          "ratio": 1.1,
+          "required": 3,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "h1",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "p",
+          "text": "Manage restaurant locations and availability.",
+          "ratio": 1.17,
+          "required": 4.5,
+          "fg": "rgb(216, 231, 220)",
+          "bg": "rgb(243,245,240)",
+          "selector": "p",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "small",
+          "text": "BAR & RESTAURANT",
+          "ratio": 1.61,
+          "required": 4.5,
+          "fg": "rgb(227, 190, 120)",
+          "bg": "rgb(243,245,240)",
+          "selector": "small",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "Active",
+          "ratio": 2.07,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(212,175,103)",
+          "selector": "span.badge.text-bg-success",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "Active",
+          "ratio": 2.07,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(212,175,103)",
+          "selector": "span.badge.text-bg-success",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "Active",
+          "ratio": 2.07,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(212,175,103)",
+          "selector": "span.badge.text-bg-success",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "a",
+          "text": "DEACTIVATE",
+          "ratio": 4.47,
+          "required": 4.5,
+          "fg": "rgb(220, 53, 69)",
+          "bg": "rgb(253,254,253)",
+          "selector": "a.btn.btn-outline-danger",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "a",
+          "text": "DEACTIVATE",
+          "ratio": 4.47,
+          "required": 4.5,
+          "fg": "rgb(220, 53, 69)",
+          "bg": "rgb(253,254,253)",
+          "selector": "a.btn.btn-outline-danger",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "a",
+          "text": "DEACTIVATE",
+          "ratio": 4.47,
+          "required": 4.5,
+          "fg": "rgb(220, 53, 69)",
+          "bg": "rgb(253,254,253)",
+          "selector": "a.btn.btn-outline-danger",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "button",
+          "text": "Act as…",
+          "ratio": 1.04,
+          "required": 4.5,
+          "fg": "rgb(248, 249, 250)",
+          "bg": "rgb(243,245,240)",
+          "selector": "button.btn.btn-sm",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "a",
+          "text": "Log out",
+          "ratio": 1.04,
+          "required": 4.5,
+          "fg": "rgb(248, 249, 250)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.btn.btn-sm",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "a",
+          "text": "CUADRA\nBAR & RESTAURANT",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.topbar-brand.brand-lockup",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "span",
+          "text": "CUADRA\nBAR & RESTAURANT",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "h1",
+          "text": "Sites",
+          "ratio": 1.1,
+          "required": 3,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "h1",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "p",
+          "text": "Manage restaurant locations and availability.",
+          "ratio": 1.17,
+          "required": 4.5,
+          "fg": "rgb(216, 231, 220)",
+          "bg": "rgb(243,245,240)",
+          "selector": "p",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "small",
+          "text": "BAR & RESTAURANT",
+          "ratio": 1.61,
+          "required": 4.5,
+          "fg": "rgb(227, 190, 120)",
+          "bg": "rgb(243,245,240)",
+          "selector": "small",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "span",
+          "text": "Active",
+          "ratio": 2.07,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(212,175,103)",
+          "selector": "span.badge.text-bg-success",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "span",
+          "text": "Active",
+          "ratio": 2.07,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(212,175,103)",
+          "selector": "span.badge.text-bg-success",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "span",
+          "text": "Active",
+          "ratio": 2.07,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(212,175,103)",
+          "selector": "span.badge.text-bg-success",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "a",
+          "text": "DEACTIVATE",
+          "ratio": 4.47,
+          "required": 4.5,
+          "fg": "rgb(220, 53, 69)",
+          "bg": "rgb(253,254,253)",
+          "selector": "a.btn.btn-outline-danger",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "a",
+          "text": "DEACTIVATE",
+          "ratio": 4.47,
+          "required": 4.5,
+          "fg": "rgb(220, 53, 69)",
+          "bg": "rgb(253,254,253)",
+          "selector": "a.btn.btn-outline-danger",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "a",
+          "text": "DEACTIVATE",
+          "ratio": 4.47,
+          "required": 4.5,
+          "fg": "rgb(220, 53, 69)",
+          "bg": "rgb(253,254,253)",
+          "selector": "a.btn.btn-outline-danger",
+          "viewport": "mobile"
+        }
+      ],
+      "status": 200,
+      "url": "http://127.0.0.1:8000/users/sedes/",
+      "horizontal_overflow": {
+        "desktop": false,
+        "mobile": false
+      }
+    },
+    {
+      "name": "Activity log",
+      "path": "/audit/",
+      "screenshots": {
+        "desktop": "audit_desktop.png",
+        "mobile": "audit_mobile.png"
+      },
+      "issues": [
+        {
+          "tag": "button",
+          "text": "Act as…",
+          "ratio": 1.04,
+          "required": 4.5,
+          "fg": "rgb(248, 249, 250)",
+          "bg": "rgb(243,245,240)",
+          "selector": "button.btn.btn-sm",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "a",
+          "text": "Log out",
+          "ratio": 1.04,
+          "required": 4.5,
+          "fg": "rgb(248, 249, 250)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.btn.btn-sm",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "Administrator · Zona T",
+          "ratio": 1.07,
+          "required": 4.5,
+          "fg": "rgba(255, 255, 255, 0.7)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span.d-block.user-role",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "a",
+          "text": "CUADRA\nBAR & RESTAURANT",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.topbar-brand.brand-lockup",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "CUADRA\nBAR & RESTAURANT",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "A\nAdministrator\nAdministrator · Zona T",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span.user-chip.d-none",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "Administrator\nAdministrator · Zona T",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span.lh-sm",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "Administrator",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span.d-block.small",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "h1",
+          "text": "Activity log",
+          "ratio": 1.1,
+          "required": 3,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "h1",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "p",
+          "text": "Search and review recorded system activity.",
+          "ratio": 1.17,
+          "required": 4.5,
+          "fg": "rgb(216, 231, 220)",
+          "bg": "rgb(243,245,240)",
+          "selector": "p",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "small",
+          "text": "BAR & RESTAURANT",
+          "ratio": 1.61,
+          "required": 4.5,
+          "fg": "rgb(227, 190, 120)",
+          "bg": "rgb(243,245,240)",
+          "selector": "small",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "Acting mode started",
+          "ratio": 2.07,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(212,175,103)",
+          "selector": "span.badge.text-bg-success",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "Acting mode started",
+          "ratio": 2.07,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(212,175,103)",
+          "selector": "span.badge.text-bg-success",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "Acting mode ended",
+          "ratio": 2.07,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(212,175,103)",
+          "selector": "span.badge.text-bg-success",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "Table released",
+          "ratio": 2.07,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(212,175,103)",
+          "selector": "span.badge.text-bg-success",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "Empty order discarded",
+          "ratio": 2.07,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(212,175,103)",
+          "selector": "span.badge.text-bg-success",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "Acting mode started",
+          "ratio": 2.07,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(212,175,103)",
+          "selector": "span.badge.text-bg-success",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "Order opened",
+          "ratio": 2.07,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(212,175,103)",
+          "selector": "span.badge.text-bg-success",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "Table released",
+          "ratio": 2.07,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(212,175,103)",
+          "selector": "span.badge.text-bg-success",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "Table released",
+          "ratio": 2.07,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(212,175,103)",
+          "selector": "span.badge.text-bg-success",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "Acting mode started",
+          "ratio": 2.07,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(212,175,103)",
+          "selector": "span.badge.text-bg-success",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "button",
+          "text": "Act as…",
+          "ratio": 1.04,
+          "required": 4.5,
+          "fg": "rgb(248, 249, 250)",
+          "bg": "rgb(243,245,240)",
+          "selector": "button.btn.btn-sm",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "a",
+          "text": "Log out",
+          "ratio": 1.04,
+          "required": 4.5,
+          "fg": "rgb(248, 249, 250)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.btn.btn-sm",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "a",
+          "text": "CUADRA\nBAR & RESTAURANT",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.topbar-brand.brand-lockup",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "span",
+          "text": "CUADRA\nBAR & RESTAURANT",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "h1",
+          "text": "Activity log",
+          "ratio": 1.1,
+          "required": 3,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "h1",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "p",
+          "text": "Search and review recorded system activity.",
+          "ratio": 1.17,
+          "required": 4.5,
+          "fg": "rgb(216, 231, 220)",
+          "bg": "rgb(243,245,240)",
+          "selector": "p",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "small",
+          "text": "BAR & RESTAURANT",
+          "ratio": 1.61,
+          "required": 4.5,
+          "fg": "rgb(227, 190, 120)",
+          "bg": "rgb(243,245,240)",
+          "selector": "small",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "span",
+          "text": "Acting mode started",
+          "ratio": 2.07,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(212,175,103)",
+          "selector": "span.badge.text-bg-success",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "span",
+          "text": "Acting mode started",
+          "ratio": 2.07,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(212,175,103)",
+          "selector": "span.badge.text-bg-success",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "span",
+          "text": "Acting mode ended",
+          "ratio": 2.07,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(212,175,103)",
+          "selector": "span.badge.text-bg-success",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "span",
+          "text": "Table released",
+          "ratio": 2.07,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(212,175,103)",
+          "selector": "span.badge.text-bg-success",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "span",
+          "text": "Empty order discarded",
+          "ratio": 2.07,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(212,175,103)",
+          "selector": "span.badge.text-bg-success",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "span",
+          "text": "Acting mode started",
+          "ratio": 2.07,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(212,175,103)",
+          "selector": "span.badge.text-bg-success",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "span",
+          "text": "Order opened",
+          "ratio": 2.07,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(212,175,103)",
+          "selector": "span.badge.text-bg-success",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "span",
+          "text": "Table released",
+          "ratio": 2.07,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(212,175,103)",
+          "selector": "span.badge.text-bg-success",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "span",
+          "text": "Table released",
+          "ratio": 2.07,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(212,175,103)",
+          "selector": "span.badge.text-bg-success",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "span",
+          "text": "Acting mode started",
+          "ratio": 2.07,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(212,175,103)",
+          "selector": "span.badge.text-bg-success",
+          "viewport": "mobile"
+        }
+      ],
+      "status": 200,
+      "url": "http://127.0.0.1:8000/audit/",
+      "horizontal_overflow": {
+        "desktop": false,
+        "mobile": false
+      }
+    },
+    {
+      "name": "Products",
+      "path": "/catalog/products/",
+      "screenshots": {
+        "desktop": "catalog_products_desktop.png",
+        "mobile": "catalog_products_mobile.png"
+      },
+      "issues": [
+        {
+          "tag": "button",
+          "text": "Act as…",
+          "ratio": 1.04,
+          "required": 4.5,
+          "fg": "rgb(248, 249, 250)",
+          "bg": "rgb(243,245,240)",
+          "selector": "button.btn.btn-sm",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "a",
+          "text": "Log out",
+          "ratio": 1.04,
+          "required": 4.5,
+          "fg": "rgb(248, 249, 250)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.btn.btn-sm",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "Administrator · Zona T",
+          "ratio": 1.07,
+          "required": 4.5,
+          "fg": "rgba(255, 255, 255, 0.7)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span.d-block.user-role",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "a",
+          "text": "CUADRA\nBAR & RESTAURANT",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.topbar-brand.brand-lockup",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "CUADRA\nBAR & RESTAURANT",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "A\nAdministrator\nAdministrator · Zona T",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span.user-chip.d-none",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "Administrator\nAdministrator · Zona T",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span.lh-sm",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "Administrator",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span.d-block.small",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "h1",
+          "text": "Products",
+          "ratio": 1.1,
+          "required": 3,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "h1.h4.mb-0",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "small",
+          "text": "BAR & RESTAURANT",
+          "ratio": 1.61,
+          "required": 4.5,
+          "fg": "rgb(227, 190, 120)",
+          "bg": "rgb(243,245,240)",
+          "selector": "small",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "a",
+          "text": "DEACTIVATE",
+          "ratio": 4.12,
+          "required": 4.5,
+          "fg": "rgb(220, 53, 69)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.btn.btn-outline-danger",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "a",
+          "text": "DEACTIVATE",
+          "ratio": 4.12,
+          "required": 4.5,
+          "fg": "rgb(220, 53, 69)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.btn.btn-outline-danger",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "a",
+          "text": "DEACTIVATE",
+          "ratio": 4.12,
+          "required": 4.5,
+          "fg": "rgb(220, 53, 69)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.btn.btn-outline-danger",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "a",
+          "text": "Edit",
+          "ratio": 4.27,
+          "required": 4.5,
+          "fg": "rgb(108, 117, 125)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.btn.btn-outline-secondary",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "a",
+          "text": "Edit",
+          "ratio": 4.27,
+          "required": 4.5,
+          "fg": "rgb(108, 117, 125)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.btn.btn-outline-secondary",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "a",
+          "text": "Edit",
+          "ratio": 4.27,
+          "required": 4.5,
+          "fg": "rgb(108, 117, 125)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.btn.btn-outline-secondary",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "button",
+          "text": "Act as…",
+          "ratio": 1.04,
+          "required": 4.5,
+          "fg": "rgb(248, 249, 250)",
+          "bg": "rgb(243,245,240)",
+          "selector": "button.btn.btn-sm",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "a",
+          "text": "Log out",
+          "ratio": 1.04,
+          "required": 4.5,
+          "fg": "rgb(248, 249, 250)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.btn.btn-sm",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "a",
+          "text": "CUADRA\nBAR & RESTAURANT",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.topbar-brand.brand-lockup",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "span",
+          "text": "CUADRA\nBAR & RESTAURANT",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "h1",
+          "text": "Products",
+          "ratio": 1.1,
+          "required": 3,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "h1.h4.mb-0",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "small",
+          "text": "BAR & RESTAURANT",
+          "ratio": 1.61,
+          "required": 4.5,
+          "fg": "rgb(227, 190, 120)",
+          "bg": "rgb(243,245,240)",
+          "selector": "small",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "a",
+          "text": "DEACTIVATE",
+          "ratio": 4.12,
+          "required": 4.5,
+          "fg": "rgb(220, 53, 69)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.btn.btn-outline-danger",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "a",
+          "text": "DEACTIVATE",
+          "ratio": 4.12,
+          "required": 4.5,
+          "fg": "rgb(220, 53, 69)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.btn.btn-outline-danger",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "a",
+          "text": "DEACTIVATE",
+          "ratio": 4.12,
+          "required": 4.5,
+          "fg": "rgb(220, 53, 69)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.btn.btn-outline-danger",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "a",
+          "text": "Edit",
+          "ratio": 4.27,
+          "required": 4.5,
+          "fg": "rgb(108, 117, 125)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.btn.btn-outline-secondary",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "a",
+          "text": "Edit",
+          "ratio": 4.27,
+          "required": 4.5,
+          "fg": "rgb(108, 117, 125)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.btn.btn-outline-secondary",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "a",
+          "text": "Edit",
+          "ratio": 4.27,
+          "required": 4.5,
+          "fg": "rgb(108, 117, 125)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.btn.btn-outline-secondary",
+          "viewport": "mobile"
+        }
+      ],
+      "status": 200,
+      "url": "http://127.0.0.1:8000/catalog/products/",
+      "horizontal_overflow": {
+        "desktop": false,
+        "mobile": false
+      }
+    },
+    {
+      "name": "Suppliers",
+      "path": "/catalog/suppliers/",
+      "screenshots": {
+        "desktop": "catalog_suppliers_desktop.png",
+        "mobile": "catalog_suppliers_mobile.png"
+      },
+      "issues": [
+        {
+          "tag": "button",
+          "text": "Act as…",
+          "ratio": 1.04,
+          "required": 4.5,
+          "fg": "rgb(248, 249, 250)",
+          "bg": "rgb(243,245,240)",
+          "selector": "button.btn.btn-sm",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "a",
+          "text": "Log out",
+          "ratio": 1.04,
+          "required": 4.5,
+          "fg": "rgb(248, 249, 250)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.btn.btn-sm",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "Administrator · Zona T",
+          "ratio": 1.07,
+          "required": 4.5,
+          "fg": "rgba(255, 255, 255, 0.7)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span.d-block.user-role",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "a",
+          "text": "CUADRA\nBAR & RESTAURANT",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.topbar-brand.brand-lockup",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "CUADRA\nBAR & RESTAURANT",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "A\nAdministrator\nAdministrator · Zona T",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span.user-chip.d-none",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "Administrator\nAdministrator · Zona T",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span.lh-sm",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "Administrator",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span.d-block.small",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "h1",
+          "text": "Suppliers",
+          "ratio": 1.1,
+          "required": 3,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "h1.h4.mb-0",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "small",
+          "text": "BAR & RESTAURANT",
+          "ratio": 1.61,
+          "required": 4.5,
+          "fg": "rgb(227, 190, 120)",
+          "bg": "rgb(243,245,240)",
+          "selector": "small",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "a",
+          "text": "DEACTIVATE",
+          "ratio": 4.12,
+          "required": 4.5,
+          "fg": "rgb(220, 53, 69)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.btn.btn-outline-danger",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "a",
+          "text": "DEACTIVATE",
+          "ratio": 4.12,
+          "required": 4.5,
+          "fg": "rgb(220, 53, 69)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.btn.btn-outline-danger",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "a",
+          "text": "Edit",
+          "ratio": 4.27,
+          "required": 4.5,
+          "fg": "rgb(108, 117, 125)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.btn.btn-outline-secondary",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "a",
+          "text": "Edit",
+          "ratio": 4.27,
+          "required": 4.5,
+          "fg": "rgb(108, 117, 125)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.btn.btn-outline-secondary",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "button",
+          "text": "Act as…",
+          "ratio": 1.04,
+          "required": 4.5,
+          "fg": "rgb(248, 249, 250)",
+          "bg": "rgb(243,245,240)",
+          "selector": "button.btn.btn-sm",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "a",
+          "text": "Log out",
+          "ratio": 1.04,
+          "required": 4.5,
+          "fg": "rgb(248, 249, 250)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.btn.btn-sm",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "a",
+          "text": "CUADRA\nBAR & RESTAURANT",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.topbar-brand.brand-lockup",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "span",
+          "text": "CUADRA\nBAR & RESTAURANT",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "h1",
+          "text": "Suppliers",
+          "ratio": 1.1,
+          "required": 3,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "h1.h4.mb-0",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "small",
+          "text": "BAR & RESTAURANT",
+          "ratio": 1.61,
+          "required": 4.5,
+          "fg": "rgb(227, 190, 120)",
+          "bg": "rgb(243,245,240)",
+          "selector": "small",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "a",
+          "text": "DEACTIVATE",
+          "ratio": 4.12,
+          "required": 4.5,
+          "fg": "rgb(220, 53, 69)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.btn.btn-outline-danger",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "a",
+          "text": "DEACTIVATE",
+          "ratio": 4.12,
+          "required": 4.5,
+          "fg": "rgb(220, 53, 69)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.btn.btn-outline-danger",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "a",
+          "text": "Edit",
+          "ratio": 4.27,
+          "required": 4.5,
+          "fg": "rgb(108, 117, 125)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.btn.btn-outline-secondary",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "a",
+          "text": "Edit",
+          "ratio": 4.27,
+          "required": 4.5,
+          "fg": "rgb(108, 117, 125)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.btn.btn-outline-secondary",
+          "viewport": "mobile"
+        }
+      ],
+      "status": 200,
+      "url": "http://127.0.0.1:8000/catalog/suppliers/",
+      "horizontal_overflow": {
+        "desktop": false,
+        "mobile": false
+      }
+    },
+    {
+      "name": "Product types",
+      "path": "/catalog/product-types/",
+      "screenshots": {
+        "desktop": "catalog_product-types_desktop.png",
+        "mobile": "catalog_product-types_mobile.png"
+      },
+      "issues": [
+        {
+          "tag": "button",
+          "text": "Act as…",
+          "ratio": 1.04,
+          "required": 4.5,
+          "fg": "rgb(248, 249, 250)",
+          "bg": "rgb(243,245,240)",
+          "selector": "button.btn.btn-sm",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "a",
+          "text": "Log out",
+          "ratio": 1.04,
+          "required": 4.5,
+          "fg": "rgb(248, 249, 250)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.btn.btn-sm",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "Administrator · Zona T",
+          "ratio": 1.07,
+          "required": 4.5,
+          "fg": "rgba(255, 255, 255, 0.7)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span.d-block.user-role",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "a",
+          "text": "CUADRA\nBAR & RESTAURANT",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.topbar-brand.brand-lockup",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "CUADRA\nBAR & RESTAURANT",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "A\nAdministrator\nAdministrator · Zona T",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span.user-chip.d-none",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "Administrator\nAdministrator · Zona T",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span.lh-sm",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "Administrator",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span.d-block.small",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "h1",
+          "text": "Product types",
+          "ratio": 1.1,
+          "required": 3,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "h1.h4.mb-0",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "small",
+          "text": "BAR & RESTAURANT",
+          "ratio": 1.61,
+          "required": 4.5,
+          "fg": "rgb(227, 190, 120)",
+          "bg": "rgb(243,245,240)",
+          "selector": "small",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "a",
+          "text": "DEACTIVATE",
+          "ratio": 4.12,
+          "required": 4.5,
+          "fg": "rgb(220, 53, 69)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.btn.btn-outline-danger",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "a",
+          "text": "DEACTIVATE",
+          "ratio": 4.12,
+          "required": 4.5,
+          "fg": "rgb(220, 53, 69)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.btn.btn-outline-danger",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "button",
+          "text": "Act as…",
+          "ratio": 1.04,
+          "required": 4.5,
+          "fg": "rgb(248, 249, 250)",
+          "bg": "rgb(243,245,240)",
+          "selector": "button.btn.btn-sm",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "a",
+          "text": "Log out",
+          "ratio": 1.04,
+          "required": 4.5,
+          "fg": "rgb(248, 249, 250)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.btn.btn-sm",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "a",
+          "text": "CUADRA\nBAR & RESTAURANT",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.topbar-brand.brand-lockup",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "span",
+          "text": "CUADRA\nBAR & RESTAURANT",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "h1",
+          "text": "Product types",
+          "ratio": 1.1,
+          "required": 3,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "h1.h4.mb-0",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "small",
+          "text": "BAR & RESTAURANT",
+          "ratio": 1.61,
+          "required": 4.5,
+          "fg": "rgb(227, 190, 120)",
+          "bg": "rgb(243,245,240)",
+          "selector": "small",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "a",
+          "text": "DEACTIVATE",
+          "ratio": 4.12,
+          "required": 4.5,
+          "fg": "rgb(220, 53, 69)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.btn.btn-outline-danger",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "a",
+          "text": "DEACTIVATE",
+          "ratio": 4.12,
+          "required": 4.5,
+          "fg": "rgb(220, 53, 69)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.btn.btn-outline-danger",
+          "viewport": "mobile"
+        }
+      ],
+      "status": 200,
+      "url": "http://127.0.0.1:8000/catalog/product-types/",
+      "horizontal_overflow": {
+        "desktop": false,
+        "mobile": false
+      }
+    },
+    {
+      "name": "Inventory management",
+      "path": "/inventory/admin/",
+      "screenshots": {
+        "desktop": "inventory_admin_desktop.png",
+        "mobile": "inventory_admin_mobile.png"
+      },
+      "issues": [
+        {
+          "tag": "button",
+          "text": "Act as…",
+          "ratio": 1.04,
+          "required": 4.5,
+          "fg": "rgb(248, 249, 250)",
+          "bg": "rgb(243,245,240)",
+          "selector": "button.btn.btn-sm",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "a",
+          "text": "Log out",
+          "ratio": 1.04,
+          "required": 4.5,
+          "fg": "rgb(248, 249, 250)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.btn.btn-sm",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "Administrator · Zona T",
+          "ratio": 1.07,
+          "required": 4.5,
+          "fg": "rgba(255, 255, 255, 0.7)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span.d-block.user-role",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "a",
+          "text": "CUADRA\nBAR & RESTAURANT",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.topbar-brand.brand-lockup",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "CUADRA\nBAR & RESTAURANT",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "A\nAdministrator\nAdministrator · Zona T",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span.user-chip.d-none",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "Administrator\nAdministrator · Zona T",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span.lh-sm",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "Administrator",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span.d-block.small",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "h1",
+          "text": "Inventory",
+          "ratio": 1.1,
+          "required": 3,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "h1",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "p",
+          "text": "Review current stock by site and product.",
+          "ratio": 1.14,
+          "required": 4.5,
+          "fg": "rgb(220, 233, 223)",
+          "bg": "rgb(243,245,240)",
+          "selector": "p",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "INVENTORY / CUADRA",
+          "ratio": 1.52,
+          "required": 4.5,
+          "fg": "rgb(230, 196, 134)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span.cuadra-operations-eyebrow",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "small",
+          "text": "BAR & RESTAURANT",
+          "ratio": 1.61,
+          "required": 4.5,
+          "fg": "rgb(227, 190, 120)",
+          "bg": "rgb(243,245,240)",
+          "selector": "small",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "Available",
+          "ratio": 2.07,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(212,175,103)",
+          "selector": "span.badge.text-bg-success",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "Available",
+          "ratio": 2.07,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(212,175,103)",
+          "selector": "span.badge.text-bg-success",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "Available",
+          "ratio": 2.07,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(212,175,103)",
+          "selector": "span.badge.text-bg-success",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "button",
+          "text": "Act as…",
+          "ratio": 1.04,
+          "required": 4.5,
+          "fg": "rgb(248, 249, 250)",
+          "bg": "rgb(243,245,240)",
+          "selector": "button.btn.btn-sm",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "a",
+          "text": "Log out",
+          "ratio": 1.04,
+          "required": 4.5,
+          "fg": "rgb(248, 249, 250)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.btn.btn-sm",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "a",
+          "text": "CUADRA\nBAR & RESTAURANT",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.topbar-brand.brand-lockup",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "span",
+          "text": "CUADRA\nBAR & RESTAURANT",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "h1",
+          "text": "Inventory",
+          "ratio": 1.1,
+          "required": 3,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "h1",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "p",
+          "text": "Review current stock by site and product.",
+          "ratio": 1.14,
+          "required": 4.5,
+          "fg": "rgb(220, 233, 223)",
+          "bg": "rgb(243,245,240)",
+          "selector": "p",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "span",
+          "text": "INVENTORY / CUADRA",
+          "ratio": 1.52,
+          "required": 4.5,
+          "fg": "rgb(230, 196, 134)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span.cuadra-operations-eyebrow",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "small",
+          "text": "BAR & RESTAURANT",
+          "ratio": 1.61,
+          "required": 4.5,
+          "fg": "rgb(227, 190, 120)",
+          "bg": "rgb(243,245,240)",
+          "selector": "small",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "span",
+          "text": "Available",
+          "ratio": 2.07,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(212,175,103)",
+          "selector": "span.badge.text-bg-success",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "span",
+          "text": "Available",
+          "ratio": 2.07,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(212,175,103)",
+          "selector": "span.badge.text-bg-success",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "span",
+          "text": "Available",
+          "ratio": 2.07,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(212,175,103)",
+          "selector": "span.badge.text-bg-success",
+          "viewport": "mobile"
+        }
+      ],
+      "status": 200,
+      "url": "http://127.0.0.1:8000/inventory/admin/",
+      "horizontal_overflow": {
+        "desktop": false,
+        "mobile": false
+      }
+    },
+    {
+      "name": "Tables management",
+      "path": "/orders/manage/",
+      "screenshots": {
+        "desktop": "orders_manage_desktop.png",
+        "mobile": "orders_manage_mobile.png"
+      },
+      "issues": [
+        {
+          "tag": "button",
+          "text": "Act as…",
+          "ratio": 1.04,
+          "required": 4.5,
+          "fg": "rgb(248, 249, 250)",
+          "bg": "rgb(243,245,240)",
+          "selector": "button.btn.btn-sm",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "a",
+          "text": "Log out",
+          "ratio": 1.04,
+          "required": 4.5,
+          "fg": "rgb(248, 249, 250)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.btn.btn-sm",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "Administrator · Zona T",
+          "ratio": 1.07,
+          "required": 4.5,
+          "fg": "rgba(255, 255, 255, 0.7)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span.d-block.user-role",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "a",
+          "text": "CUADRA\nBAR & RESTAURANT",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.topbar-brand.brand-lockup",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "CUADRA\nBAR & RESTAURANT",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "A\nAdministrator\nAdministrator · Zona T",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span.user-chip.d-none",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "Administrator\nAdministrator · Zona T",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span.lh-sm",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "Administrator",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span.d-block.small",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "h1",
+          "text": "Manage tables",
+          "ratio": 1.1,
+          "required": 3,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "h1",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "p",
+          "text": "Manage table availability and numbering by site.",
+          "ratio": 1.14,
+          "required": 4.5,
+          "fg": "rgb(220, 233, 223)",
+          "bg": "rgb(243,245,240)",
+          "selector": "p",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "OPERATIONS / CUADRA",
+          "ratio": 1.52,
+          "required": 4.5,
+          "fg": "rgb(230, 196, 134)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span.cuadra-operations-eyebrow",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "small",
+          "text": "BAR & RESTAURANT",
+          "ratio": 1.61,
+          "required": 4.5,
+          "fg": "rgb(227, 190, 120)",
+          "bg": "rgb(243,245,240)",
+          "selector": "small",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "button",
+          "text": "Disable",
+          "ratio": 4.12,
+          "required": 4.5,
+          "fg": "rgb(220, 53, 69)",
+          "bg": "rgb(243,245,240)",
+          "selector": "button.btn.btn-sm",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "button",
+          "text": "Disable",
+          "ratio": 4.12,
+          "required": 4.5,
+          "fg": "rgb(220, 53, 69)",
+          "bg": "rgb(243,245,240)",
+          "selector": "button.btn.btn-sm",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "button",
+          "text": "Disable",
+          "ratio": 4.12,
+          "required": 4.5,
+          "fg": "rgb(220, 53, 69)",
+          "bg": "rgb(243,245,240)",
+          "selector": "button.btn.btn-sm",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "button",
+          "text": "Disable",
+          "ratio": 4.12,
+          "required": 4.5,
+          "fg": "rgb(220, 53, 69)",
+          "bg": "rgb(243,245,240)",
+          "selector": "button.btn.btn-sm",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "button",
+          "text": "Disable",
+          "ratio": 4.12,
+          "required": 4.5,
+          "fg": "rgb(220, 53, 69)",
+          "bg": "rgb(243,245,240)",
+          "selector": "button.btn.btn-sm",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "button",
+          "text": "Disable",
+          "ratio": 4.12,
+          "required": 4.5,
+          "fg": "rgb(220, 53, 69)",
+          "bg": "rgb(243,245,240)",
+          "selector": "button.btn.btn-sm",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "button",
+          "text": "Disable",
+          "ratio": 4.12,
+          "required": 4.5,
+          "fg": "rgb(220, 53, 69)",
+          "bg": "rgb(243,245,240)",
+          "selector": "button.btn.btn-sm",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "button",
+          "text": "Disable",
+          "ratio": 4.12,
+          "required": 4.5,
+          "fg": "rgb(220, 53, 69)",
+          "bg": "rgb(243,245,240)",
+          "selector": "button.btn.btn-sm",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "button",
+          "text": "Act as…",
+          "ratio": 1.04,
+          "required": 4.5,
+          "fg": "rgb(248, 249, 250)",
+          "bg": "rgb(243,245,240)",
+          "selector": "button.btn.btn-sm",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "a",
+          "text": "Log out",
+          "ratio": 1.04,
+          "required": 4.5,
+          "fg": "rgb(248, 249, 250)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.btn.btn-sm",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "a",
+          "text": "CUADRA\nBAR & RESTAURANT",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.topbar-brand.brand-lockup",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "span",
+          "text": "CUADRA\nBAR & RESTAURANT",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "h1",
+          "text": "Manage tables",
+          "ratio": 1.1,
+          "required": 3,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "h1",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "p",
+          "text": "Manage table availability and numbering by site.",
+          "ratio": 1.14,
+          "required": 4.5,
+          "fg": "rgb(220, 233, 223)",
+          "bg": "rgb(243,245,240)",
+          "selector": "p",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "span",
+          "text": "OPERATIONS / CUADRA",
+          "ratio": 1.52,
+          "required": 4.5,
+          "fg": "rgb(230, 196, 134)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span.cuadra-operations-eyebrow",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "small",
+          "text": "BAR & RESTAURANT",
+          "ratio": 1.61,
+          "required": 4.5,
+          "fg": "rgb(227, 190, 120)",
+          "bg": "rgb(243,245,240)",
+          "selector": "small",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "button",
+          "text": "Disable",
+          "ratio": 4.12,
+          "required": 4.5,
+          "fg": "rgb(220, 53, 69)",
+          "bg": "rgb(243,245,240)",
+          "selector": "button.btn.btn-sm",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "button",
+          "text": "Disable",
+          "ratio": 4.12,
+          "required": 4.5,
+          "fg": "rgb(220, 53, 69)",
+          "bg": "rgb(243,245,240)",
+          "selector": "button.btn.btn-sm",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "button",
+          "text": "Disable",
+          "ratio": 4.12,
+          "required": 4.5,
+          "fg": "rgb(220, 53, 69)",
+          "bg": "rgb(243,245,240)",
+          "selector": "button.btn.btn-sm",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "button",
+          "text": "Disable",
+          "ratio": 4.12,
+          "required": 4.5,
+          "fg": "rgb(220, 53, 69)",
+          "bg": "rgb(243,245,240)",
+          "selector": "button.btn.btn-sm",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "button",
+          "text": "Disable",
+          "ratio": 4.12,
+          "required": 4.5,
+          "fg": "rgb(220, 53, 69)",
+          "bg": "rgb(243,245,240)",
+          "selector": "button.btn.btn-sm",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "button",
+          "text": "Disable",
+          "ratio": 4.12,
+          "required": 4.5,
+          "fg": "rgb(220, 53, 69)",
+          "bg": "rgb(243,245,240)",
+          "selector": "button.btn.btn-sm",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "button",
+          "text": "Disable",
+          "ratio": 4.12,
+          "required": 4.5,
+          "fg": "rgb(220, 53, 69)",
+          "bg": "rgb(243,245,240)",
+          "selector": "button.btn.btn-sm",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "button",
+          "text": "Disable",
+          "ratio": 4.12,
+          "required": 4.5,
+          "fg": "rgb(220, 53, 69)",
+          "bg": "rgb(243,245,240)",
+          "selector": "button.btn.btn-sm",
+          "viewport": "mobile"
+        }
+      ],
+      "status": 200,
+      "url": "http://127.0.0.1:8000/orders/manage/",
+      "horizontal_overflow": {
+        "desktop": false,
+        "mobile": false
+      }
+    },
+    {
+      "name": "Consolidated report",
+      "path": "/reports/general/",
+      "screenshots": {
+        "desktop": "reports_general_desktop.png",
+        "mobile": "reports_general_mobile.png"
+      },
+      "issues": [
+        {
+          "tag": "button",
+          "text": "Act as…",
+          "ratio": 1.04,
+          "required": 4.5,
+          "fg": "rgb(248, 249, 250)",
+          "bg": "rgb(243,245,240)",
+          "selector": "button.btn.btn-sm",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "a",
+          "text": "Log out",
+          "ratio": 1.04,
+          "required": 4.5,
+          "fg": "rgb(248, 249, 250)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.btn.btn-sm",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "Administrator · Zona T",
+          "ratio": 1.07,
+          "required": 4.5,
+          "fg": "rgba(255, 255, 255, 0.7)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span.d-block.user-role",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "a",
+          "text": "CUADRA\nBAR & RESTAURANT",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.topbar-brand.brand-lockup",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "CUADRA\nBAR & RESTAURANT",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "A\nAdministrator\nAdministrator · Zona T",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span.user-chip.d-none",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "Administrator\nAdministrator · Zona T",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span.lh-sm",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "Administrator",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span.d-block.small",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "h1",
+          "text": "Consolidated report",
+          "ratio": 1.1,
+          "required": 3,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "h1",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "p",
+          "text": "Sales across all sites and a live snapshot of current inventory.",
+          "ratio": 1.14,
+          "required": 4.5,
+          "fg": "rgb(220, 233, 223)",
+          "bg": "rgb(243,245,240)",
+          "selector": "p",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "CUADRA / MANAGEMENT INSIGHTS",
+          "ratio": 1.52,
+          "required": 4.5,
+          "fg": "rgb(230, 196, 134)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span.cuadra-admin-report-eyebrow",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "small",
+          "text": "BAR & RESTAURANT",
+          "ratio": 1.61,
+          "required": 4.5,
+          "fg": "rgb(227, 190, 120)",
+          "bg": "rgb(243,245,240)",
+          "selector": "small",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "button",
+          "text": "Act as…",
+          "ratio": 1.04,
+          "required": 4.5,
+          "fg": "rgb(248, 249, 250)",
+          "bg": "rgb(243,245,240)",
+          "selector": "button.btn.btn-sm",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "a",
+          "text": "Log out",
+          "ratio": 1.04,
+          "required": 4.5,
+          "fg": "rgb(248, 249, 250)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.btn.btn-sm",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "a",
+          "text": "CUADRA\nBAR & RESTAURANT",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.topbar-brand.brand-lockup",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "span",
+          "text": "CUADRA\nBAR & RESTAURANT",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "h1",
+          "text": "Consolidated report",
+          "ratio": 1.1,
+          "required": 3,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "h1",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "p",
+          "text": "Sales across all sites and a live snapshot of current inventory.",
+          "ratio": 1.14,
+          "required": 4.5,
+          "fg": "rgb(220, 233, 223)",
+          "bg": "rgb(243,245,240)",
+          "selector": "p",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "span",
+          "text": "CUADRA / MANAGEMENT INSIGHTS",
+          "ratio": 1.52,
+          "required": 4.5,
+          "fg": "rgb(230, 196, 134)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span.cuadra-admin-report-eyebrow",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "small",
+          "text": "BAR & RESTAURANT",
+          "ratio": 1.61,
+          "required": 4.5,
+          "fg": "rgb(227, 190, 120)",
+          "bg": "rgb(243,245,240)",
+          "selector": "small",
+          "viewport": "mobile"
+        }
+      ],
+      "status": 200,
+      "url": "http://127.0.0.1:8000/reports/general/",
+      "horizontal_overflow": {
+        "desktop": false,
+        "mobile": false
+      }
+    },
+    {
+      "name": "Sales report",
+      "path": "/reports/sales/",
+      "screenshots": {
+        "desktop": "reports_sales_desktop.png",
+        "mobile": "reports_sales_mobile.png"
+      },
+      "issues": [
+        {
+          "tag": "button",
+          "text": "Act as…",
+          "ratio": 1.04,
+          "required": 4.5,
+          "fg": "rgb(248, 249, 250)",
+          "bg": "rgb(243,245,240)",
+          "selector": "button.btn.btn-sm",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "a",
+          "text": "Log out",
+          "ratio": 1.04,
+          "required": 4.5,
+          "fg": "rgb(248, 249, 250)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.btn.btn-sm",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "Administrator · Zona T",
+          "ratio": 1.07,
+          "required": 4.5,
+          "fg": "rgba(255, 255, 255, 0.7)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span.d-block.user-role",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "a",
+          "text": "CUADRA\nBAR & RESTAURANT",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.topbar-brand.brand-lockup",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "CUADRA\nBAR & RESTAURANT",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "A\nAdministrator\nAdministrator · Zona T",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span.user-chip.d-none",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "Administrator\nAdministrator · Zona T",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span.lh-sm",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "Administrator",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span.d-block.small",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "h1",
+          "text": "Sales report",
+          "ratio": 1.1,
+          "required": 3,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "#sales-title",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "p",
+          "text": "Review completed payments, explore your sales and access printable receipts.",
+          "ratio": 1.14,
+          "required": 4.5,
+          "fg": "rgb(220, 233, 223)",
+          "bg": "rgb(243,245,240)",
+          "selector": "p",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "TOTAL SALES",
+          "ratio": 1.16,
+          "required": 4.5,
+          "fg": "rgb(217, 232, 221)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "small",
+          "text": "For the selected filters",
+          "ratio": 1.16,
+          "required": 4.5,
+          "fg": "rgb(217, 232, 221)",
+          "bg": "rgb(243,245,240)",
+          "selector": "small",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "CUADRA · MANAGEMENT & ANALYTICS",
+          "ratio": 1.44,
+          "required": 4.5,
+          "fg": "rgb(237, 201, 135)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span.cuadra-sales-kicker",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "small",
+          "text": "BAR & RESTAURANT",
+          "ratio": 1.61,
+          "required": 4.5,
+          "fg": "rgb(227, 190, 120)",
+          "bg": "rgb(243,245,240)",
+          "selector": "small",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "button",
+          "text": "Act as…",
+          "ratio": 1.04,
+          "required": 4.5,
+          "fg": "rgb(248, 249, 250)",
+          "bg": "rgb(243,245,240)",
+          "selector": "button.btn.btn-sm",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "a",
+          "text": "Log out",
+          "ratio": 1.04,
+          "required": 4.5,
+          "fg": "rgb(248, 249, 250)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.btn.btn-sm",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "a",
+          "text": "CUADRA\nBAR & RESTAURANT",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.topbar-brand.brand-lockup",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "span",
+          "text": "CUADRA\nBAR & RESTAURANT",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "h1",
+          "text": "Sales report",
+          "ratio": 1.1,
+          "required": 3,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "#sales-title",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "p",
+          "text": "Review completed payments, explore your sales and access printable receipts.",
+          "ratio": 1.14,
+          "required": 4.5,
+          "fg": "rgb(220, 233, 223)",
+          "bg": "rgb(243,245,240)",
+          "selector": "p",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "span",
+          "text": "TOTAL SALES",
+          "ratio": 1.16,
+          "required": 4.5,
+          "fg": "rgb(217, 232, 221)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "small",
+          "text": "For the selected filters",
+          "ratio": 1.16,
+          "required": 4.5,
+          "fg": "rgb(217, 232, 221)",
+          "bg": "rgb(243,245,240)",
+          "selector": "small",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "span",
+          "text": "CUADRA · MANAGEMENT & ANALYTICS",
+          "ratio": 1.44,
+          "required": 4.5,
+          "fg": "rgb(237, 201, 135)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span.cuadra-sales-kicker",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "small",
+          "text": "BAR & RESTAURANT",
+          "ratio": 1.61,
+          "required": 4.5,
+          "fg": "rgb(227, 190, 120)",
+          "bg": "rgb(243,245,240)",
+          "selector": "small",
+          "viewport": "mobile"
+        }
+      ],
+      "status": 200,
+      "url": "http://127.0.0.1:8000/reports/sales/",
+      "horizontal_overflow": {
+        "desktop": false,
+        "mobile": false
+      }
+    },
+    {
+      "name": "Inventory report",
+      "path": "/reports/inventory/",
+      "screenshots": {
+        "desktop": "reports_inventory_desktop.png",
+        "mobile": "reports_inventory_mobile.png"
+      },
+      "issues": [
+        {
+          "tag": "button",
+          "text": "Act as…",
+          "ratio": 1.04,
+          "required": 4.5,
+          "fg": "rgb(248, 249, 250)",
+          "bg": "rgb(243,245,240)",
+          "selector": "button.btn.btn-sm",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "a",
+          "text": "Log out",
+          "ratio": 1.04,
+          "required": 4.5,
+          "fg": "rgb(248, 249, 250)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.btn.btn-sm",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "Administrator · Zona T",
+          "ratio": 1.07,
+          "required": 4.5,
+          "fg": "rgba(255, 255, 255, 0.7)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span.d-block.user-role",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "p",
+          "text": "Review current stock availability by site and product. Keep your team informed with a clea",
+          "ratio": 1.09,
+          "required": 4.5,
+          "fg": "rgb(226, 238, 230)",
+          "bg": "rgb(243,245,240)",
+          "selector": "p",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "a",
+          "text": "CUADRA\nBAR & RESTAURANT",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.topbar-brand.brand-lockup",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "CUADRA\nBAR & RESTAURANT",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "A\nAdministrator\nAdministrator · Zona T",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span.user-chip.d-none",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "Administrator\nAdministrator · Zona T",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span.lh-sm",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "Administrator",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span.d-block.small",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "h1",
+          "text": "Inventory report",
+          "ratio": 1.1,
+          "required": 3,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "h1",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "small",
+          "text": "BAR & RESTAURANT",
+          "ratio": 1.61,
+          "required": 4.5,
+          "fg": "rgb(227, 190, 120)",
+          "bg": "rgb(243,245,240)",
+          "selector": "small",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "button",
+          "text": "Act as…",
+          "ratio": 1.04,
+          "required": 4.5,
+          "fg": "rgb(248, 249, 250)",
+          "bg": "rgb(243,245,240)",
+          "selector": "button.btn.btn-sm",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "a",
+          "text": "Log out",
+          "ratio": 1.04,
+          "required": 4.5,
+          "fg": "rgb(248, 249, 250)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.btn.btn-sm",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "p",
+          "text": "Review current stock availability by site and product. Keep your team informed with a clea",
+          "ratio": 1.09,
+          "required": 4.5,
+          "fg": "rgb(226, 238, 230)",
+          "bg": "rgb(243,245,240)",
+          "selector": "p",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "a",
+          "text": "CUADRA\nBAR & RESTAURANT",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.topbar-brand.brand-lockup",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "span",
+          "text": "CUADRA\nBAR & RESTAURANT",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "h1",
+          "text": "Inventory report",
+          "ratio": 1.1,
+          "required": 3,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "h1",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "small",
+          "text": "BAR & RESTAURANT",
+          "ratio": 1.61,
+          "required": 4.5,
+          "fg": "rgb(227, 190, 120)",
+          "bg": "rgb(243,245,240)",
+          "selector": "small",
+          "viewport": "mobile"
+        }
+      ],
+      "status": 200,
+      "url": "http://127.0.0.1:8000/reports/inventory/",
+      "horizontal_overflow": {
+        "desktop": false,
+        "mobile": false
+      }
+    },
+    {
+      "name": "Top-selling products",
+      "path": "/reports/top-products/",
+      "screenshots": {
+        "desktop": "reports_top-products_desktop.png",
+        "mobile": "reports_top-products_mobile.png"
+      },
+      "issues": [
+        {
+          "tag": "button",
+          "text": "Act as…",
+          "ratio": 1.04,
+          "required": 4.5,
+          "fg": "rgb(248, 249, 250)",
+          "bg": "rgb(243,245,240)",
+          "selector": "button.btn.btn-sm",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "a",
+          "text": "Log out",
+          "ratio": 1.04,
+          "required": 4.5,
+          "fg": "rgb(248, 249, 250)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.btn.btn-sm",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "Administrator · Zona T",
+          "ratio": 1.07,
+          "required": 4.5,
+          "fg": "rgba(255, 255, 255, 0.7)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span.d-block.user-role",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "a",
+          "text": "CUADRA\nBAR & RESTAURANT",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.topbar-brand.brand-lockup",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "CUADRA\nBAR & RESTAURANT",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "A\nAdministrator\nAdministrator · Zona T",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span.user-chip.d-none",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "Administrator\nAdministrator · Zona T",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span.lh-sm",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "Administrator",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span.d-block.small",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "h1",
+          "text": "Top-selling products",
+          "ratio": 1.1,
+          "required": 3,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "h1",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "p",
+          "text": "Ranked by units in paid orders. Revenue uses the price recorded at the time of sale.",
+          "ratio": 1.14,
+          "required": 4.5,
+          "fg": "rgb(220, 233, 223)",
+          "bg": "rgb(243,245,240)",
+          "selector": "p",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "CUADRA / SALES INTELLIGENCE",
+          "ratio": 1.52,
+          "required": 4.5,
+          "fg": "rgb(230, 196, 134)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span.cuadra-admin-report-eyebrow",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "small",
+          "text": "BAR & RESTAURANT",
+          "ratio": 1.61,
+          "required": 4.5,
+          "fg": "rgb(227, 190, 120)",
+          "bg": "rgb(243,245,240)",
+          "selector": "small",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "button",
+          "text": "Act as…",
+          "ratio": 1.04,
+          "required": 4.5,
+          "fg": "rgb(248, 249, 250)",
+          "bg": "rgb(243,245,240)",
+          "selector": "button.btn.btn-sm",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "a",
+          "text": "Log out",
+          "ratio": 1.04,
+          "required": 4.5,
+          "fg": "rgb(248, 249, 250)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.btn.btn-sm",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "a",
+          "text": "CUADRA\nBAR & RESTAURANT",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "a.topbar-brand.brand-lockup",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "span",
+          "text": "CUADRA\nBAR & RESTAURANT",
+          "ratio": 1.1,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "h1",
+          "text": "Top-selling products",
+          "ratio": 1.1,
+          "required": 3,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(243,245,240)",
+          "selector": "h1",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "p",
+          "text": "Ranked by units in paid orders. Revenue uses the price recorded at the time of sale.",
+          "ratio": 1.14,
+          "required": 4.5,
+          "fg": "rgb(220, 233, 223)",
+          "bg": "rgb(243,245,240)",
+          "selector": "p",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "span",
+          "text": "CUADRA / SALES INTELLIGENCE",
+          "ratio": 1.52,
+          "required": 4.5,
+          "fg": "rgb(230, 196, 134)",
+          "bg": "rgb(243,245,240)",
+          "selector": "span.cuadra-admin-report-eyebrow",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "small",
+          "text": "BAR & RESTAURANT",
+          "ratio": 1.61,
+          "required": 4.5,
+          "fg": "rgb(227, 190, 120)",
+          "bg": "rgb(243,245,240)",
+          "selector": "small",
+          "viewport": "mobile"
+        }
+      ],
+      "status": 200,
+      "url": "http://127.0.0.1:8000/reports/top-products/",
+      "horizontal_overflow": {
+        "desktop": false,
+        "mobile": false
+      }
+    }
+  ],
+  "note": "Medición heurística: fondos con gradientes, imágenes, pseudo-elementos y componentes superpuestos requieren revisión manual. No equivale a una certificación WCAG."
+}

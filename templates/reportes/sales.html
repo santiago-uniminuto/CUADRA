@@ -32,7 +32,8 @@
     </div>
     <section class="cuadra-sales-panel cuadra-sales-results" aria-labelledby="sales-results-title">
       <div class="cuadra-sales-panel-heading"><div><h2 id="sales-results-title">Payment history</h2><span>Most recent payments first</span></div><span class="cuadra-sales-count">{{ count }} records</span></div>
-      <div class="table-responsive">
+      <p class="cuadra-sales-scroll-hint">Scroll the table horizontally to see all columns, including Amount and Receipt.</p>
+      <div class="table-responsive" role="region" aria-label="Payment history table; scroll horizontally to see more columns" tabindex="0">
         <table class="table cuadra-sales-table align-middle mb-0">
           <thead><tr><th>Paid at</th><th>Site</th><th>Order</th><th>Cashier</th><th>Method</th><th class="text-end">Amount</th><th>Receipt</th></tr></thead>
           <tbody>

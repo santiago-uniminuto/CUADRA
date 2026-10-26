@@ -1,0 +1,79 @@
+{
+  "date": "2026-10-25T21:27:54",
+  "role": "waiter",
+  "base_url": "http://127.0.0.1:8000",
+  "results": [
+    {
+      "name": "Tables",
+      "path": "/orders/",
+      "screenshots": {
+        "desktop": "orders_desktop.png",
+        "mobile": "orders_mobile.png"
+      },
+      "issues": [],
+      "status": 200,
+      "url": "http://127.0.0.1:8000/orders/",
+      "horizontal_overflow": {
+        "desktop": false,
+        "mobile": false
+      }
+    },
+    {
+      "name": "Inventory",
+      "path": "/inventory/",
+      "screenshots": {
+        "desktop": "inventory_desktop.png",
+        "mobile": "inventory_mobile.png"
+      },
+      "issues": [
+        {
+          "tag": "span",
+          "text": "Available",
+          "ratio": 2.07,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(212,175,103)",
+          "selector": "span.badge.text-bg-success",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "Available",
+          "ratio": 2.07,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(212,175,103)",
+          "selector": "span.badge.text-bg-success",
+          "viewport": "desktop"
+        },
+        {
+          "tag": "span",
+          "text": "Available",
+          "ratio": 2.07,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(212,175,103)",
+          "selector": "span.badge.text-bg-success",
+          "viewport": "mobile"
+        },
+        {
+          "tag": "span",
+          "text": "Available",
+          "ratio": 2.07,
+          "required": 4.5,
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(212,175,103)",
+          "selector": "span.badge.text-bg-success",
+          "viewport": "mobile"
+        }
+      ],
+      "status": 200,
+      "url": "http://127.0.0.1:8000/inventory/",
+      "horizontal_overflow": {
+        "desktop": false,
+        "mobile": false
+      }
+    }
+  ],
+  "note": "Medición heurística: fondos con gradientes, imágenes, pseudo-elementos y componentes superpuestos requieren revisión manual. No equivale a una certificación WCAG."
+}

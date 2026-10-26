@@ -1,0 +1,68 @@
+{
+  "date": "2026-10-25T21:27:35",
+  "role": "cashier",
+  "base_url": "http://127.0.0.1:8000",
+  "results": [
+    {
+      "name": "Payments",
+      "path": "/payments/",
+      "screenshots": {
+        "desktop": "payments_desktop.png",
+        "mobile": "payments_mobile.png"
+      },
+      "issues": [],
+      "status": 200,
+      "url": "http://127.0.0.1:8000/payments/",
+      "horizontal_overflow": {
+        "desktop": false,
+        "mobile": false
+      }
+    },
+    {
+      "name": "Sales report",
+      "path": "/reports/sales/",
+      "screenshots": {
+        "desktop": "reports_sales_desktop.png",
+        "mobile": "reports_sales_mobile.png"
+      },
+      "issues": [],
+      "status": 200,
+      "url": "http://127.0.0.1:8000/reports/sales/",
+      "horizontal_overflow": {
+        "desktop": false,
+        "mobile": false
+      }
+    },
+    {
+      "name": "Inventory report",
+      "path": "/reports/inventory/",
+      "screenshots": {
+        "desktop": "reports_inventory_desktop.png",
+        "mobile": "reports_inventory_mobile.png"
+      },
+      "issues": [],
+      "status": 200,
+      "url": "http://127.0.0.1:8000/reports/inventory/",
+      "horizontal_overflow": {
+        "desktop": false,
+        "mobile": false
+      }
+    },
+    {
+      "name": "Top-selling products",
+      "path": "/reports/top-products/",
+      "screenshots": {
+        "desktop": "reports_top-products_desktop.png",
+        "mobile": "reports_top-products_mobile.png"
+      },
+      "issues": [],
+      "status": 200,
+      "url": "http://127.0.0.1:8000/reports/top-products/",
+      "horizontal_overflow": {
+        "desktop": false,
+        "mobile": false
+      }
+    }
+  ],
+  "note": "Medición heurística: fondos con gradientes, imágenes, pseudo-elementos y componentes superpuestos requieren revisión manual. No equivale a una certificación WCAG."
+}
