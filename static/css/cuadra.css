@@ -589,3 +589,10 @@ body:has(.cuadra-operations-hero) .form-select:focus{border-color:#d4af67;box-sh
 body:has(.cuadra-operations-hero) .card{border:1px solid #dce4dc;border-radius:1rem;box-shadow:0 10px 24px rgba(14,59,47,.06)}
 @media(max-width:720px){.cuadra-operations-hero{padding:1.3rem}body:has(.cuadra-operations-hero) .table thead th{font-size:.74rem}}
 
+/* CUADRA FASE 5 WAITER AVAILABLE CONTRAST START */
+/* Dark lettering on gold keeps the brand color while improving readability. */
+.layout-pos .pos-tile .badge.text-bg-success {
+  color: #15251D !important;
+  background-color: #D4AF67 !important;
+}
+/* CUADRA FASE 5 WAITER AVAILABLE CONTRAST END */
