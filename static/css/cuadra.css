@@ -776,3 +776,29 @@ body:has(.cuadra-operations-hero) .cuadra-stock-cancel:focus-visible {
   .cuadra-table-confirm-actions .btn { flex: 1 1 auto; }
 }
 
+/* CUADRA FASE 8.2: admin confirmation modal */
+.cuadra-table-confirm-proceed.is-success,
+.cuadra-table-confirm-proceed.is-success:hover,
+.cuadra-table-confirm-proceed.is-success:focus {
+  background: #0E3B2F !important;
+  border-color: #0E3B2F !important;
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+}
+.cuadra-table-confirm-proceed.is-danger,
+.cuadra-table-confirm-proceed.is-danger:hover,
+.cuadra-table-confirm-proceed.is-danger:focus {
+  background: #A83232 !important;
+  border-color: #A83232 !important;
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+}
+/* Standalone fallback pages: user reactivation should never be gold. */
+.layout-admin .cuadra-management-form .btn-success,
+.layout-admin .cuadra-management-form .btn-success:hover,
+.layout-admin .cuadra-management-form .btn-success:focus {
+  background: #0E3B2F !important;
+  border-color: #0E3B2F !important;
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+}

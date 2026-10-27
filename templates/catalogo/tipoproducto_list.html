@@ -18,9 +18,9 @@
           <td>{% if t.activo %}<span class="badge text-bg-success">Active</span>{% else %}<span class="badge text-bg-secondary">Inactive</span>{% endif %}</td>
           <td class="text-end text-nowrap">
             {% if t.activo %}
-            <a href="{% url 'catalogo:tipoproducto_toggle' t.pk %}" class="btn btn-outline-danger btn-sm">DEACTIVATE</a>
+            <a href="{% url 'catalogo:tipoproducto_toggle' t.pk %}" class="btn btn-outline-danger btn-sm" data-cuadra-confirm="deactivate" data-cuadra-kind="product type" data-cuadra-name="{{ t.nombre }}">DEACTIVATE</a>
             {% else %}
-            <a href="{% url 'catalogo:tipoproducto_toggle' t.pk %}" class="btn btn-outline-success btn-sm">REACTIVATE</a>
+            <a href="{% url 'catalogo:tipoproducto_toggle' t.pk %}" class="btn btn-outline-success btn-sm" data-cuadra-confirm="reactivate" data-cuadra-kind="product type" data-cuadra-name="{{ t.nombre }}">REACTIVATE</a>
             {% endif %}
           </td>
         </tr>

@@ -23,9 +23,9 @@
         <td class="text-end text-nowrap">
           <a href="{% url 'usuarios:sede_edit' sede.pk %}" class="btn btn-outline-secondary btn-sm">Edit</a>
           {% if sede.activo %}
-          <a href="{% url 'usuarios:sede_toggle' sede.pk %}" class="btn btn-outline-danger btn-sm">DEACTIVATE</a>
+          <a href="{% url 'usuarios:sede_toggle' sede.pk %}" class="btn btn-outline-danger btn-sm" data-cuadra-confirm="deactivate" data-cuadra-kind="site" data-cuadra-name="{{ sede.nombre }}">DEACTIVATE</a>
           {% else %}
-          <a href="{% url 'usuarios:sede_toggle' sede.pk %}" class="btn btn-outline-success btn-sm">REACTIVATE</a>
+          <a href="{% url 'usuarios:sede_toggle' sede.pk %}" class="btn btn-outline-success btn-sm" data-cuadra-confirm="reactivate" data-cuadra-kind="site" data-cuadra-name="{{ sede.nombre }}">REACTIVATE</a>
           {% endif %}
         </td>
       </tr>

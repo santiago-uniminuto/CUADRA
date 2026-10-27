@@ -20,9 +20,9 @@
           <td class="text-end text-nowrap">
             <a href="{% url 'catalogo:proveedor_edit' p.pk %}" class="btn btn-outline-secondary btn-sm">Edit</a>
             {% if p.activo %}
-            <a href="{% url 'catalogo:proveedor_toggle' p.pk %}" class="btn btn-outline-danger btn-sm">DEACTIVATE</a>
+            <a href="{% url 'catalogo:proveedor_toggle' p.pk %}" class="btn btn-outline-danger btn-sm" data-cuadra-confirm="deactivate" data-cuadra-kind="supplier" data-cuadra-name="{{ p.nombre }}">DEACTIVATE</a>
             {% else %}
-            <a href="{% url 'catalogo:proveedor_toggle' p.pk %}" class="btn btn-outline-success btn-sm">REACTIVATE</a>
+            <a href="{% url 'catalogo:proveedor_toggle' p.pk %}" class="btn btn-outline-success btn-sm" data-cuadra-confirm="reactivate" data-cuadra-kind="supplier" data-cuadra-name="{{ p.nombre }}">REACTIVATE</a>
             {% endif %}
           </td>
         </tr>

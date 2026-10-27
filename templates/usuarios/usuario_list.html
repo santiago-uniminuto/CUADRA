@@ -39,9 +39,9 @@
         <a href="{% url 'usuarios:usuario_list' %}?assign={{ u.pk }}#assign" class="btn btn-outline-primary btn-sm">Assign</a>
         <a href="{% url 'usuarios:usuario_reset_password' u.pk %}" class="btn btn-outline-warning btn-sm">Reset password</a>
         {% if u.is_active and u.pk != user.pk %}
-        <a href="{% url 'usuarios:usuario_deactivate' u.pk %}" class="btn btn-outline-danger btn-sm">DEACTIVATE</a>
+        <a href="{% url 'usuarios:usuario_deactivate' u.pk %}" class="btn btn-outline-danger btn-sm" data-cuadra-confirm="deactivate" data-cuadra-kind="user" data-cuadra-name="{{ u.nombre }}">DEACTIVATE</a>
         {% elif not u.is_active %}
-        <a href="{% url 'usuarios:usuario_reactivate' u.pk %}" class="btn btn-outline-success btn-sm">REACTIVATE</a>
+        <a href="{% url 'usuarios:usuario_reactivate' u.pk %}" class="btn btn-outline-success btn-sm" data-cuadra-confirm="reactivate" data-cuadra-kind="user" data-cuadra-name="{{ u.nombre }}">REACTIVATE</a>
         {% endif %}
       </td>
     </tr>

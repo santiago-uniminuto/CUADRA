@@ -6,7 +6,7 @@
   <title>{% block title %}CUADRA{% endblock %}</title>
   {# Bootstrap va dentro del proyecto (static/vendor): en el servidor de la red local puede no haber internet. #}
   <link href="{% static 'vendor/bootstrap/bootstrap.min.css' %}" rel="stylesheet">
-  <link href="{% static 'css/cuadra.css' %}?v=cuadra-fase8-1" rel="stylesheet">
+  <link href="{% static 'css/cuadra.css' %}?v=cuadra-fase8-2" rel="stylesheet">
   <link href="{% static 'css/admin_dashboard_phase4.css' %}?v=1" rel="stylesheet">
   <link href="{% static 'css/report_contrast_phase4.css' %}?v=1" rel="stylesheet">
 </head>
@@ -125,6 +125,67 @@
   })();
 </script>
 {% endif %}
+
+{% if user.is_authenticated and layout == 'admin' %}
+<dialog id="cuadraAdminConfirmDialog" class="cuadra-table-confirm-dialog" aria-labelledby="cuadraAdminConfirmTitle">
+  <div class="cuadra-table-confirm-inner">
+    <div class="cuadra-table-confirm-symbol" aria-hidden="true">!</div>
+    <h2 id="cuadraAdminConfirmTitle">Confirm action</h2>
+    <p id="cuadraAdminConfirmMessage"></p>
+    <div class="cuadra-table-confirm-actions">
+      <button type="button" class="btn cuadra-table-confirm-cancel" id="cuadraAdminConfirmCancel">CANCEL</button>
+      <button type="button" class="btn cuadra-table-confirm-proceed" id="cuadraAdminConfirmProceed">CONFIRM</button>
+    </div>
+  </div>
+</dialog>
+<form id="cuadraAdminConfirmForm" method="post" hidden>{% csrf_token %}</form>
+<script>
+(function () {
+  'use strict';
+  const dialog = document.getElementById('cuadraAdminConfirmDialog');
+  const form = document.getElementById('cuadraAdminConfirmForm');
+  const title = document.getElementById('cuadraAdminConfirmTitle');
+  const message = document.getElementById('cuadraAdminConfirmMessage');
+  const proceed = document.getElementById('cuadraAdminConfirmProceed');
+  const cancel = document.getElementById('cuadraAdminConfirmCancel');
+  if (!dialog || !form || !title || !message || !proceed || !cancel) return;
+  let target = null;
+  document.addEventListener('click', function (event) {
+    const link = event.target.closest('a[data-cuadra-confirm]');
+    if (!link) return;
+    if (event.defaultPrevented || event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+    event.preventDefault();
+    target = link.href;
+    const action = link.dataset.cuadraConfirm;
+    const noun = link.dataset.cuadraKind || 'item';
+    const name = link.dataset.cuadraName || 'this item';
+    const activate = action === 'reactivate';
+    title.textContent = (activate ? 'Reactivate ' : 'Deactivate ') + noun;
+    let content = 'Are you sure you want to ' + action + ' ' + noun + ' “' + name + '”?';
+    if (!activate && noun === 'user') content += ' The user will no longer be able to log in and any open session will be closed immediately.';
+    if (!activate && noun === 'site') content += ' The site must have no active users assigned. Its history will be kept.';
+    message.textContent = content;
+    proceed.textContent = activate ? 'REACTIVATE' : 'DEACTIVATE';
+    proceed.classList.toggle('is-success', activate);
+    proceed.classList.toggle('is-danger', !activate);
+    if (typeof dialog.showModal === 'function') dialog.showModal();
+    else if (window.confirm(content)) { form.action = target; form.submit(); }
+  });
+  cancel.addEventListener('click', function () { target = null; dialog.close(); });
+  proceed.addEventListener('click', function () {
+    if (!target) return;
+    proceed.disabled = true;
+    form.action = target;
+    form.submit();
+  });
+  dialog.addEventListener('close', function () { target = null; proceed.disabled = false; });
+  dialog.addEventListener('click', function (event) {
+    if (event.target === dialog) dialog.close();
+  });
+})();
+</script>
+{% endif %}
+
 {% block scripts %}{% endblock %}
 </body>
 </html>
