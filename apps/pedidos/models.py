@@ -14,6 +14,11 @@ class Mesa(models.Model):
     estado = models.CharField(max_length=10, choices=Estado.choices, default=Estado.AVAILABLE)
     # Una mesa deshabilitada no se ofrece para nuevos pedidos pero conserva su historial.
     activo = models.BooleanField(default=True)
+    # Mesero de la atención actual, independiente del historial de ventas.
+    responsable_actual = models.ForeignKey(
+        settings.AUTH_USER_MODEL, null=True, blank=True,
+        on_delete=models.SET_NULL, related_name='mesas_a_cargo',
+    )
 
     class Meta:
         constraints = [

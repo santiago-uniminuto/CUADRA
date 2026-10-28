@@ -25,9 +25,11 @@ def _assert_owner(request, waiter_id):
         raise PermissionDenied('This table is assigned to another waiter.')
 
 
-def _last_order(table):
-    """El ultimo pedido identifica al responsable hasta liberar la mesa."""
-    return Pedido.objects.filter(mesa=table).order_by('-fecha', '-pk').first()
+def _assert_table_owner(request, table):
+    """Solo el responsable de la atención actual (o admin puro)."""
+    if table.responsable_actual_id:
+        _assert_owner(request, table.responsable_actual_id)
+
 
 
 def _table(request, pk, lock=False):
@@ -42,14 +44,14 @@ def tables(request):
     with transaction.atomic():
         if not Mesa.objects.filter(sede=site).exists():
             list(Mesa.objects.bulk_create([Mesa(sede=site, numero=n) for n in range(1, 9)], ignore_conflicts=True))
-    items = quick_sort(Mesa.objects.filter(sede=site, activo=True), key=lambda mesa: (mesa.numero, mesa.pk))
+    items = quick_sort(Mesa.objects.filter(sede=site, activo=True).select_related('responsable_actual'), key=lambda mesa: (mesa.numero, mesa.pk))
     open_orders = {order.mesa_id: order.pk for order in Pedido.objects.filter(mesa__in=items, estado=Pedido.Estado.OPEN)}
     for item in items:
         item.open_order_id = open_orders.get(item.pk)
         item.has_open_order = bool(item.open_order_id)
-        last = _last_order(item) if item.estado == Mesa.Estado.OCCUPIED else None
-        item.owner_name = last.mesero.nombre or last.mesero.username if last else None
-        item.is_other_waiter = bool(last and last.mesero_id != request.user.pk and
+        owner = item.responsable_actual if item.estado == Mesa.Estado.OCCUPIED else None
+        item.owner_name = (owner.nombre or owner.username) if owner else None
+        item.is_other_waiter = bool(owner and owner.pk != request.user.pk and
                                     not (request.user.rol == 'ADMIN' and not get_actuando_como(request)))
     return render(request, 'pedidos/tables.html', {'tables': items, 'site': site})
 
@@ -59,14 +61,13 @@ def tables(request):
 def open_order(request, table_id):
     with transaction.atomic():
         table = _table(request, table_id, lock=True)
-        last = _last_order(table) if table.estado == Mesa.Estado.OCCUPIED else None
-        if last:
-            _assert_owner(request, last.mesero_id)
+        _assert_table_owner(request, table)
         if Pedido.objects.filter(mesa=table, estado=Pedido.Estado.OPEN).exists():
             messages.error(request, 'This table already has an open order.')
             return redirect('pedidos:tables')
         table.estado = Mesa.Estado.OCCUPIED
-        table.save(update_fields=['estado'])
+        table.responsable_actual = request.user
+        table.save(update_fields=['estado', 'responsable_actual'])
         order = Pedido.objects.create(mesa=table, mesero=request.user)
         registrar(request, 'ORDER_OPEN', 'Pedido', order, f'Opened order for table {table.numero} at {table.sede}')
     return redirect('pedidos:order_detail', pk=order.pk)
@@ -133,11 +134,8 @@ def discard_empty(request, pk):
         registrar(request, 'ORDER_DISCARD', 'Pedido', order, 'Discarded an empty order')
         table = Mesa.objects.select_for_update().get(pk=order.mesa_id)
         order.delete()
-        # Si el pedido descartado era el ultimo de la mesa, termina su atencion.
-        # Si habia una venta pagada anterior, conserva la mesa ocupada y su responsable.
-        if not Pedido.objects.filter(mesa=table).exists():
-            table.estado = Mesa.Estado.AVAILABLE
-            table.save(update_fields=['estado'])
+        # Descartar una orden vacía NO termina la atención ni borra su responsable.
+        # La mesa se libera exclusivamente mediante Release table.
     return redirect('pedidos:tables')
 
 
@@ -146,15 +144,14 @@ def discard_empty(request, pk):
 def release_table(request, table_id):
     with transaction.atomic():
         table = _table(request, table_id, lock=True)
-        last = _last_order(table) if table.estado == Mesa.Estado.OCCUPIED else None
-        if last:
-            _assert_owner(request, last.mesero_id)
+        _assert_table_owner(request, table)
         if Pedido.objects.filter(mesa=table, estado=Pedido.Estado.OPEN).exists():
             messages.error(request, 'A table with an open order cannot be released.')
             return redirect('pedidos:tables')
         if table.estado == Mesa.Estado.OCCUPIED:
             table.estado = Mesa.Estado.AVAILABLE
-            table.save(update_fields=['estado'])
+            table.responsable_actual = None
+            table.save(update_fields=['estado', 'responsable_actual'])
             registrar(request, 'TABLE_RELEASE', 'Mesa', table, f'Released table {table.numero} at {table.sede}')
     return redirect('pedidos:tables')
 
