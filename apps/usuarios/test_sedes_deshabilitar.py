@@ -76,7 +76,7 @@ class SedeToggleTests(TestCase):
     def test_list_shows_status_and_buttons(self):
         resp = self.client.get(reverse("usuarios:sede_list"))
         self.assertContains(resp, "DEACTIVATE")
-        self.assertNotContains(resp, "REACTIVATE")
+        self.assertNotContains(resp, 'data-cuadra-confirm="reactivate"')
 
     def test_non_admin_forbidden(self):
         waiter = Client()

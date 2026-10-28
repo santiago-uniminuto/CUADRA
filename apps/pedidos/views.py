@@ -1,6 +1,7 @@
 """Waiter operations. Payment and stock deduction belong to the cashier sprint."""
 from django.contrib import messages
 from django.db import IntegrityError, transaction
+from django.db.models import Sum
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
@@ -94,11 +95,22 @@ def add_product(request, pk):
         order = get_object_or_404(Pedido.objects.select_for_update().select_related('mesa'), pk=pk, mesa__sede=get_sede_efectiva(request), estado=Pedido.Estado.OPEN)
         _assert_owner(request, order.mesero_id)
         product = get_object_or_404(Producto, pk=product_id, activo=True)
-        inventory = Inventario.objects.filter(producto=product, sede=order.mesa.sede).first()
+        # Lock the inventory row before counting reservations. This serializes
+        # concurrent additions for the same product and site on MySQL/InnoDB.
+        inventory = Inventario.objects.select_for_update().filter(
+            producto=product, sede=order.mesa.sede
+        ).first()
         detail = DetallePedido.objects.filter(pedido=order, producto=product).first()
         updated_qty = qty + (detail.cantidad if detail else 0)
-        if not inventory or inventory.cantidad < updated_qty:
-            messages.error(request, 'Insufficient stock for this product.')
+        reserved = (DetallePedido.objects.filter(
+            producto=product,
+            pedido__estado=Pedido.Estado.OPEN,
+            pedido__mesa__sede=order.mesa.sede,
+        ).aggregate(total=Sum('cantidad'))['total'] or 0)
+        # qty is the newly requested amount; existing details are already
+        # included in reserved. No physical stock is deducted at this stage.
+        if not inventory or reserved + qty > inventory.cantidad:
+            messages.error(request, 'Insufficient unreserved stock for this product.')
             return redirect('pedidos:order_detail', pk=pk)
         if detail:
             detail.cantidad = updated_qty

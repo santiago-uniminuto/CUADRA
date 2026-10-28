@@ -47,5 +47,5 @@ class ReactivateTests(BaseUsuariosTest):
 
     def test_list_shows_reactivate_only_for_inactive(self):
         resp = self.client.get(reverse("usuarios:usuario_list"))
-        self.assertContains(resp, "REACTIVATE", count=1)
+        self.assertContains(resp, 'data-cuadra-confirm="reactivate"', count=1)
         self.assertContains(resp, reverse("usuarios:usuario_reactivate", args=[self.mesero.pk]))
