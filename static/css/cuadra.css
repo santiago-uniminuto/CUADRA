@@ -888,3 +888,19 @@ body:has(.cuadra-operations-hero) .cuadra-stock-cancel:focus-visible {
 .layout-admin .badge.cuadra-status-available,
 .layout-admin .badge.cuadra-status-occupied,
 .layout-admin .badge.cuadra-status-neutral { font-weight:750!important; padding:.45em .8em!important; border-radius:999px!important; }
+
+/* CUADRA — Fase 8.7: contraste de inventario en modo cajero */
+.layout-pos .cuadra-inventory-table {
+    --bs-table-bg: #1d332a;
+    --bs-table-color: #f1f2eb;
+    --bs-table-striped-bg: #263e33;
+    --bs-table-striped-color: #f1f2eb;
+    --bs-table-hover-bg: #365746;
+    --bs-table-hover-color: #ffffff;
+    --bs-table-border-color: rgba(255, 255, 255, 0.14);
+}
+
+.layout-pos .cuadra-inventory-table > tbody > tr:hover > * {
+    background-color: #365746;
+    color: #ffffff;
+}

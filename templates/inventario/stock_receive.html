@@ -28,7 +28,7 @@
   <input type="hidden" name="sede" value="{{ sede.pk }}">
   <p class="text-muted">Type how many units arrived of each product. Leave blank (or 0) the ones that did not.</p>
   <div class="table-responsive">
-    <table class="table table-striped align-middle">
+    <table class="table table-striped table-hover align-middle cuadra-inventory-table">
       <thead><tr><th>Product</th><th>Type</th><th class="text-end">Current stock</th><th style="width: 160px;">Units received</th></tr></thead>
       <tbody>
         {% for f in filas %}
