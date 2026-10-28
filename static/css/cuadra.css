@@ -872,3 +872,19 @@ body:has(.cuadra-operations-hero) .cuadra-stock-cancel:focus-visible {
 .layout-admin .cuadra-table-confirm-dialog .cuadra-table-confirm-inner p {
   text-shadow: none !important;
 }
+
+/* CUADRA FASE 8.4 — semantic audit events and table availability */
+.layout-admin .badge.cuadra-event-danger { background:#B83D49!important; color:#fff!important; -webkit-text-fill-color:#fff!important; }
+.layout-admin .badge.cuadra-event-success { background:#168452!important; color:#fff!important; -webkit-text-fill-color:#fff!important; }
+.layout-admin .badge.cuadra-event-neutral { background:#65717A!important; color:#fff!important; -webkit-text-fill-color:#fff!important; }
+.layout-admin .badge.cuadra-event-info { background:#426A7B!important; color:#fff!important; -webkit-text-fill-color:#fff!important; }
+.layout-admin .badge.cuadra-status-available { background:#168452!important; color:#fff!important; -webkit-text-fill-color:#fff!important; }
+.layout-admin .badge.cuadra-status-occupied { background:#D4AF67!important; color:#172B22!important; -webkit-text-fill-color:#172B22!important; }
+.layout-admin .badge.cuadra-status-neutral { background:#65717A!important; color:#fff!important; -webkit-text-fill-color:#fff!important; }
+.layout-admin .badge.cuadra-event-danger,
+.layout-admin .badge.cuadra-event-success,
+.layout-admin .badge.cuadra-event-neutral,
+.layout-admin .badge.cuadra-event-info,
+.layout-admin .badge.cuadra-status-available,
+.layout-admin .badge.cuadra-status-occupied,
+.layout-admin .badge.cuadra-status-neutral { font-weight:750!important; padding:.45em .8em!important; border-radius:999px!important; }

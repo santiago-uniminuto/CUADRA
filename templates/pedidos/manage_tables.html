@@ -18,7 +18,7 @@
 <div class="col-sm-4"><label class="form-label" for="number">Table number</label><input class="form-control" id="number" name="number" type="number" min="1" max="999999999" required></div>
 <div class="col-auto"><button class="btn btn-primary">Add table</button></div></form></div></div>
 <div class="table-responsive"><table class="table align-middle"><thead><tr><th>Table</th><th>Status</th><th>Availability</th><th>Action</th></tr></thead><tbody>
-{% for table in tables %}<tr><td>{{ table.numero }}</td><td><span class="cuadra-table-state">{{ table.get_estado_display }}</span></td><td>{% if table.activo %}<span class="badge text-bg-success">Enabled</span>{% else %}<span class="badge text-bg-secondary">Disabled</span>{% endif %}</td>
+{% for table in tables %}<tr><td>{{ table.numero }}</td><td>{% if table.estado == 'AVAILABLE' %}<span class="badge cuadra-status-available">Available</span>{% elif table.estado == 'OCCUPIED' %}<span class="badge cuadra-status-occupied">Occupied</span>{% else %}<span class="badge cuadra-status-neutral">{{ table.get_estado_display }}</span>{% endif %}</td><td>{% if table.activo %}<span class="badge text-bg-success">Enabled</span>{% else %}<span class="badge text-bg-secondary">Disabled</span>{% endif %}</td>
 <td>{% if table.activo and table.has_open_order %}<span class="text-muted">Open order — cannot disable</span>
 {% elif table.activo and table.estado == 'OCCUPIED' %}<span class="text-muted">Occupied — release first</span>
 {% else %}

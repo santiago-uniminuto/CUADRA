@@ -62,7 +62,17 @@
         <td class="text-nowrap">{{ e.fecha|date:"M j, Y H:i" }}</td>
         <td>{{ e.quien }}</td>
         <td>
-          <span class="badge {% if e.categoria == 'security' %}text-bg-danger{% elif e.categoria == 'access' %}text-bg-secondary{% else %}text-bg-success{% endif %}">{{ e.accion_legible }}</span>
+          {% if e.accion == 'DEACTIVATE' or e.accion == 'TABLE_DISABLE' or e.accion == 'ORDER_DISCARD' %}
+          <span class="badge cuadra-event-danger">{% if e.accion == 'TABLE_DISABLE' %}Table disabled{% else %}{{ e.accion_legible }}{% endif %}</span>
+          {% elif e.accion == 'REACTIVATE' or e.accion == 'TABLE_ENABLE' or e.accion == 'CREATE' %}
+          <span class="badge cuadra-event-success">{% if e.accion == 'TABLE_ENABLE' %}Table enabled{% elif e.accion == 'REACTIVATE' %}Activated{% else %}{{ e.accion_legible }}{% endif %}</span>
+          {% elif e.categoria == 'security' %}
+          <span class="badge cuadra-event-danger">{{ e.accion_legible }}</span>
+          {% elif e.categoria == 'access' %}
+          <span class="badge cuadra-event-neutral">{{ e.accion_legible }}</span>
+          {% else %}
+          <span class="badge cuadra-event-info">{{ e.accion_legible }}</span>
+          {% endif %}
         </td>
         <td>{{ e.detalle|default:"—" }}</td>
       </tr>
