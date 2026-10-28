@@ -11,6 +11,7 @@
 </div>
 
 {# Cambiar de sede recarga la pantalla para mostrar las existencias actuales de esa sede #}
+{% if not cashier_mode %}
 <form method="get" class="row g-2 mb-3">
   <div class="col-md-4">
     <label class="form-label" for="sede-select">Site that received the delivery</label>
@@ -19,6 +20,7 @@
     </select>
   </div>
 </form>
+{% else %}<p class="text-muted">Receiving site: {{ sede.nombre }}</p>{% endif %}
 
 {% if filas %}
 <form method="post" novalidate>

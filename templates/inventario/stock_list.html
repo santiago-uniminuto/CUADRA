@@ -9,17 +9,17 @@
   <h1>Inventory</h1><p>Review current stock by site and product.</p></div>
 </section>
   <div class="d-flex gap-2">
-    <a href="{% url 'inventario:stock_adjust' %}{% if sede %}?sede={{ sede.pk }}{% endif %}" class="btn btn-outline-primary btn-sm">Adjust stock</a>
+    {% if not cashier_mode %}<a href="{% url 'inventario:stock_adjust' %}{% if sede %}?sede={{ sede.pk }}{% endif %}" class="btn btn-outline-primary btn-sm">Adjust stock</a>{% endif %}
     <a href="{% url 'inventario:stock_receive' %}{% if sede %}?sede={{ sede.pk }}{% endif %}" class="btn btn-primary btn-sm">+ Receive stock</a>
   </div>
 </div>
 
 <form method="get" class="row g-2 mb-3">
-  <div class="col-md-3">
+  {% if not cashier_mode %}<div class="col-md-3">
     <select name="sede" class="form-select" aria-label="Site" onchange="this.form.submit()">
       {% for s in sedes %}<option value="{{ s.pk }}"{% if sede and s.pk == sede.pk %} selected{% endif %}>{{ s.nombre }}</option>{% endfor %}
     </select>
-  </div>
+  </div>{% else %}<div class="col-md-3"><span class="form-control">{{ sede.nombre }}</span></div>{% endif %}
   <div class="col-md-5">
     <input type="search" name="q" value="{{ query }}" class="form-control" placeholder="Search product..." aria-label="Search product">
   </div>

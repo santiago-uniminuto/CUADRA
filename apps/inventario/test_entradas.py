@@ -45,12 +45,37 @@ class AccessTests(Base):
             self.assertEqual(self.client.get(reverse(name)).status_code, 200, name)
 
     def test_waiter_and_cashier_forbidden(self):
-        for user in (self.mesero, self.cajero):
-            c = Client()
-            c.force_login(user)
-            for name in self.URLS:
-                self.assertEqual(c.get(reverse(name)).status_code, 403, (user.username, name))
-            self.assertEqual(c.post(reverse("inventario:stock_receive"), {"sede": self.zona_t.pk, f"qty_{self.aguila.pk}": "5"}).status_code, 403)
+        # El mesero no puede acceder a la gestión de existencias.
+        waiter_client = Client()
+        waiter_client.force_login(self.mesero)
+
+        for name in self.URLS:
+            self.assertEqual(
+                waiter_client.get(reverse(name)).status_code,
+                403,
+                (self.mesero.username, name),
+            )
+
+        self.assertEqual(
+            waiter_client.post(
+                reverse("inventario:stock_receive"),
+                {"sede": self.zona_t.pk, f"qty_{self.aguila.pk}": "5"},
+            ).status_code,
+            403,
+        )
+
+        # Fase 8.7: el cajero puede consultar y recibir stock en su sede.
+        cashier_client = Client()
+        cashier_client.force_login(self.cajero)
+
+        for name in self.URLS:
+            self.assertEqual(
+                cashier_client.get(reverse(name)).status_code,
+                200,
+                (self.cajero.username, name),
+            )
+
+        # La consulta no debe modificar el inventario.
         self.assertIsNone(self.stock(self.aguila))
 
     def test_anonymous_goes_to_login(self):

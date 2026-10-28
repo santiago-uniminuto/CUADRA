@@ -33,7 +33,7 @@ class MenuTests(TestCase):
         resp = self.client_for(self.mesero1).get(reverse("inventario:inventario_list"))
         self.assertEqual([label for label, _ in items(resp)], ["Inventory", "Tables & orders"])
         resp = self.client_for(self.cajero1).get(reverse("pagos:queue"))
-        self.assertEqual([label for label, _ in items(resp)], ["Payments", "Sales report", "Inventory report"])
+        self.assertEqual([label for label, _ in items(resp)], ["Payments", "Inventory", "Sales report", "Inventory report"])
 
     def test_menu_never_offers_pages_the_role_cannot_open(self):
         for user in (self.admin, self.mesero1):
@@ -61,7 +61,7 @@ class MenuTests(TestCase):
         self.assertEqual(resp.status_code, 302)
         resp = c.get(reverse("pagos:queue"))
         self.assertEqual(resp.status_code, 200)
-        self.assertEqual([label for label, _ in items(resp)], ["Payments", "Sales report", "Inventory report"])
+        self.assertEqual([label for label, _ in items(resp)], ["Payments", "Inventory", "Sales report", "Inventory report"])
         c.post(reverse("usuarios:return_to_admin"))
         self.assertEqual([l for l, _ in items(c.get(reverse("usuarios:usuario_list")))], ADMIN_MENU)
 

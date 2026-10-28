@@ -9,7 +9,7 @@ from apps.algoritmos.ordenamiento import counting_sort, insertion_sort, merge_so
 from apps.auditoria.utils import registrar
 from apps.catalogo.models import Producto
 from apps.pedidos.models import Pedido
-from apps.usuarios.decorators import get_sede_efectiva, role_required
+from apps.usuarios.decorators import get_sede_efectiva, get_rol_efectivo, role_required
 from apps.usuarios.models import Sede
 
 from .models import Inventario
@@ -78,13 +78,14 @@ def _filas_de_stock(sede, query=""):
     return merge_sort(filas, key=lambda f: f["producto"].nombre.lower())
 
 
-@role_required("ADMIN")
+@role_required("ADMIN", "CASHIER")
 def stock_list(request):
     """
     Existencias de CUALQUIER sede, para el administrador (el mesero solo ve la suya, en teselas).
     Ordenado por nombre con ordenamiento por mezcla (requisito académico de algoritmos).
     """
-    sede = _sede_elegida(request, request.GET.get("sede"))
+    cashier_mode = get_rol_efectivo(request) == "CASHIER"
+    sede = get_sede_efectiva(request) if cashier_mode else _sede_elegida(request, request.GET.get("sede"))
     query = request.GET.get("q", "").strip()
     sort_mode = request.GET.get("sort", "name")
     if sort_mode not in ("name", "quantity"):
@@ -94,20 +95,31 @@ def stock_list(request):
         # Stable Counting Sort: equal stock quantities retain name order.
         filas = counting_sort(filas, key=lambda row: row["actual"])
     return render(request, "inventario/stock_list.html", {
-        "sedes": Sede.objects.filter(activo=True).order_by("nombre"),
+        "sedes": Sede.objects.filter(pk=sede.pk) if cashier_mode and sede else Sede.objects.filter(activo=True).order_by("nombre"),
+        "cashier_mode": cashier_mode,
         "sede": sede, "query": query, "sort_mode": sort_mode,
         "filas": filas,
     })
 
 
-@role_required("ADMIN")
+@role_required("ADMIN", "CASHIER")
 def stock_receive(request):
     """
     Registrar la ENTRADA de mercancía de una sede ("llegaron 30 Águila a Zona T, 10 a Galerías").
     Se elige la sede y se anotan las cantidades de todos los productos que llegaron. Es todo o nada:
     si una línea es inválida no se aplica ninguna. Cada entrada queda en la bitácora con el antes y el después.
     """
-    if request.method == "POST":
+    cashier_mode = get_rol_efectivo(request) == "CASHIER"
+    if cashier_mode:
+        sede = get_sede_efectiva(request)
+        if sede is None or not sede.activo:
+            messages.error(request, "Choose a valid site.")
+            return redirect("inventario:stock_list")
+        # Reject forged POST site identifiers; never receive stock for another site.
+        if request.method == "POST" and str(request.POST.get("sede", "")) != str(sede.pk):
+            messages.error(request, "You can only receive stock at your assigned site.")
+            return redirect("inventario:stock_receive")
+    elif request.method == "POST":
         pk = _entero(request.POST.get("sede"))
         sede = Sede.objects.filter(activo=True, pk=pk).first() if pk is not None else None
     else:
@@ -152,7 +164,8 @@ def stock_receive(request):
             messages.error(request, e)
 
     return render(request, "inventario/stock_receive.html", {
-        "sedes": Sede.objects.filter(activo=True).order_by("nombre"), "sede": sede, "filas": filas,
+        "sedes": Sede.objects.filter(pk=sede.pk) if cashier_mode else Sede.objects.filter(activo=True).order_by("nombre"),
+        "cashier_mode": cashier_mode, "sede": sede, "filas": filas,
     })
 
 
