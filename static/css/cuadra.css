@@ -802,3 +802,73 @@ body:has(.cuadra-operations-hero) .cuadra-stock-cancel:focus-visible {
   color: #FFFFFF !important;
   -webkit-text-fill-color: #FFFFFF !important;
 }
+
+
+/* CUADRA FASE 8.3 — semantic statuses, quieter actions, modal contrast */
+.layout-admin .badge.text-bg-success,
+.layout-pos .badge.text-bg-success {
+  background-color: #168452 !important; color: #fff !important;
+  -webkit-text-fill-color: #fff !important; border: 1px solid #168452 !important;
+  font-weight: 750 !important; padding: .45em .8em !important;
+}
+.layout-admin .badge.text-bg-secondary,
+.layout-pos .badge.text-bg-secondary {
+  background-color: #65717a !important; color: #fff !important;
+  -webkit-text-fill-color: #fff !important; border: 1px solid #65717a !important;
+  font-weight: 750 !important; padding: .45em .8em !important;
+}
+/* Actions: neutral by default, semantic emphasis for state changes. */
+.layout-admin .cuadra-management-table .btn-outline-warning,
+.layout-admin .cuadra-management-table .btn-outline-primary,
+.layout-admin .cuadra-management-table .btn-outline-secondary,
+.layout-admin .cuadra-catalog-page .btn-outline-secondary {
+  background: transparent !important; border-color: #8b9699 !important;
+  color: #3e5054 !important; -webkit-text-fill-color: #3e5054 !important;
+}
+.layout-admin .cuadra-management-table .btn-outline-warning:hover,
+.layout-admin .cuadra-management-table .btn-outline-primary:hover,
+.layout-admin .cuadra-management-table .btn-outline-secondary:hover,
+.layout-admin .cuadra-catalog-page .btn-outline-secondary:hover {
+  background: #e6ebe9 !important; border-color: #526765 !important;
+  color: #203b35 !important; -webkit-text-fill-color: #203b35 !important;
+}
+.layout-admin a[data-cuadra-confirm="reactivate"],
+.layout-admin .cuadra-table-toggle-form .btn-outline-success {
+  background: #168452 !important; border: 1px solid #168452 !important;
+  color: #fff !important; -webkit-text-fill-color: #fff !important;
+  font-weight: 750 !important;
+}
+.layout-admin a[data-cuadra-confirm="reactivate"]:hover,
+.layout-admin .cuadra-table-toggle-form .btn-outline-success:hover {
+  background: #106d43 !important; border-color: #106d43 !important;
+  color: #fff !important; -webkit-text-fill-color: #fff !important;
+}
+.layout-admin a[data-cuadra-confirm="deactivate"],
+.layout-admin .cuadra-table-toggle-form .btn-outline-danger {
+  background: #fff !important; border: 1px solid #b83d49 !important;
+  color: #a52b38 !important; -webkit-text-fill-color: #a52b38 !important;
+  font-weight: 750 !important;
+}
+.layout-admin a[data-cuadra-confirm="deactivate"]:hover,
+.layout-admin .cuadra-table-toggle-form .btn-outline-danger:hover {
+  background: #b83d49 !important; border-color: #b83d49 !important;
+  color: #fff !important; -webkit-text-fill-color: #fff !important;
+}
+/* Brighter green against the dark confirmation dialog, matching table dialog geometry. */
+.layout-admin .cuadra-table-confirm-dialog .cuadra-table-confirm-proceed.is-success,
+.layout-admin .cuadra-table-confirm-dialog .cuadra-table-confirm-proceed.is-success:hover,
+.layout-admin .cuadra-table-confirm-dialog .cuadra-table-confirm-proceed.is-success:focus-visible {
+  background: #168452 !important; border-color: #36ad79 !important;
+  color: #fff !important; -webkit-text-fill-color: #fff !important;
+}
+.layout-admin .cuadra-table-confirm-dialog .cuadra-table-confirm-proceed.is-danger {
+  background: #b83d49 !important; border-color: #d15a65 !important;
+  color: #fff !important; -webkit-text-fill-color: #fff !important;
+}
+.layout-admin .cuadra-table-confirm-dialog .cuadra-table-confirm-proceed.is-danger:hover {
+  background: #a82c39 !important; border-color: #d15a65 !important;
+}
+.layout-admin .cuadra-table-confirm-dialog .cuadra-table-confirm-inner h2,
+.layout-admin .cuadra-table-confirm-dialog .cuadra-table-confirm-inner p {
+  text-shadow: none !important;
+}
