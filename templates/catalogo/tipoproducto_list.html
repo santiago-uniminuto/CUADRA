@@ -3,7 +3,7 @@
 {% block content %}
 <section class="cuadra-catalog-page">
 
-  <header class="cuadra-catalog-hero"><div><div class="cuadra-catalog-eyebrow">CATALOG / PRODUCT TYPES</div><h1>Product types</h1><p>Organize products into types to keep your catalog consistent.</p></div><a href="{% url 'catalogo:tipoproducto_create' %}" class="btn btn-primary btn-sm">+ New product type</a></header>
+  <header class="cuadra-management-hero"><div><div class="cuadra-management-eyebrow">CATALOG / PRODUCT TYPES</div><h1>Product types</h1><p>Organize products into types to keep your catalog consistent.</p></div><a href="{% url 'catalogo:tipoproducto_create' %}" class="btn">+ New product type</a></header>
   {% if tipos %}
   <div class="table-responsive">
     <table class="table table-striped align-middle">
