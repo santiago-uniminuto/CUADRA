@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load moneda %}
 {% block title %}Order {{ order.pk }} — CUADRA{% endblock %}
 {% block content %}
 <section class="cuadra-pos-workspace" aria-labelledby="order-title">
@@ -12,10 +13,10 @@
       <div class="cuadra-panel-heading"><h2 id="items-title">Order items</h2><span>{{ details|length }} line items</span></div>
       <div class="table-responsive"><table class="table cuadra-order-table"><thead><tr><th>Product</th><th>Qty.</th><th>Unit price</th><th>Action</th></tr></thead><tbody>
       {% for detail in details %}
-        <tr><td class="fw-semibold">{{ detail.producto.nombre }}</td><td>{{ detail.cantidad }}</td><td>${{ detail.valor_venta_unitario }}</td><td>{% if order.estado == 'OPEN' %}<form method="post" action="{% url 'pedidos:remove_product' order.pk detail.pk %}">{% csrf_token %}<button type="submit" class="btn btn-sm btn-outline-danger">Remove</button></form>{% else %}—{% endif %}</td></tr>
+        <tr><td class="fw-semibold">{{ detail.producto.nombre }}</td><td>{{ detail.cantidad }}</td><td>{{ detail.valor_venta_unitario|cop }}</td><td>{% if order.estado == 'OPEN' %}<form method="post" action="{% url 'pedidos:remove_product' order.pk detail.pk %}">{% csrf_token %}<button type="submit" class="btn btn-sm btn-outline-danger">Remove</button></form>{% else %}—{% endif %}</td></tr>
       {% empty %}<tr><td colspan="4" class="cuadra-empty-items">No products added yet.</td></tr>{% endfor %}
       </tbody></table></div>
-      <div class="cuadra-order-total"><span>Order total</span><strong>${{ total }}</strong></div>
+      <div class="cuadra-order-total"><span>Order total</span><strong>{{ total|cop }}</strong></div>
     </section>
     <aside class="cuadra-service-panel cuadra-add-panel" aria-labelledby="add-title">
       {% if order.estado == 'OPEN' %}

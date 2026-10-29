@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load moneda %}
 {% block title %}Sales report — CUADRA{% endblock %}
 {% block content %}
 <section class="cuadra-sales-v2" aria-labelledby="sales-title">
@@ -28,7 +29,7 @@
   {% else %}
     <div class="cuadra-sales-metrics">
       <div class="cuadra-sales-metric"><span>Registered payments</span><strong>{{ count }}</strong><small>Completed transactions</small></div>
-      <div class="cuadra-sales-metric cuadra-sales-metric-total"><span>Total sales</span><strong>${{ total|floatformat:2 }}</strong><small>For the selected filters</small></div>
+      <div class="cuadra-sales-metric cuadra-sales-metric-total"><span>Total sales</span><strong>{{ total|cop }}</strong><small>For the selected filters</small></div>
     </div>
     <section class="cuadra-sales-panel cuadra-sales-results" aria-labelledby="sales-results-title">
       <div class="cuadra-sales-panel-heading"><div><h2 id="sales-results-title">Payment history</h2><span>Most recent payments first</span></div><span class="cuadra-sales-count">{{ count }} records</span></div>
@@ -38,7 +39,7 @@
           <thead><tr><th>Paid at</th><th>Site</th><th>Order</th><th>Cashier</th><th>Method</th><th class="text-end">Amount</th><th>Receipt</th></tr></thead>
           <tbody>
           {% for p in payments %}
-            <tr><td class="cuadra-sales-nowrap">{{ p.fecha|date:'Y-m-d H:i' }}</td><td>{{ p.pedido.mesa.sede.nombre }}</td><td class="fw-semibold">#{{ p.pedido_id }}</td><td>{{ p.cajero.nombre }}</td><td>{{ p.get_metodo_pago_display }}</td><td class="text-end fw-semibold cuadra-sales-nowrap">${{ p.valor|floatformat:2 }}</td><td><a class="btn btn-sm cuadra-btn-receipt cuadra-sales-nowrap" href="{% url 'pagos:receipt' p.pedido_id %}">View receipt</a></td></tr>
+            <tr><td class="cuadra-sales-nowrap">{{ p.fecha|date:'Y-m-d H:i' }}</td><td>{{ p.pedido.mesa.sede.nombre }}</td><td class="fw-semibold">#{{ p.pedido_id }}</td><td>{{ p.cajero.nombre }}</td><td>{{ p.get_metodo_pago_display }}</td><td class="text-end fw-semibold cuadra-sales-nowrap">{{ p.valor|cop }}</td><td><a class="btn btn-sm cuadra-btn-receipt cuadra-sales-nowrap" href="{% url 'pagos:receipt' p.pedido_id %}">View receipt</a></td></tr>
           {% empty %}
             <tr><td colspan="7" class="cuadra-sales-empty">No payments found for the selected filters.</td></tr>
           {% endfor %}

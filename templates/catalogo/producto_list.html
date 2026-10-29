@@ -1,12 +1,10 @@
 {% extends "base.html" %}
+{% load moneda %}
 {% block title %}Products — CUADRA{% endblock %}
 {% block content %}
 <section class="cuadra-catalog-page">
 
-  <div class="d-flex justify-content-between align-items-center mb-3">
-    <h1 class="h4 mb-0">Products</h1>
-    <a href="{% url 'catalogo:producto_create' %}" class="btn btn-primary btn-sm">+ New product</a>
-  </div>
+  <header class="cuadra-catalog-hero"><div><div class="cuadra-catalog-eyebrow">CATALOG / PRODUCTS</div><h1>Products</h1><p>Manage products, sale prices and product status in your catalog.</p></div><a href="{% url 'catalogo:producto_create' %}" class="btn btn-primary btn-sm">+ New product</a></header>
 
   <form method="get" class="row g-2 mb-3">
     <div class="col-md-5">
@@ -31,7 +29,7 @@
           <td>{{ p.nombre }}</td>
           <td>{{ p.tipo_producto }}</td>
           <td>{{ p.proveedor }}</td>
-          <td class="text-end">${{ p.valor_venta|floatformat:"-2g" }}</td>
+          <td class="text-end">{{ p.valor_venta|cop }}</td>
           <td>{% if p.activo %}<span class="badge text-bg-success">Active</span>{% else %}<span class="badge text-bg-secondary">Inactive</span>{% endif %}</td>
           <td class="text-end text-nowrap">
             <a href="{% url 'catalogo:producto_edit' p.pk %}" class="btn btn-outline-secondary btn-sm">Edit</a>

@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load moneda %}
 {% block title %}Pending payments — CUADRA{% endblock %}
 {% block content %}
 <section class="cuadra-cash-workspace" aria-labelledby="cash-queue-title">
@@ -7,7 +8,7 @@
   {% for order in orders %}
     <article class="cuadra-cash-order-card">
       <div class="cuadra-cash-order-meta"><span class="cuadra-cash-order-tag">ORDER #{{ order.pk }}</span><span class="cuadra-cash-table">Table {{ order.mesa.numero }}</span></div>
-      <div class="cuadra-cash-order-details"><div><small>Waiter</small><strong>{{ order.mesero.nombre }}</strong></div><div><small>Amount due</small><strong class="cuadra-cash-amount">${{ order.total }}</strong></div></div>
+      <div class="cuadra-cash-order-details"><div><small>Waiter</small><strong>{{ order.mesero.nombre }}</strong></div><div><small>Amount due</small><strong class="cuadra-cash-amount">{{ order.total|cop }}</strong></div></div>
       <a class="btn btn-primary cuadra-cash-pay-button" href="{% url 'pagos:checkout_detail' order.pk %}">Go to checkout <span aria-hidden="true">→</span></a>
     </article>
   {% empty %}

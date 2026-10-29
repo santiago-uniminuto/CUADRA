@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load moneda %}
 {% block title %}Inventory — CUADRA{% endblock %}
 {% block content %}
   <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-3">
@@ -28,7 +29,7 @@
           </div>
           <div class="d-flex justify-content-between align-items-end mt-auto mb-3">
             <div class="pos-tile-qty">{{ item.cantidad }} <small>in stock</small></div>
-            <div class="pos-tile-price">${{ item.producto.valor_venta|floatformat:"-2g" }}</div>
+            <div class="pos-tile-price">{{ item.producto.valor_venta|cop }}</div>
           </div>
           {% if item.cantidad == 0 %}
             <button type="button" class="btn btn-primary w-100" disabled title="Out of stock">Add</button>

@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load moneda %}
 {% block title %}Checkout — Order #{{ order.pk }}{% endblock %}
 {% block content %}
 <section class="cuadra-cash-workspace cuadra-checkout" aria-labelledby="checkout-title">
@@ -8,15 +9,15 @@
     <section class="cuadra-cash-panel" aria-labelledby="summary-title">
       <div class="cuadra-cash-panel-title"><h2 id="summary-title">Order summary</h2><span>Table {{ order.mesa.numero }}</span></div>
       <div class="table-responsive"><table class="table cuadra-cash-items"><thead><tr><th>Product</th><th>Quantity</th><th>Unit price</th></tr></thead><tbody>
-      {% for detail in details %}<tr><td class="fw-semibold">{{ detail.producto.nombre }}</td><td>{{ detail.cantidad }}</td><td>${{ detail.valor_venta_unitario }}</td></tr>{% empty %}<tr><td colspan="3" class="cuadra-cash-empty-line">No products added.</td></tr>{% endfor %}
+      {% for detail in details %}<tr><td class="fw-semibold">{{ detail.producto.nombre }}</td><td>{{ detail.cantidad }}</td><td>{{ detail.valor_venta_unitario|cop }}</td></tr>{% empty %}<tr><td colspan="3" class="cuadra-cash-empty-line">No products added.</td></tr>{% endfor %}
       </tbody></table></div>
-      <div class="cuadra-cash-total"><span>Total due</span><strong>${{ total }}</strong></div>
+      <div class="cuadra-cash-total"><span>Total due</span><strong>{{ total|cop }}</strong></div>
     </section>
     <section class="cuadra-cash-panel cuadra-cash-payment" aria-labelledby="payment-title">
       <div class="cuadra-cash-panel-title"><h2 id="payment-title">Payment</h2><span>Secure checkout</span></div>
       {% if payment %}
         <div class="cuadra-cash-success" role="status"><strong>Payment registered</strong><span>{{ payment.get_metodo_pago_display }} · ${{ payment.valor }}</span></div>
-        {% if payment.efectivo_recibido is not None %}<div class="cuadra-cash-change"><span>Cash received</span><strong>${{ payment.efectivo_recibido }}</strong><span>Change due</span><strong>${{ payment.cambio }}</strong></div>{% endif %}
+        {% if payment.efectivo_recibido is not None %}<div class="cuadra-cash-change"><span>Cash received</span><strong>{{ payment.efectivo_recibido|cop }}</strong><span>Change due</span><strong>{{ payment.cambio|cop }}</strong></div>{% endif %}
         <a class="btn cuadra-btn-receipt" href="{% url 'pagos:receipt' order.pk %}">View receipt</a>
       {% elif order.estado == 'OPEN' and details %}
         <form method="post" action="{% url 'pagos:register_payment' order.pk %}">{% csrf_token %}
@@ -38,7 +39,7 @@
    box.hidden = !active; cash.required = active;
    if (!active) { change.textContent = '—'; error.textContent = ''; return; }
    const amount = cash.value.trim() === '' ? NaN : Number(cash.value);
-   change.textContent = Number.isFinite(amount) && amount >= total ? (amount - total).toFixed(2) : '—';
+   change.textContent = Number.isFinite(amount) && amount >= total ? (amount - total).toLocaleString('es-CO', {minimumFractionDigits: 2, maximumFractionDigits: 2}) : '—';
    error.textContent = Number.isFinite(amount) && amount < total ? 'Cash received is less than the total.' : '';
  }
  method.addEventListener('change', update); cash.addEventListener('input', update); update();

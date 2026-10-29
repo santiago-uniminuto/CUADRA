@@ -904,3 +904,27 @@ body:has(.cuadra-operations-hero) .cuadra-stock-cancel:focus-visible {
     background-color: #365746;
     color: #ffffff;
 }
+
+/* CUADRA — catalog list headers, consistent with Management */
+.cuadra-catalog-hero {
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 1rem; padding: 1.65rem 1.85rem;
+  margin-bottom: 1.5rem; border-radius: 1rem;
+  background: linear-gradient(115deg, #193d2e, #28543c);
+  color: #fff; box-shadow: 0 10px 28px rgba(16, 46, 31, .13);
+}
+.cuadra-catalog-eyebrow {
+  color: #d0e5c9; font-size: .72rem; font-weight: 750;
+  letter-spacing: .14em; text-transform: uppercase; margin-bottom: .55rem;
+}
+.cuadra-catalog-hero h1 { color: #fff; font-size: clamp(1.45rem, 2.5vw, 2rem); font-weight: 750; margin: 0 0 .4rem; }
+.cuadra-catalog-hero p { color: #e2ebdf; margin: 0; line-height: 1.5; }
+.cuadra-catalog-hero .btn {
+  background: #f1eee1; color: #193d2e; border: 1px solid #f1eee1;
+  border-radius: .6rem; padding: .6rem 1rem; font-weight: 700;
+  white-space: nowrap;
+}
+.cuadra-catalog-hero .btn:hover, .cuadra-catalog-hero .btn:focus {
+  background: #fff; color: #193d2e; border-color: #fff;
+}
+@media (max-width: 575px) { .cuadra-catalog-hero { padding: 1.25rem; } }
