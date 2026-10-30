@@ -9,6 +9,7 @@ from apps.algoritmos.ordenamiento import counting_sort, insertion_sort, merge_so
 from apps.auditoria.utils import registrar
 from apps.catalogo.models import Producto
 from apps.pedidos.models import Pedido
+from apps.pedidos.reservas import reservas_por_producto
 from apps.usuarios.decorators import get_sede_efectiva, get_rol_efectivo, role_required
 from apps.usuarios.models import Sede
 
@@ -39,7 +40,14 @@ def inventario_list(request):
     items_qs = Inventario.objects.select_related("producto__tipo_producto").filter(sede=sede, producto__activo=True)
     if query:
         items_qs = items_qs.filter(producto__nombre__icontains=query)
-    items = insertion_sort(items_qs, key=lambda i: (i.cantidad, i.producto.nombre.lower()))
+    # Disponible = existencia física menos lo que ya está en pedidos abiertos (aún sin pagar)
+    # de la sede. Así un mesero no ve "3 en stock" si otra mesa ya pidió esas 3 unidades.
+    reservado = reservas_por_producto(sede)
+    items = list(items_qs)
+    for i in items:
+        i.reservado = reservado.get(i.producto_id, 0)
+        i.disponible = max(i.cantidad - i.reservado, 0)
+    items = insertion_sort(items, key=lambda i: (i.disponible, i.producto.nombre.lower()))
     # El selector de Inventory solo ofrece pedidos del mesero actual.
     # El endpoint pedidos:add_product valida tambien la propiedad del pedido
     # en el servidor (parche Control de Mesas por Mesero).

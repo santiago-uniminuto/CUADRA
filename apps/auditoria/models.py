@@ -21,6 +21,7 @@ ACCIONES = {
     "ORDER_EDIT": ("Order updated", "change"),
     "ORDER_SAVE": ("Order saved", "change"),
     "ORDER_DISCARD": ("Empty order discarded", "change"),
+    "ORDER_CANCEL": ("Unpaid order cancelled", "change"),
     "ORDER_CLOSE": ("Order closed", "change"),
     "PAYMENT": ("Payment registered", "change"),
     "TABLE_RELEASE": ("Table released", "change"),

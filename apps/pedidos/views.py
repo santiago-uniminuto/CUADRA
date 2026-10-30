@@ -14,6 +14,7 @@ from apps.inventario.models import Inventario
 from apps.usuarios.decorators import get_sede_efectiva, role_required, get_actuando_como
 from apps.usuarios.models import Sede
 from .models import DetallePedido, Mesa, Pedido
+from .reservas import mensaje_sin_stock, reservas_por_producto
 
 
 def _integer(value):
@@ -79,14 +80,27 @@ def order_detail(request, pk):
     order = get_object_or_404(Pedido.objects.select_related('mesa', 'mesa__sede'), pk=pk, mesa__sede=get_sede_efectiva(request))
     _assert_owner(request, order.mesero_id)
     details = list(order.detalles.select_related('producto').order_by('producto__nombre'))
-    products = Producto.objects.filter(activo=True, inventario__sede=order.mesa.sede, inventario__cantidad__gt=0).distinct().order_by('nombre') if order.estado == Pedido.Estado.OPEN else []
-    # HU024-E1: al editar una línea se puede cambiar a cualquier producto con stock o conservar el actual.
-    edit_products = (Producto.objects.filter(activo=True).filter(
-        Q(inventario__sede=order.mesa.sede, inventario__cantidad__gt=0) | Q(pk__in=[d.producto_id for d in details])
-    ).distinct().order_by('nombre')) if order.estado == Pedido.Estado.OPEN else []
+    products, edit_detail, edit_products = [], None, []
+    if order.estado == Pedido.Estado.OPEN:
+        site = order.mesa.sede
+        stock = dict(Inventario.objects.filter(sede=site).values_list('producto_id', 'cantidad'))
+        reserved = reservas_por_producto(site)
+        # Solo se ofrecen productos con unidades libres (existencia menos lo que ya está en pedidos abiertos).
+        products = [p for p in Producto.objects.filter(activo=True, pk__in=stock).order_by('nombre')
+                    if stock.get(p.pk, 0) - reserved.get(p.pk, 0) > 0]
+        for p in products:
+            p.free_units = stock[p.pk] - reserved.get(p.pk, 0)
+        # HU024-E1: edición en el panel derecho (?edit=<línea>).
+        edit_id = _integer(request.GET.get('edit'))
+        edit_detail = next((d for d in details if d.pk == edit_id), None)
+        if edit_detail:
+            own = {d.producto_id for d in details}
+            edit_products = [p for p in Producto.objects.filter(activo=True, pk__in=set(stock) | own).order_by('nombre')
+                             if p.pk in own or stock.get(p.pk, 0) - reserved.get(p.pk, 0) > 0]
     total = sum(d.cantidad * d.valor_venta_unitario for d in details)
     return render(request, 'pedidos/order_detail.html', {'order': order, 'details': details, 'products': products,
-                                                         'edit_products': edit_products, 'total': total})
+                                                         'edit_detail': edit_detail, 'edit_products': edit_products,
+                                                         'total': total})
 
 
 @require_POST
@@ -115,7 +129,7 @@ def add_product(request, pk):
         # qty is the newly requested amount; existing details are already
         # included in reserved. No physical stock is deducted at this stage.
         if not inventory or reserved + qty > inventory.cantidad:
-            messages.error(request, 'Insufficient unreserved stock for this product.')
+            messages.error(request, mensaje_sin_stock(product, inventory.cantidad if inventory else 0, reserved))
             return redirect('pedidos:order_detail', pk=pk)
         if detail:
             detail.cantidad = updated_qty
@@ -179,8 +193,8 @@ def edit_item(request, pk, detail_id):
         # línea del mismo pedido, esa línea ya está incluida y se suma qty.
         reserved = _reserved(product, site, exclude_detail=detail)
         if not inventory or reserved + qty > inventory.cantidad:
-            messages.error(request, 'Insufficient unreserved stock for this product.')
-            return redirect('pedidos:order_detail', pk=pk)
+            messages.error(request, mensaje_sin_stock(product, inventory.cantidad if inventory else 0, reserved))
+            return redirect(f"{reverse('pedidos:order_detail', args=[pk])}?edit={detail.pk}")
         before = f'{detail.cantidad} x product #{detail.producto_id}'
         if other:
             other.cantidad += qty
@@ -212,6 +226,32 @@ def save_order(request, pk):
         return redirect('pedidos:order_detail', pk=pk)
     registrar(request, 'ORDER_SAVE', 'Pedido', order, f'Saved order #{order.pk} for table {order.mesa.numero}')
     messages.success(request, f'Order #{order.pk} saved. The cashier can now collect payment.')
+    return redirect('pedidos:tables')
+
+
+@require_POST
+@role_required('WAITER')
+def cancel_order(request, pk):
+    """Cancelar un pedido abierto que no se va a pagar (el cliente se fue o desistió).
+
+    Los productos vuelven a quedar libres para las demás mesas (nunca se descontaron del
+    inventario: eso solo ocurre al pagar). El pedido se elimina porque los únicos estados del
+    negocio son OPEN y CLOSED; la bitácora conserva quién lo canceló y qué contenía. La mesa
+    sigue ocupada hasta que el mesero la libera (Release table), igual que al descartar un
+    pedido vacío.
+    """
+    with transaction.atomic():
+        order = get_object_or_404(Pedido.objects.select_for_update().select_related('mesa'), pk=pk,
+                                  mesa__sede=get_sede_efectiva(request), estado=Pedido.Estado.OPEN)
+        _assert_owner(request, order.mesero_id)
+        lines = list(order.detalles.select_related('producto').order_by('producto__nombre'))
+        summary = ', '.join(f'{d.cantidad} x {d.producto.nombre}' for d in lines) or 'no products'
+        registrar(request, 'ORDER_CANCEL', 'Pedido', order,
+                  f'Cancelled unpaid order #{order.pk}, table {order.mesa.numero}: {summary}')
+        number = order.mesa.numero
+        order.delete()
+    messages.success(request, f'Order cancelled; its products are available again. '
+                              f'Release table {number} when the guests leave.')
     return redirect('pedidos:tables')
 
 

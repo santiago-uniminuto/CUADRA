@@ -15,7 +15,7 @@
     <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xxl-4 g-3">
       {% for item in items %}
       <div class="col">
-        <div class="pos-tile{% if item.cantidad == 0 %} out{% endif %}">
+        <div class="pos-tile{% if item.disponible == 0 %} out{% endif %}">
           <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
             <div>
               <div class="pos-tile-name">{{ item.producto.nombre }}</div>
@@ -23,16 +23,19 @@
             </div>
             {% if item.cantidad == 0 %}
               <span class="badge text-bg-danger">OUT OF STOCK</span>
+            {% elif item.disponible == 0 %}
+              <span class="badge text-bg-warning">ALL IN OPEN ORDERS</span>
             {% else %}
               <span class="badge text-bg-success">In stock</span>
             {% endif %}
           </div>
           <div class="d-flex justify-content-between align-items-end mt-auto mb-3">
-            <div class="pos-tile-qty">{{ item.cantidad }} <small>in stock</small></div>
+            <div class="pos-tile-qty">{{ item.disponible }} <small>available</small></div>
             <div class="pos-tile-price">{{ item.producto.valor_venta|cop }}</div>
           </div>
-          {% if item.cantidad == 0 %}
-            <button type="button" class="btn btn-primary w-100" disabled title="Out of stock">Add</button>
+          {% if item.reservado %}<p class="cuadra-reserved-note">{{ item.reservado }} of {{ item.cantidad }} unit{{ item.cantidad|pluralize }} in open orders (unpaid). Freed if those orders are cancelled.</p>{% endif %}
+          {% if item.disponible == 0 %}
+            <button type="button" class="btn btn-primary w-100" disabled title="{% if item.cantidad == 0 %}Out of stock{% else %}All units are in open orders{% endif %}">Add</button>
           {% elif open_orders %}
             <form method="post" action="{% url 'pedidos:add_product' open_orders.0.pk %}" class="inventory-add-form">
               {% csrf_token %}
@@ -42,7 +45,7 @@
                 {% for order in open_orders %}<option value="{% url 'pedidos:add_product' order.pk %}">Table {{ order.mesa.numero }} — Order #{{ order.pk }}</option>{% endfor %}
               </select>
               <div class="d-flex gap-2">
-                <input type="number" name="quantity" min="1" max="{{ item.cantidad }}" value="1" required class="form-control" aria-label="Quantity" style="max-width:100px">
+                <input type="number" name="quantity" min="1" max="{{ item.disponible }}" value="1" required class="form-control" aria-label="Quantity" style="max-width:100px">
                 <button type="submit" class="btn btn-primary flex-grow-1">Add</button>
               </div>
             </form>

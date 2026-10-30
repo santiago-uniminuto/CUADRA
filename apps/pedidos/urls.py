@@ -15,4 +15,5 @@ urlpatterns = [
     path('<int:pk>/discard/', views.discard_empty, name='discard_empty'),
     path('<int:pk>/items/<int:detail_id>/edit/', views.edit_item, name='edit_item'),
     path('<int:pk>/save/', views.save_order, name='save_order'),
+    path('<int:pk>/cancel/', views.cancel_order, name='cancel_order'),
 ]

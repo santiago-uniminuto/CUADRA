@@ -279,7 +279,7 @@ body { background: radial-gradient(ellipse at 90% 0%, #e1e9dc 0%, transparent 45
 .cuadra-add-panel .form-control,.cuadra-add-panel .form-select{background:#f8faf7;color:#172d25;border-color:#c5d3c9;min-height:44px}
 .cuadra-add-panel .btn{min-height:44px;border-radius:.65rem}
 @media(max-width:900px){.cuadra-order-grid{grid-template-columns:minmax(0,1fr)}}
-.cuadra-edit-row td{border-top:0;padding-top:0}.cuadra-edit-row summary{list-style:none;cursor:pointer}.cuadra-edit-row summary::-webkit-details-marker{display:none}
+.cuadra-line-actions{display:flex;gap:.5rem;justify-content:flex-end;flex-wrap:wrap}.cuadra-line-actions form{margin:0}.cuadra-row-editing td{background:rgba(212,175,106,.12)}.cuadra-panel-link{font-size:.9rem;font-weight:600;color:#d4af6a;text-decoration:none}.cuadra-panel-link:hover{text-decoration:underline}.cuadra-panel-divider{border-top:1px solid rgba(230,239,228,.14);margin:1.25rem 0}.cuadra-reserved-note{font-size:.8rem;color:#f1d08a;margin:-.4rem 0 .75rem}@media(max-width:575px){.cuadra-order-table th:nth-child(3),.cuadra-order-table td:nth-child(3){display:none}.cuadra-line-actions{flex-direction:column;align-items:stretch}.cuadra-line-actions .btn{width:100%}}
 @media(max-width:575px){.cuadra-workspace-head{align-items:flex-start}.cuadra-workspace-count{font-size:1.3rem;padding:.5rem}.cuadra-table-grid{grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:.65rem}.cuadra-table-card{padding:.85rem;min-height:235px}.cuadra-table-number strong{font-size:2.2rem}.cuadra-service-panel{padding:1rem}}
 @media(prefers-reduced-motion:reduce){.cuadra-table-card{transition:none}.cuadra-table-card:hover{transform:none}}
 
