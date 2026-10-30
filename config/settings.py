@@ -3,6 +3,7 @@ CUADRA - Operations Management System (Engineery Solutions S.A.S.)
 Configuración de Django. Los valores sensibles vienen del archivo .env (NO se sube a Git).
 """
 import os
+from django.core.exceptions import ImproperlyConfigured
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -10,7 +11,9 @@ from dotenv import load_dotenv
 BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(BASE_DIR / ".env")
 
-SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "dev-only-insecure-key-change-me")
+SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY")
+if not SECRET_KEY:
+    raise ImproperlyConfigured("DJANGO_SECRET_KEY must be set.")
 DEBUG = os.environ.get("DJANGO_DEBUG", "True") == "True"
 # En la red local se agrega la IP del computador servidor, ej: 192.168.1.50
 ALLOWED_HOSTS = [h.strip() for h in os.environ.get("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1").split(",") if h.strip()]
@@ -98,7 +101,7 @@ SESSION_COOKIE_AGE = 3600
 SESSION_SAVE_EVERY_REQUEST = True
 SESSION_COOKIE_HTTPONLY = True
 
-# La interfaz debe estar en inglés (requisito del cliente/profesor)
+# La interfaz debe estar en inglés (requisito del cliente)
 LANGUAGE_CODE = "en-us"
 TIME_ZONE = "America/Bogota"
 USE_I18N = True
@@ -109,3 +112,17 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"   # Nginx sirve esta carpeta en el despliegue
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# Registro de errores (Documento de Arquitectura, buenas prácticas: manejo de errores y logging).
+# Se escribe en la salida estándar: en el servidor Linux lo recoge systemd/journald vía Gunicorn
+# (journalctl -u <servicio>). Errores 5xx y eventos de seguridad; no se registran datos de los formularios.
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {"simple": {"format": "{asctime} {levelname} {name}: {message}", "style": "{"}},
+    "handlers": {"console": {"class": "logging.StreamHandler", "formatter": "simple"}},
+    "loggers": {
+        "django.request": {"handlers": ["console"], "level": "ERROR", "propagate": False},
+        "django.security": {"handlers": ["console"], "level": "WARNING", "propagate": False},
+    },
+}

@@ -19,10 +19,14 @@ ACCIONES = {
     "RETURN_TO_ADMIN": ("Acting mode ended", "change"),
     "ORDER_OPEN": ("Order opened", "change"),
     "ORDER_EDIT": ("Order updated", "change"),
+    "ORDER_SAVE": ("Order saved", "change"),
     "ORDER_DISCARD": ("Empty order discarded", "change"),
     "ORDER_CLOSE": ("Order closed", "change"),
     "PAYMENT": ("Payment registered", "change"),
     "TABLE_RELEASE": ("Table released", "change"),
+    "TABLE_CREATE": ("Table created", "change"),
+    "TABLE_ENABLE": ("Table enabled", "change"),
+    "TABLE_DISABLE": ("Table disabled", "change"),
 }
 
 

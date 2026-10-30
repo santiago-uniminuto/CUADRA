@@ -177,10 +177,15 @@ def inventory_export(request):
 @role_required('ADMIN')
 def general_report(request):
     """HU030/HU032: consolidated sales and current inventory across sites."""
+    site, _is_admin = _site(request)  # HU030-E2: LOCATION (ALL) o una sede
     start, end, error = _filters(request)
     payments = Pago.objects.select_related('pedido__mesa__sede', 'cajero').all()
+    stock = Inventario.objects.select_related('sede', 'producto')
+    if site:
+        payments = payments.filter(pedido__mesa__sede=site)
+        stock = stock.filter(sede=site)
     payments = _apply_payment_date_filters(payments, start, end).order_by('-fecha', '-pk')
-    stock = Inventario.objects.select_related('sede', 'producto').order_by('sede__nombre', 'producto__nombre', 'pk')
+    stock = stock.order_by('sede__nombre', 'producto__nombre', 'pk')
     if error:
         payments = []
     total = payments.aggregate(total=Sum('valor'))['total'] or Decimal('0.00') if not error else Decimal('0.00')
@@ -189,23 +194,35 @@ def general_report(request):
         'count': payments.count() if not error else 0, 'error': error,
         'start': request.GET.get('start', ''), 'end': request.GET.get('end', ''),
         'site_count': Sede.objects.filter(activo=True).count(),
+        'site': site, 'sites': Sede.objects.order_by('nombre'),
     })
 
 
+@role_required('ADMIN')
 def general_export(request):
-    """HU031: export the consolidated report using the same date filter."""
+    """HU031: export the consolidated report using the same date filter.
+
+    Administrator only, like general_report (closing audit: this view was
+    missing its access control and was reachable without signing in).
+    """
     from openpyxl import Workbook
     from openpyxl.styles import Font, PatternFill
+    site, _is_admin = _site(request)  # HU031-E2: conserva el filtro de sede de la pantalla
     start, end, error = _filters(request)
     if error:
         return HttpResponse(error, status=400, content_type='text/plain; charset=utf-8')
     payments = Pago.objects.select_related('pedido__mesa__sede', 'cajero').all()
+    stock = Inventario.objects.select_related('sede', 'producto')
+    if site:
+        payments = payments.filter(pedido__mesa__sede=site)
+        stock = stock.filter(sede=site)
     payments = _apply_payment_date_filters(payments, start, end).order_by('-fecha', '-pk')
-    stock = Inventario.objects.select_related('sede', 'producto').order_by('sede__nombre', 'producto__nombre', 'pk')
+    stock = stock.order_by('sede__nombre', 'producto__nombre', 'pk')
+    scope = site.nombre if site else 'All sites'
     workbook = Workbook()
     sales = workbook.active
     sales.title = 'Sales'
-    sales.append(['CUADRA — Consolidated sales report'])
+    sales.append(['CUADRA — Consolidated sales report', scope])
     sales.append(['From', start.isoformat() if start else 'Any'])
     sales.append(['To', end.isoformat() if end else 'Any'])
     sales.append(['Payments', payments.count()])
@@ -221,7 +238,7 @@ def general_export(request):
     sales.freeze_panes = 'A8'
     sales.auto_filter.ref = f'A7:F{sales.max_row}'
     inventory = workbook.create_sheet('Current inventory')
-    inventory.append(['CUADRA — Current inventory snapshot'])
+    inventory.append(['CUADRA — Current inventory snapshot', scope])
     inventory.append(['Note', 'Current stock only; historical inventory is not available.'])
     inventory.append(['Site', 'Product', 'Available units'])
     for cell in inventory[3]:

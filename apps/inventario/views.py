@@ -30,7 +30,7 @@ def inventario_list(request):
     HU023 (Sprint 4), esta pantalla solo deja preparado el bloqueo visual.
 
     El orden final se calcula con ordenamiento por inserción (requisito
-    académico de algoritmos), por cantidad disponible: primero lo que hay
+    de algoritmos funcionales del proyecto), por cantidad disponible: primero lo que hay
     menos stock (a igual cantidad, por nombre), útil para que el mesero note
     rápido qué se está agotando.
     """
@@ -82,7 +82,7 @@ def _filas_de_stock(sede, query=""):
 def stock_list(request):
     """
     Existencias de CUALQUIER sede, para el administrador (el mesero solo ve la suya, en teselas).
-    Ordenado por nombre con ordenamiento por mezcla (requisito académico de algoritmos).
+    Ordenado por nombre con ordenamiento por mezcla (requisito de algoritmos funcionales del proyecto).
     """
     cashier_mode = get_rol_efectivo(request) == "CASHIER"
     sede = get_sede_efectiva(request) if cashier_mode else _sede_elegida(request, request.GET.get("sede"))

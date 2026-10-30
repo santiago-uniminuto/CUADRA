@@ -4,14 +4,15 @@
 {% block content %}
 <div class="cuadra-admin-report">
   <header class="cuadra-admin-report-hero">
-    <div><span class="cuadra-admin-report-eyebrow">CUADRA / MANAGEMENT INSIGHTS</span><h1>Consolidated report</h1><p>Sales across all sites and a live snapshot of current inventory.</p></div>
+    <div><span class="cuadra-admin-report-eyebrow">CUADRA / MANAGEMENT INSIGHTS</span><h1>Consolidated report</h1><p>Sales {% if site %}at {{ site.nombre }}{% else %}across all sites{% endif %} and a live snapshot of current inventory.</p></div>
     <a class="btn cuadra-btn-report" href="{% url 'reportes:top_products' %}">Top-selling products →</a>
   </header>
   <form method="get" class="card cuadra-admin-filter mb-4"><div class="card-body"><div class="row g-3 align-items-end">
-    <div class="col-md-4"><label class="form-label" for="start">From</label><input class="form-control" type="date" id="start" name="start" value="{{ start }}"></div>
-    <div class="col-md-4"><label class="form-label" for="end">To</label><input class="form-control" type="date" id="end" name="end" value="{{ end }}"></div>
+    <div class="col-md-3"><label class="form-label" for="site">Location</label><select class="form-select" id="site" name="site"><option value="">All sites</option>{% for s in sites %}<option value="{{ s.pk }}"{% if site and site.pk == s.pk %} selected{% endif %}>{{ s.nombre }}</option>{% endfor %}</select></div>
+    <div class="col-md-3"><label class="form-label" for="start">From</label><input class="form-control" type="date" id="start" name="start" value="{{ start }}"></div>
+    <div class="col-md-2"><label class="form-label" for="end">To</label><input class="form-control" type="date" id="end" name="end" value="{{ end }}"></div>
     <div class="col-md-2"><button class="btn btn-primary w-100" type="submit">Apply filters</button></div>
-    <div class="col-md-2"><a class="btn cuadra-btn-export w-100" href="{% url 'reportes:general_export' %}?start={{ start|urlencode }}&amp;end={{ end|urlencode }}">↓ Export Excel</a></div>
+    <div class="col-md-2"><a class="btn cuadra-btn-export w-100" href="{% url 'reportes:general_export' %}?site={% if site %}{{ site.pk }}{% endif %}&amp;start={{ start|urlencode }}&amp;end={{ end|urlencode }}">↓ Export Excel</a></div>
   </div></div></form>
   {% if error %}<div class="alert alert-danger" role="alert">{{ error }}</div>{% else %}
   <div class="cuadra-admin-kpis mb-4"><div class="cuadra-admin-kpi"><span>Registered payments</span><strong>{{ count }}</strong><small>Payments matching the selected dates</small></div><div class="cuadra-admin-kpi"><span>Total sales</span><strong>{{ total|cop }}</strong><small>Value of registered payments</small></div><div class="cuadra-admin-kpi"><span>Active sites</span><strong>{{ site_count }}</strong><small>Current active locations</small></div></div>

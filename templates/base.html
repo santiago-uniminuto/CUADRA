@@ -6,7 +6,7 @@
   <title>{% block title %}CUADRA{% endblock %}</title>
   {# Bootstrap va dentro del proyecto (static/vendor): en el servidor de la red local puede no haber internet. #}
   <link href="{% static 'vendor/bootstrap/bootstrap.min.css' %}" rel="stylesheet">
-  <link href="{% static 'css/cuadra.css' %}?v=cuadra-catalog-cop-1" rel="stylesheet">
+  <link href="{% static 'css/cuadra.css' %}?v=cuadra-cierre-1" rel="stylesheet">
   <link href="{% static 'css/admin_dashboard_phase4.css' %}?v=1" rel="stylesheet">
   <link href="{% static 'css/report_contrast_phase4.css' %}?v=1" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="{% static 'img/cuadra-mark.svg' %}">
@@ -187,6 +187,19 @@
 </script>
 {% endif %}
 
+{% if user.is_authenticated and inactivity_timeout %}
+<script>
+  /* HU002: la sesion se cierra en el servidor tras {{ inactivity_timeout }} s sin peticiones.
+     Si la pantalla queda quieta, se vuelve a pedir (GET) para que el servidor cierre la
+     sesion y muestre el aviso de inactividad, sin esperar a que el usuario haga clic. */
+  (function () {
+    var seconds = {{ inactivity_timeout }};
+    setTimeout(function () {
+      window.location.replace(window.location.pathname + window.location.search);
+    }, (seconds + 2) * 1000);
+  })();
+</script>
+{% endif %}
 {% block scripts %}{% endblock %}
 </body>
 </html>

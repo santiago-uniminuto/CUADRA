@@ -51,8 +51,8 @@ class UsuarioListView(AdminRequiredMixin, ListView):
         self.query = self.request.GET.get("q", "").strip()
         if self.query:
             qs = qs.filter(Q(nombre__icontains=self.query))
-        # Orden por nombre con ordenamiento burbuja (requisito académico de
-        # algoritmos), sin distinguir mayúsculas de minúsculas.
+        # Orden por nombre con ordenamiento burbuja (requisito de algoritmos
+        # funcionales del proyecto), sin distinguir mayúsculas de minúsculas.
         return bubble_sort(qs, key=lambda u: (u.nombre.lower(), u.username.lower()))
 
     def get_context_data(self, **kwargs):

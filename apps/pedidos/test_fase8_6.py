@@ -64,6 +64,11 @@ class ReservationTests(ReservationFixture, TestCase):
 
     def test_removing_detail_releases_reservation(self):
         self.add(0)
+        # HU024-E3: a line can be deleted only if another product remains in the order.
+        other = Producto.objects.create(nombre='Second item', valor_compra=Decimal('1.00'), valor_venta=Decimal('2.00'),
+                                        tipo_producto=self.product.tipo_producto, proveedor=self.product.proveedor)
+        DetallePedido.objects.create(pedido=self.orders[0], producto=other, cantidad=1,
+                                     valor_venta_unitario=other.valor_venta, valor_compra_unitario=other.valor_compra)
         detail = DetallePedido.objects.get(pedido=self.orders[0], producto=self.product)
         self.client.post(reverse('pedidos:remove_product', args=[self.orders[0].pk, detail.pk]))
         self.add(1)

@@ -1,6 +1,6 @@
 """
 Algoritmos de ordenamiento, implementados manualmente (sin usar sort()/order_by()
-de Django ni de Python) para el requisito académico de la materia.
+de Django ni de Python) para cumplir el requisito de algoritmos funcionales del proyecto.
 
 Todas las funciones reciben cualquier iterable (incluido un QuerySet de Django,
 que se convierte a lista antes de ordenar: no se modifica ni se vuelve a

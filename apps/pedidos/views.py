@@ -1,7 +1,7 @@
 """Waiter operations. Payment and stock deduction belong to the cashier sprint."""
 from django.contrib import messages
 from django.db import IntegrityError, transaction
-from django.db.models import Sum
+from django.db.models import Q, Sum
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
@@ -80,8 +80,13 @@ def order_detail(request, pk):
     _assert_owner(request, order.mesero_id)
     details = list(order.detalles.select_related('producto').order_by('producto__nombre'))
     products = Producto.objects.filter(activo=True, inventario__sede=order.mesa.sede, inventario__cantidad__gt=0).distinct().order_by('nombre') if order.estado == Pedido.Estado.OPEN else []
+    # HU024-E1: al editar una línea se puede cambiar a cualquier producto con stock o conservar el actual.
+    edit_products = (Producto.objects.filter(activo=True).filter(
+        Q(inventario__sede=order.mesa.sede, inventario__cantidad__gt=0) | Q(pk__in=[d.producto_id for d in details])
+    ).distinct().order_by('nombre')) if order.estado == Pedido.Estado.OPEN else []
     total = sum(d.cantidad * d.valor_venta_unitario for d in details)
-    return render(request, 'pedidos/order_detail.html', {'order': order, 'details': details, 'products': products, 'total': total})
+    return render(request, 'pedidos/order_detail.html', {'order': order, 'details': details, 'products': products,
+                                                         'edit_products': edit_products, 'total': total})
 
 
 @require_POST
@@ -128,10 +133,86 @@ def remove_product(request, pk, detail_id):
         order = get_object_or_404(Pedido.objects.select_for_update(), pk=pk, mesa__sede=get_sede_efectiva(request), estado=Pedido.Estado.OPEN)
         _assert_owner(request, order.mesero_id)
         detail = get_object_or_404(DetallePedido, pk=detail_id, pedido=order)
+        if order.detalles.count() <= 1:
+            # HU024-E3: el pedido conserva al menos un producto (coherente con HU025).
+            messages.error(request, 'An order must have at least one product')
+            return redirect('pedidos:order_detail', pk=pk)
         product_id = detail.producto_id
         detail.delete()
         registrar(request, 'ORDER_EDIT', 'Pedido', order, f'Removed product #{product_id}')
     return redirect('pedidos:order_detail', pk=pk)
+
+
+def _reserved(product, site, exclude_detail=None):
+    """Unidades del producto ya comprometidas en pedidos abiertos de la sede."""
+    qs = DetallePedido.objects.filter(producto=product, pedido__estado=Pedido.Estado.OPEN, pedido__mesa__sede=site)
+    if exclude_detail is not None:
+        qs = qs.exclude(pk=exclude_detail.pk)
+    return qs.aggregate(total=Sum('cantidad'))['total'] or 0
+
+
+@require_POST
+@role_required('WAITER')
+def edit_item(request, pk, detail_id):
+    """HU024-E1: corregir la cantidad o el producto de una línea mientras el pedido está abierto.
+
+    Misma regla de stock que add_product: se bloquea la fila de inventario y se valida contra
+    lo reservado por los demás pedidos abiertos de la sede. Si el producto nuevo ya está en el
+    pedido, las dos líneas se unen (HU023-E3: una línea por producto).
+    """
+    product_id, qty = _integer(request.POST.get('product')), _integer(request.POST.get('quantity'))
+    if product_id is None or qty is None or not 1 <= qty <= 100000:
+        messages.error(request, 'Choose a valid product and quantity.')
+        return redirect('pedidos:order_detail', pk=pk)
+    with transaction.atomic():
+        order = get_object_or_404(Pedido.objects.select_for_update().select_related('mesa'), pk=pk,
+                                  mesa__sede=get_sede_efectiva(request), estado=Pedido.Estado.OPEN)
+        _assert_owner(request, order.mesero_id)
+        detail = get_object_or_404(DetallePedido.objects.select_for_update(), pk=detail_id, pedido=order)
+        product = get_object_or_404(Producto, pk=product_id, activo=True)
+        site = order.mesa.sede
+        inventory = Inventario.objects.select_for_update().filter(producto=product, sede=site).first()
+        other = None
+        if product.pk != detail.producto_id:
+            other = DetallePedido.objects.select_for_update().filter(pedido=order, producto=product).first()
+        # Lo reservado por todos los demás (excluye la línea que se edita); si se une con otra
+        # línea del mismo pedido, esa línea ya está incluida y se suma qty.
+        reserved = _reserved(product, site, exclude_detail=detail)
+        if not inventory or reserved + qty > inventory.cantidad:
+            messages.error(request, 'Insufficient unreserved stock for this product.')
+            return redirect('pedidos:order_detail', pk=pk)
+        before = f'{detail.cantidad} x product #{detail.producto_id}'
+        if other:
+            other.cantidad += qty
+            other.save(update_fields=['cantidad'])
+            detail.delete()
+        elif product.pk != detail.producto_id:
+            detail.producto = product
+            detail.cantidad = qty
+            detail.valor_venta_unitario = product.valor_venta
+            detail.valor_compra_unitario = product.valor_compra
+            detail.save()
+        else:
+            detail.cantidad = qty
+            detail.save(update_fields=['cantidad'])
+        registrar(request, 'ORDER_EDIT', 'Pedido', order, f'Edited line: {before} -> {qty} x product #{product.pk}')
+    messages.success(request, 'Order item updated.')
+    return redirect('pedidos:order_detail', pk=pk)
+
+
+@require_POST
+@role_required('WAITER')
+def save_order(request, pk):
+    """HU025: guardar el pedido. Cada producto ya queda persistido al agregarlo; guardar confirma
+    que el pedido está listo y visible para el cajero, y exige al menos un producto."""
+    order = get_object_or_404(Pedido, pk=pk, mesa__sede=get_sede_efectiva(request), estado=Pedido.Estado.OPEN)
+    _assert_owner(request, order.mesero_id)
+    if not order.detalles.exists():
+        messages.error(request, 'You must add at least one product')
+        return redirect('pedidos:order_detail', pk=pk)
+    registrar(request, 'ORDER_SAVE', 'Pedido', order, f'Saved order #{order.pk} for table {order.mesa.numero}')
+    messages.success(request, f'Order #{order.pk} saved. The cashier can now collect payment.')
+    return redirect('pedidos:tables')
 
 
 @require_POST

@@ -1,5 +1,5 @@
 # CUADRA — Operations Management System
-Engineery Solutions S.A.S. · Proyecto universitario (Scrum). Django + MySQL + Bootstrap.
+Engineery Solutions S.A.S. · Proyecto de desarrollo de software (Scrum). Django + MySQL + Bootstrap.
 
 ## Estructura
 ```

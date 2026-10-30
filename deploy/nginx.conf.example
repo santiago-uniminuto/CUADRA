@@ -7,6 +7,10 @@ server {
         alias /RUTA/AL/PROYECTO/staticfiles/;   # resultado de: python manage.py collectstatic
     }
 
+    # Recomendado en el servidor del cliente: el panel tecnico de Django no se usa en la operacion
+    # (todas las funciones estan en la aplicacion, con bitacora). Descomentar para bloquearlo:
+    # location /django-admin/ { return 404; }
+
     location / {
         proxy_pass http://127.0.0.1:8000;
         proxy_set_header Host $host;

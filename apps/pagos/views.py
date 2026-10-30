@@ -14,7 +14,9 @@ from .models import Pago
 
 @role_required('CASHIER')
 def checkout_queue(request):
-    orders = (Pedido.objects.filter(mesa__sede=get_sede_efectiva(request), estado=Pedido.Estado.OPEN)
+    # HU025-E1: el cajero ve los pedidos abiertos que ya tienen productos guardados.
+    orders = (Pedido.objects.filter(mesa__sede=get_sede_efectiva(request), estado=Pedido.Estado.OPEN,
+                                    detalles__isnull=False).distinct()
               .select_related('mesa', 'mesero').prefetch_related('detalles').order_by('fecha'))
     for order in orders:
         order.total = sum((d.cantidad * d.valor_venta_unitario for d in order.detalles.all()), Decimal('0.00'))
@@ -38,7 +40,7 @@ def checkout_detail(request, pk):
 def register_payment(request, pk):
     method = request.POST.get('method', '')
     if method not in Pago.Metodo.values:
-        messages.error(request, 'Select a valid payment method.')
+        messages.error(request, 'You must select a payment method')  # HU027-E2
         return redirect('pagos:checkout_detail', pk=pk)
     cash_received = None
     if method == Pago.Metodo.CASH:

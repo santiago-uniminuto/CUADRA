@@ -14,8 +14,8 @@ from .models import Producto, Proveedor, TipoProducto
 def producto_list(request):
     """
     HU015 — Listar productos, con búsqueda por nombre (Escenarios 1-3).
-    Orden final con ordenamiento por selección (requisito académico de
-    algoritmos), por precio de venta ascendente; a igual precio, por nombre.
+    Orden final con ordenamiento por selección (requisito de algoritmos
+    funcionales del proyecto), por precio de venta ascendente; a igual precio, por nombre.
     """
     query = request.GET.get("q", "").strip()
     productos_qs = Producto.objects.select_related("tipo_producto", "proveedor")

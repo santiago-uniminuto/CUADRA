@@ -68,7 +68,10 @@ def nav_menu(request):
     coincidencias = [e for e in entradas if request.path.startswith(e["url"])]
     if coincidencias:
         max(coincidencias, key=lambda e: len(e["url"]))["active"] = True
+    from django.conf import settings
     return {
+        # HU002: segundos de inactividad; base.html recarga la pantalla al cumplirse.
+        "inactivity_timeout": int(getattr(settings, "SESSION_INACTIVITY_TIMEOUT", 180)),
         "nav_items": entradas,
         "layout": "admin" if rol == "ADMIN" else "pos",
         "sede_actual": get_sede_efectiva(request),

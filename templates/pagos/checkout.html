@@ -22,7 +22,7 @@
       {% elif order.estado == 'OPEN' and details %}
         <form method="post" action="{% url 'pagos:register_payment' order.pk %}">{% csrf_token %}
           <label for="method" class="form-label">Payment method</label>
-          <select name="method" id="method" class="form-select mb-3" required>{% for value,label in methods %}<option value="{{ value }}">{{ label }}</option>{% endfor %}</select>
+          <select name="method" id="method" class="form-select mb-3"><option value="" selected>Select a payment method</option>{% for value,label in methods %}<option value="{{ value }}">{{ label }}</option>{% endfor %}</select>
           <div id="cash-fields" class="cuadra-cash-fields mb-3"><label class="form-label" for="cash_received">Cash received</label><input class="form-control" id="cash_received" name="cash_received" type="number" min="0" step="0.01" inputmode="decimal"><div class="cuadra-cash-change"><span>Change due</span><strong id="change-due" aria-live="polite">—</strong></div><p id="cash-error" class="cuadra-cash-error" role="status"></p></div>
           <button class="btn btn-primary cuadra-cash-confirm" type="submit">Confirm payment and close order</button>
         </form>

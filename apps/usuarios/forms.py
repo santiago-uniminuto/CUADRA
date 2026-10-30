@@ -1,6 +1,6 @@
 """
 Sprint 2 — formularios de gestión de usuarios (HU004, HU005, HU007, HU008).
-Todos los mensajes visibles están en inglés (requisito del cliente/profesor).
+Todos los mensajes visibles están en inglés (requisito del cliente).
 """
 from django import forms
 from django.db.models import Q
