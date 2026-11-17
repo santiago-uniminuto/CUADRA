@@ -80,3 +80,14 @@ class GeneralExportAuthorizationTests(TestCase):
         response = self.client.get(reverse("reportes:general_export"))
         self.assertEqual(response.status_code, 200)
         self.assertIn("spreadsheetml", response["Content-Type"])
+
+
+class SalesExportLinkTests(TestCase):
+    """HU031: the sales report offers the Excel export with the filters on screen."""
+
+    def test_sales_report_links_to_export_with_dates(self):
+        sede = Sede.objects.create(nombre="Zona T", direccion="Bogota")
+        cashier = Usuario.objects.create_user("c9", password="Pass-2026-x", nombre="C", rol="CASHIER", sede=sede)
+        self.client.force_login(cashier)
+        r = self.client.get(reverse("reportes:sales"), {"start": "2026-11-01", "end": "2026-11-15"})
+        self.assertContains(r, reverse("reportes:sales_export") + "?start=2026-11-01&amp;end=2026-11-15")

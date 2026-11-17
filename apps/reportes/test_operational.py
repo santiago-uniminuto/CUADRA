@@ -117,6 +117,10 @@ class OperationalReportsTests(TestCase):
     def test_general_export_contains_sales_and_current_inventory_sheets(self):
         from io import BytesIO
         from openpyxl import load_workbook
+        from datetime import datetime
+        from django.utils import timezone
+        # Pin the payment dates: the fixture creates them "now", which falls outside October after that month.
+        Pago.objects.all().update(fecha=timezone.make_aware(datetime(2026, 10, 22, 13, 18), timezone.get_current_timezone()))
         response = self.get(self.admin, 'general_export', {'start': '2026-10-01', 'end': '2026-10-31'})
         self.assertEqual(response.status_code, 200)
         workbook = load_workbook(BytesIO(response.content), read_only=True)

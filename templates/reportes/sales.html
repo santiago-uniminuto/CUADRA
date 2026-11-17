@@ -9,7 +9,10 @@
       <h1 id="sales-title">Sales report</h1>
       <p>Review completed payments, explore your sales and access printable receipts.</p>
     </div>
-    <a class="cuadra-sales-hero-link" href="{% url 'reportes:top_products' %}">Top-selling products <span aria-hidden="true">↗</span></a>
+    <div class="d-flex flex-wrap gap-2">
+      <a class="cuadra-sales-hero-link" href="{% url 'reportes:sales_export' %}?{% if is_admin_report and site %}site={{ site.pk }}&amp;{% endif %}start={{ start|urlencode }}&amp;end={{ end|urlencode }}">↓ Export to Excel</a>
+      <a class="cuadra-sales-hero-link" href="{% url 'reportes:top_products' %}">Top-selling products <span aria-hidden="true">↗</span></a>
+    </div>
   </header>
 
   <form method="get" class="cuadra-sales-panel cuadra-sales-filters" aria-label="Sales report filters">
