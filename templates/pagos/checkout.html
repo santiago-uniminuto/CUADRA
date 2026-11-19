@@ -18,6 +18,7 @@
       {% if payment %}
         <div class="cuadra-cash-success" role="status"><strong>Payment registered</strong><span>{{ payment.get_metodo_pago_display }} · ${{ payment.valor }}</span></div>
         {% if payment.efectivo_recibido is not None %}<div class="cuadra-cash-change"><span>Cash received</span><strong>{{ payment.efectivo_recibido|cop }}</strong><span>Change due</span><strong>{{ payment.cambio|cop }}</strong></div>{% endif %}
+        {% if change_breakdown %}<div class="cuadra-cash-change"><span>Give back</span><strong>{% for item in change_breakdown %}{{ item.quantity }} × {{ item.value|cop }}{% if not forloop.last %} · {% endif %}{% endfor %}</strong>{% if change_remainder %}<span>Below smallest coin</span><strong>{{ change_remainder|cop }}</strong>{% endif %}</div>{% endif %}
         <a class="btn cuadra-btn-receipt" href="{% url 'pagos:receipt' order.pk %}">View receipt</a>
       {% elif order.estado == 'OPEN' and details %}
         <form method="post" action="{% url 'pagos:register_payment' order.pk %}">{% csrf_token %}
