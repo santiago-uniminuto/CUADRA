@@ -7,6 +7,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.views.decorators.http import require_POST
 
+from apps.algoritmos.calculos import sumatoria
 from apps.algoritmos.ordenamiento import quick_sort
 from apps.auditoria.utils import registrar
 from apps.catalogo.models import Producto
@@ -97,7 +98,7 @@ def order_detail(request, pk):
             own = {d.producto_id for d in details}
             edit_products = [p for p in Producto.objects.filter(activo=True, pk__in=set(stock) | own).order_by('nombre')
                              if p.pk in own or stock.get(p.pk, 0) - reserved.get(p.pk, 0) > 0]
-    total = sum(d.cantidad * d.valor_venta_unitario for d in details)
+    total = sumatoria(d.cantidad * d.valor_venta_unitario for d in details)
     return render(request, 'pedidos/order_detail.html', {'order': order, 'details': details, 'products': products,
                                                          'edit_detail': edit_detail, 'edit_products': edit_products,
                                                          'total': total})

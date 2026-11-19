@@ -5,6 +5,7 @@ from django.db import transaction
 from django.db.models import Prefetch
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
+from apps.algoritmos.calculos import desglose_vuelto, sumatoria
 from apps.auditoria.utils import registrar
 from apps.inventario.models import Inventario
 from apps.pedidos.models import Pedido
@@ -19,7 +20,7 @@ def checkout_queue(request):
                                     detalles__isnull=False).distinct()
               .select_related('mesa', 'mesero').prefetch_related('detalles').order_by('fecha'))
     for order in orders:
-        order.total = sum((d.cantidad * d.valor_venta_unitario for d in order.detalles.all()), Decimal('0.00'))
+        order.total = sumatoria((d.cantidad * d.valor_venta_unitario for d in order.detalles.all()), Decimal('0.00'))
     return render(request, 'pagos/queue.html', {'orders': orders})
 
 
@@ -28,10 +29,17 @@ def checkout_detail(request, pk):
     order = get_object_or_404(Pedido.objects.select_related('mesa', 'mesero'), pk=pk,
                               mesa__sede=get_sede_efectiva(request))
     details = list(order.detalles.select_related('producto').order_by('producto__nombre'))
-    total = sum((d.cantidad * d.valor_venta_unitario for d in details), Decimal('0.00'))
+    total = sumatoria((d.cantidad * d.valor_venta_unitario for d in details), Decimal('0.00'))
     payment = Pago.objects.filter(pedido=order).first()
+    change_breakdown, change_remainder = [], Decimal('0.00')
+    if payment and payment.cambio:
+        # Algoritmo voraz: billetes y monedas a devolver, de mayor a menor.
+        pairs, change_remainder = desglose_vuelto(payment.cambio)
+        change_breakdown = [{'value': value, 'quantity': quantity} for value, quantity in pairs]
     return render(request, 'pagos/checkout.html', {'order': order, 'details': details,
                                                     'total': total, 'payment': payment,
+                                                    'change_breakdown': change_breakdown,
+                                                    'change_remainder': change_remainder,
                                                     'methods': Pago.Metodo.choices})
 
 
@@ -71,7 +79,7 @@ def register_payment(request, pk):
             if not inventory or inventory.cantidad < detail.cantidad:
                 messages.error(request, f'Insufficient stock for {detail.producto.nombre}. No payment was registered.')
                 return redirect('pagos:checkout_detail', pk=pk)
-        total = sum((d.cantidad * d.valor_venta_unitario for d in details), Decimal('0.00'))
+        total = sumatoria((d.cantidad * d.valor_venta_unitario for d in details), Decimal('0.00'))
         if method == Pago.Metodo.CASH and cash_received < total:
             messages.error(request, 'Cash received cannot be less than the order total.')
             return redirect('pagos:checkout_detail', pk=pk)
